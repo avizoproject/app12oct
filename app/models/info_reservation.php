@@ -120,21 +120,23 @@ function getListReservations(){
 function getSelectReservations($id_user){
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-    $results = $conn->query("SELECT reservation.pk_reservation, marque.nom_marque, modele.nom_modele FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE reservation.fk_utilisateur='" . $id_user . "' AND reservation.statut = '1'");
+    $results = $conn->query("SELECT reservation.date_debut, reservation.date_fin, reservation.pk_reservation, marque.nom_marque, modele.nom_modele FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE reservation.fk_utilisateur='" . $id_user . "' AND reservation.statut = '1'");
 
     $allreservation = array();
     while ($row = $results->fetch_assoc()) {
         $allreservation[] = array(
             'pk_reservation' => $row['pk_reservation'],
             'nom_marque' => $row['nom_marque'],
-            'nom_modele' => $row['nom_modele']
+            'nom_modele' => $row['nom_modele'],
+            'date_debut' => $row['date_debut'],
+            'date_fin' => $row['date_fin']
         );
     }
     echo "<select class='form-control' id='selectReservation' name='selectReservation'>";
     $size= sizeof($allreservation);
     if($size != null){
         for($i=0;$i<$size;$i++){
-            echo "<option value='".$allreservation[$i]['pk_reservation']."'>".$allreservation[$i]['nom_marque'] . " ".$allreservation[$i]['nom_modele']."</option>";
+            echo "<option value='".$allreservation[$i]['pk_reservation']."'>".$allreservation[$i]['nom_marque'] . " ".$allreservation[$i]['nom_modele']. " " . $allreservation[$i]['date_debut'] . " à " . $allreservation[$i]['date_fin'] ."</option>";
         }
     }
     echo "</select>";

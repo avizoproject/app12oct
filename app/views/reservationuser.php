@@ -47,35 +47,19 @@ $gReservation = new InfoReservation();
 	            <div class="container-fluid">
 	                <div class="row">
 	                    <div class="col-md-12">
-	                        <div class="card">
-	                            <div class="card-header" data-background-color="blue">
-	                                <h4 class="title">Mes réservations</h4>
-	                                <p class="category">Sélectionnez avant de choisir une action</p>
-	                            </div>
-	                            <div class="card-content table-responsive">
-	                                <table class="table" id="example">
-	                                    <thead class="text-primary">
-	                                    	<th class="hidden">ID Réservation</th>
-	                                    	<th>Vehicule</th>
-	                                    	<th>Réservé par</th>
-						                    <th>Date de début</th>
-                                            <th>Date de retour prévu</th>
-                                            <th>Statut (1=actif , 0=inactif)</th>
-	                                    </thead>
-	                                    <tbody>
-                                                <?php $gReservation->getListReservations(); ?>
-	                                    </tbody>
-	                                </table>
-	                            </div>
-	                        </div>
-	                    </div>
-                            <div class="buttons">
-                                <div class="centerbuttons">
-                                    <button class="btn btn-default" name="Ajouter" id="Ajouter">Ajouter</button>
-                                    <button class="btn btn-default" name="Modifier" id="Modifier">Modifier</button>
-                                    <button class="btn btn-default" name="Consulter" id="Consulter">Consulter</button>
+
+                                <div class="buttons">
+                                    <div class="centerbuttons">
+                                        <button class="btn btn-default center-block float-none" name="Ajouter" id="Ajouter">Ajouter</button>
+                                        <br>
+                                        <button class="btn btn-default center-block float-none" name="Modifier" id="Modifier">Modifier</button>
+                                        <br>
+                                        <button class="btn btn-default center-block float-none" name="Consulter" id="Retourner">Retourner</button>
+                                    </div>
                                 </div>
-                            </div>
+
+	                    </div>
+
 	                </div>
 	            </div>
               <div class="cd-schedule loading">
@@ -121,10 +105,8 @@ $gReservation = new InfoReservation();
     </body>
 
     <!--   Core JS Files   -->
-
-
-        <script src="../js/jquery-3.1.0.min.js" type="text/javascript"></script>
-        <script src="../js/jquery.dataTables.min.js"></script>
+    <script src="../js/jquery-3.1.0.min.js" type="text/javascript"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
 
 	<script src="../js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="../js/material.min.js" type="text/javascript"></script>
@@ -150,17 +132,7 @@ $gReservation = new InfoReservation();
 			// Javascript method's body can be found in assets/js/demos.js
         	demo.initDashboardPageCharts();
 
-                var table = $('#example').DataTable();
 
-                //modifie les styles pour la sélection de rangée
-                $('#example tbody').on('click', 'tr', function () {
-                    if ($(this).hasClass('selected')) {
-                        $(this).removeClass('selected');
-                    } else {
-                        table.$('tr.selected').removeClass('selected');
-                        $(this).addClass('selected');
-                    }
-                });
 
                 //clic modifier, envoie en get le id selectionné
                 $('#Modifier').click(function () {
@@ -179,10 +151,10 @@ $gReservation = new InfoReservation();
                 });
 
                 //clic consulter, envoie en get le id selectionné
-                $('#Consulter').click(function () {
+                $('#Retourner').click(function () {
                     if ($('#example tr.selected td:first').length > 0) {
                         var idcons = $('#example tr.selected td:first').html();
-                        window.location.href = "http://localhost/app/app/views/viewReservation.php?id=" + idcons + "";
+                        window.location.href = "http://localhost/app/app/views/returnReservation";
                     }else{
                         swal({
                                 title:"",
@@ -198,7 +170,7 @@ $gReservation = new InfoReservation();
                     window.location.href = "http://localhost/app/app/views/addReservation.php";
                 });
 
-                 var activePage = window.location.href;
+                var activePage = window.location.href;
             	console.log(activePage);
                 var active = activePage.substring(activePage.lastIndexOf('/') + 1);
 

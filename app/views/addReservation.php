@@ -39,12 +39,12 @@ $listVehicule = new InfoVehicule();
 	<div class="wrapper">
 	    <?php 
             require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapper.php';
-            ?>
+        ?>
 
 	    <div class="main-panel">
 			<?php 
                         require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/navigation.php';
-                        ?>
+            ?>
 
             <div class="content">
                 <div class="container-fluid">
@@ -58,7 +58,7 @@ $listVehicule = new InfoVehicule();
                                 <div class="card-content">
                                     <form id="formAjout" >
                                         <div class="row">
-                                            <div class="col-md-3">
+                                            <div class="col-md-5">
                                                 <div class="form-group label-static">
                                                     <label class="control-label">Dates</label>
 
@@ -79,7 +79,7 @@ $listVehicule = new InfoVehicule();
 
 
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-5">
                                                 <div class="form-group label-static">
 
                                                     <label class="control-label">Choisissez un véhicule</label>
