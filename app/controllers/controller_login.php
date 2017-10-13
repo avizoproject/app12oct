@@ -76,6 +76,7 @@ if ($loginControl->getHs() == true) {
     $_SESSION['secteur']= $secteur['nom_secteur'];
     $_SESSION['admin'] = $user['fk_statut'];
     $_SESSION['email'] =$user['courriel'];
+    $_SESSION['firstTime']=true;
     
     $_SESSION['loggedIn']=true;
     echo $_SESSION['admin'];
@@ -86,7 +87,12 @@ if ($loginControl->getHs() == true) {
     exit();
 }
 else{
-    header("Location: http://localhost/app/app/views/signin.php");
+   $message = "Le nom d\'utilisateur ou le mot de passe est erronné.";
+    
+    echo ("<SCRIPT LANGUAGE='JavaScript'>
+    window.alert('Succesfully Updated')
+    window.location.href='http://localhost/app/app/views/signin.php';
+    </SCRIPT>");
     exit();
 }
 ?>

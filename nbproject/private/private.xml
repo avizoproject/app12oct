@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/wamp64/www/app/app/views/addReservationadmin.php</file>
+            <file>file:/C:/wamp64/www/app/app/views/addReservation.php</file>
+            <file>file:/C:/wamp64/www/app/app/views/notifications.php</file>
+            <file>file:/C:/wamp64/www/app/app/views/entretien.php</file>
+            <file>file:/C:/wamp64/www/app/app/views/profil.php</file>
+            <file>file:/C:/wamp64/www/app/app/views/wrapperUser.php</file>
+            <file>file:/C:/wamp64/www/app/app/controllers/controller_login.php</file>
+            <file>file:/C:/wamp64/www/app/app/views/signin.php</file>
+            <file>file:/C:/wamp64/www/app/app/views/viewReservation.php</file>
+            <file>file:/C:/wamp64/www/app/app/views/wrapper.php</file>
+            <file>file:/C:/wamp64/www/app/app/views/reservation.php</file>
+            <file>file:/C:/wamp64/www/app/app/views/updateReservation.php</file>
+            <file>file:/C:/wamp64/www/app/app/views/dashboard.php</file>
+            <file>file:/C:/wamp64/www/app/app/views/reservationuser.php</file>
+            <file>file:/C:/wamp64/www/app/app/views/upgrade.php</file>
+        </group>
+    </open-files>
 </project-private>

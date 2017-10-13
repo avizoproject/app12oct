@@ -100,6 +100,10 @@ if (session_status() == true) {
 	<!--  Charts Plugin -->
 	<script src="../js/chartist.min.js"></script>
 
+                <!--  Sweet alert -->
+        <script src="../js/sweetalert2.min.js"></script>
+        <script src="../js/sweetalert2.js"></script>
+        
 	<!--  Notifications Plugin    -->
 	<script src="../js/bootstrap-notify.js"></script>
 

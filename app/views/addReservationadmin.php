@@ -76,7 +76,7 @@ $listVehicule = new InfoVehicule();
                                             <div class="form-group label-static">
                                                 <label class="control-label">Dates</label>
 
-                                                <input type='text' size="40" class="flatpickr form-control" data-enabletime=true data-enable-seconds=true name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation">
+                                                <input type='text' size="40" class="flatpickr form-control" data-enabletime=true data-enable-seconds=true name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation" required>
 
                                                 <script src="../js/flatpickr.js" type="text/javascript"></script>
                                                 <script>
@@ -97,7 +97,7 @@ $listVehicule = new InfoVehicule();
                                             <div class="form-group label-static">
 
                                                 <label class="control-label">Choisissez un véhicule</label>
-                                                <select class="form-control" id="vehicule" name="select"></select>
+                                                <select class="form-control" id="vehicule" name="select" required></select>
                                             </div>
                                         </div>
 
@@ -131,6 +131,10 @@ $listVehicule = new InfoVehicule();
 
 <!--  Charts Plugin -->
 <script src="../js/chartist.min.js"></script>
+
+<!--  Sweet alert -->
+<script src="../js/sweetalert2.min.js"></script>
+<script src="../js/sweetalert2.js"></script>
 
 <!--  Notifications Plugin    -->
 <script src="../js/bootstrap-notify.js"></script>
@@ -185,8 +189,26 @@ $listVehicule = new InfoVehicule();
 
 
 
-
-</script>
+function erreurNonCon(){
+            swal({
+                    title: "Erreur",
+                    type: "error",
+                    text: "Vous n'êtes pas connecté!",
+                    timer: 2000,
+                    showConfirmButton: false,
+                    animation : "pop"
+                    });
+                    setTimeout(function(){window.location.href='../views/signin.php';},1800);
+        }
+	</script>
+        
+        <?php
+        if($_SESSION['loggedIn']==false){
+                echo '<script type="text/javascript">',
+                      'erreurNonCon();',
+                    '</script>';
+            }
+            ?>
 <script src="../js/calendarModernizr.js"></script>
 <script>
     if( !window.jQuery ) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');

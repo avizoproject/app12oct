@@ -6,12 +6,6 @@
             require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
             session_start();
             error_reporting(1);
-//            if($_SESSION['loggedIn']==false){
-//                echo '<script type="text/javascript">'; 
-//                echo 'alert("Vous n\'êtes pas connecté.");'; 
-//                echo 'window.location.href = "../views/signin.php";';
-//                echo '</script>';
-//            }
             ?>
 </head>
 
@@ -140,6 +134,10 @@
 	<!--  Charts Plugin -->
 	<script src="../js/chartist.min.js"></script>
 
+        <!--  Sweet alert -->
+        <script src="../js/sweetalert2.min.js"></script>
+        <script src="../js/sweetalert2.js"></script>
+        
 	<!--  Notifications Plugin    -->
 	<script src="../js/bootstrap-notify.js"></script>
 
@@ -180,6 +178,27 @@
                 });
                 $('.navbar-header a').html("Notifications");
     	});
+
+
+function erreurNonCon(){
+            swal({
+                    title: "Erreur",
+                    type: "error",
+                    text: "Vous n'êtes pas connecté!",
+                    timer: 2000,
+                    showConfirmButton: false,
+                    animation : "pop"
+                    });
+                    setTimeout(function(){window.location.href='../views/signin.php';},1800);
+        }
 	</script>
+        
+        <?php
+        if($_SESSION['loggedIn']==false){
+                echo '<script type="text/javascript">',
+                      'erreurNonCon();',
+                    '</script>';
+            }
+            ?>
 
 </html>
