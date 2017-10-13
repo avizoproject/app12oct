@@ -12,6 +12,10 @@ echo "<meta charset='utf-8' />
     <!-- Bootstrap core CSS     -->
     <link href='../css/bootstrap.min.css' rel='stylesheet' />
 
+    <!--  Sweet Alert    -->
+    <link href='../css/sweetalert2.css' rel='stylesheet'/>
+    <link href='../css/sweetalert2.min.css' rel='stylesheet'/>
+    
     <!--  Material Dashboard CSS    -->
     <link href='../css/material-dashboard.css' rel='stylesheet'/>
 
