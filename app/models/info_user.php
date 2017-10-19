@@ -119,7 +119,7 @@ function getUser($email_client)
         return null;
     }
 
-    function getListUsers (){
+    function getListUsers ($iduser){
         include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
 
@@ -129,7 +129,11 @@ function getUser($email_client)
 
 
         while ($row = $results->fetch_assoc()) {
-            echo "<option value='" . $row['fk_secteur'] . " " . $row['pk_utilisateur'] . "'>" . $row['nom'] . " " . $row['prenom'] . "</option>";
+            if ($row['pk_utilisateur']==$iduser) {
+                echo "<option selected value='" . $row['fk_secteur'] . " " . $row['pk_utilisateur'] . "'>" . $row['nom'] . " " . $row['prenom'] . "</option>";
+            }else {
+                echo "<option value='" . $row['fk_secteur'] . " " . $row['pk_utilisateur'] . "'>" . $row['nom'] . " " . $row['prenom'] . "</option>";
+            }
         }
 
         // Frees the memory associated with a result
@@ -138,7 +142,34 @@ function getUser($email_client)
         // close connection
         $conn->close();
 
-        //return $allvehicule;
+    }
+
+    function getUserReservation ($id_reservation){
+        include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+        $results = $conn->query("SELECT * FROM reservation LEFT OUTER JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur WHERE reservation.pk_reservation =" . $id_reservation . "");
+
+        $allreservation = array();
+        while ($row = $results->fetch_assoc()) {
+            $allreservation[] = array(
+                'pk_utilisateur' => $row['pk_utilisateur'],
+                'nom' => $row['nom'],
+                'prenom' => $row['prenom'],
+                'fk_secteur' => $row['fk_secteur']
+            );
+        }
+
+        return $allreservation[0]['pk_utilisateur'];
+       /* $size= sizeof($allreservation);
+        if($size != null){
+            echo "<option value='".$allreservation[0]['pk_utilisateur']." " . $allreservation[0]['fk_secteur']."'>".$allreservation[0]['nom']." ".$allreservation[0]['prenom']."</option>";
+        }*/
+
+        // Frees the memory associated with a result
+        $results->free();
+
+        // close connection
+        $conn->close();
     }
 
 }

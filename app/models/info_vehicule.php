@@ -131,11 +131,11 @@ function setFk_statut($fk_statut) {
     $this->fk_statut = $fk_statut;
 }
 
-function getListVehiculeSector ($pkreservation, $user_sector, $datedebut, $datefin){
+function getListVehiculeSector ($pkreservation, $user_sector, $datedebut, $datefin, $pkvehicule){
 include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
 
-$results = $conn->query("SELECT v.pk_vehicule, m.nom_marque, o.nom_modele FROM vehicule v LEFT JOIN marque m ON v.fk_marque=m.pk_marque LEFT JOIN modele o ON o.pk_modele = v.fk_modele WHERE v.pk_vehicule NOT IN 
+$results = $conn->query("SELECT v.fk_secteur, v.pk_vehicule, m.nom_marque, o.nom_modele FROM vehicule v LEFT JOIN marque m ON v.fk_marque=m.pk_marque LEFT JOIN modele o ON o.pk_modele = v.fk_modele WHERE v.pk_vehicule NOT IN 
 ( Select vehicule.pk_vehicule 
 FROM vehicule INNER JOIN reservation ON vehicule.pk_vehicule = reservation.fk_vehicule 
 WHERE date_fin >= '" . $datedebut . "' 
@@ -148,7 +148,11 @@ AND v.fk_secteur = '" . $user_sector . "'");
 
 
     while ($row = $results->fetch_assoc()) {
-        echo "<option value=" . $row['pk_vehicule'] . ">" . $row['nom_marque'] . " " . $row['nom_modele'] . "</option>";
+        if ($row['pk_vehicule']==$pkvehicule){
+            echo "<option selected value='" . $row['pk_vehicule'] . " " . $row['fk_secteur'] ."'>" . $row['nom_marque'] . " " . $row['nom_modele'] . "</option>";
+        }else {
+            echo "<option value='" . $row['pk_vehicule'] . " " . $row['fk_secteur'] ."'>" . $row['nom_marque'] . " " . $row['nom_modele'] . "</option>";
+        }
     }
 
     // Frees the memory associated with a result
@@ -174,10 +178,13 @@ function getVehiculeReservation ($id_reservation){
           'nom_modele' => $row['nom_modele']
       );
   }
-  $size= sizeof($allreservation);
+
+  return $allreservation[0]['pk_vehicule'];
+
+  /*$size= sizeof($allreservation);
   if($size != null){
     echo "<option value=".$allreservation[0]['pk_vehicule'].">".$allreservation[0]['nom_marque']." ".$allreservation[0]['nom_modele']."</option>";
-  }
+  }*/
 
   // Frees the memory associated with a result
   $results->free();

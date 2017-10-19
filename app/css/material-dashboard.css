@@ -3688,7 +3688,9 @@ footer .btn {
   border-top: none;
 }
 
-
+.unlock-button {
+  margin-top:30px;
+}
 
 .card [data-background-color="purple"] {
   background: linear-gradient(60deg, #ab47bc, #8e24aa);

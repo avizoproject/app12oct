@@ -21,8 +21,8 @@
 
 	    <div class="main-panel">
 			<?php 
-                        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/navigation.php';
-                        ?>
+                require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/navigation.php';
+                ?>
 
 			<div class="content">
 				<div class="container-fluid">

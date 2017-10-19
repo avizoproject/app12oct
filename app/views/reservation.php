@@ -165,7 +165,7 @@ $gReservation = new InfoReservation();
 
                     if ($('#example tr.selected td:first').length > 0) {
                         var idcont = $('#example tr.selected td:first').html();
-                        window.location.href = "http://localhost/app/app/views/updateReservation.php?id=" + idcont + "";
+                        window.location.href = "http://localhost/app/app/views/updateReservationadmin.php?id=" + idcont + "";
                     }else{
                         swal({
                                 title:"",
@@ -193,7 +193,7 @@ $gReservation = new InfoReservation();
 
                 //clic ajouter
                 $('#Ajouter').click(function () {
-                    window.location.href = "http://localhost/app/app/views/addReservation.php";
+                    window.location.href = "http://localhost/app/app/views/addReservationadmin.php";
                 });
 
                  var activePage = window.location.href;
