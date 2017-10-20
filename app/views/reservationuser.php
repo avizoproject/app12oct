@@ -141,7 +141,7 @@ $gReservation = new InfoReservation();
                     }else{
                         swal({
                                 title:"",
-                                text:"Vous devez sélectionner un client.",
+                                text:"Vous devez sélectionner une réservation",
                                 type:"warning",
                                 allowOutsideClick : true
                             });
@@ -156,7 +156,7 @@ $gReservation = new InfoReservation();
                     }else{
                         swal({
                                 title:"",
-                                text:"Vous devez sélectionner un client.",
+                                text:"Vous devez sélectionner une réservation",
                                 type:"warning",
                                 allowOutsideClick : true
                             });
