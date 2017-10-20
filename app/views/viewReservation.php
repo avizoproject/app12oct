@@ -49,6 +49,7 @@
                                          <div class="row">
                                              <div class="col-md-3">
                                                  <div class="form-group label-static">
+                                                     <label id="trigger" class="hidden"></label>
                                                      <label class="control-label">Dates</label>
 
                                                      <input type='text' size="40" class="flatpickr form-control" data-enabletime=true data-enable-seconds=true name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation" disabled>
@@ -129,6 +130,17 @@
                  location.href = "http://localhost/app/app/views/updateReservation.php?id=<?php echo $_GET["id"]; ?>";
 
              });
+
+            $("#trigger").load("../controllers/getSelectUsers.php?id=<?php echo $_GET['id']; ?>", function() {
+
+                var date = $("#acquisition").val();
+                var deuxDates = date.split(' à ');
+                var dateFrom = deuxDates[0];
+                var dateTo = deuxDates[1];
+
+                $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom);
+
+            });
 
                  $('.navbar-header a').html("Consultation de réservation");
 

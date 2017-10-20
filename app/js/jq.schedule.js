@@ -100,13 +100,15 @@
             //$element.find('.sc_main').append($bar);
             $element.find('.sc_main .timeline').eq(data["timeline"]).append($bar);
         }
+
         // スケジュール追加
         this.addScheduleData = function(data){
             var st = Math.ceil((data["start"] - tableStartTime) / setting.widthTime);
             var et = Math.floor((data["end"] - tableStartTime) / setting.widthTime);
             var $bar = jQuery('<div class="sc_Bar"><span class="head"><span class="time"></span></span><span class="text"></span></div>');
-            var stext = element.formatTime(data["start"]);
-            var etext = element.formatTime(data["end"]);
+            var stext = data["dated"];
+
+
             var snum = element.getScheduleCount(data["timeline"]);
             $bar.css({
                 left : (st * setting.widthTimeX),
@@ -114,7 +116,7 @@
                 width : ((et - st) * setting.widthTimeX),
                 height : (setting.timeLineY)
             });
-            $bar.find(".time").text(stext+"-"+etext);
+            $bar.find(".time").text(""+stext+"");
             if(data["text"]){
                 $bar.find(".text").text(data["text"]);
             }
@@ -142,7 +144,7 @@
 
             var $node = $element.find(".sc_Bar");
             // move node.
-            $node.draggable({
+            /*$node.draggable({
                 grid: [ setting.widthTimeX, 1 ],
                 containment: ".sc_main",
                 helper : 'original',
@@ -244,7 +246,7 @@
                         setting.change(node, scheduleData[sc_key]);
                     }
                 }
-            });
+            });*/
             return key;
         };
         // スケジュール数の取得
@@ -309,6 +311,7 @@
                     data["timeline"] = id;
                     data["start"] = s;
                     data["end"] = e;
+                    data["dated"] = bdata["dated"];
                     if(bdata["text"]){
                         data["text"] = bdata["text"];
                     }
@@ -458,7 +461,7 @@
         this.init = function(){
             var html = '';
             html += '<div class="sc_menu">'+"\n";
-            html += '<div class="sc_header_cell"><span>&nbsp;</span></div>'+"\n";
+            html += '<div class="sc_header_cell"><span>&nbsp;Véhicule</span></div>'+"\n";
             html += '<div class="sc_header">'+"\n";
             html += '<div class="sc_header_scroll">'+"\n";
             html += '</div>'+"\n";
@@ -495,7 +498,32 @@
                     (before_time < 0) ||
                         (Math.floor(before_time / 3600) != Math.floor(t / 3600))){
                     var html = '';
-                    html += '<div class="sc_time">'+element.formatTime(t)+'</div>';
+
+                    switch (element.formatTime(t)) {
+                        case "00:00":
+                            html += '<div class="sc_time">'+'Dimanche'+'</div>';
+                            break;
+                        case "01:00":
+                            html += '<div class="sc_time">'+'Lundi'+'</div>';
+                            break;
+                        case "02:00":
+                            html += '<div class="sc_time">'+'Mardi'+'</div>';
+                            break;
+                        case "03:00":
+                            html += '<div class="sc_time">'+'Mercredi'+'</div>';
+                            break;
+                        case "04:00":
+                            html += '<div class="sc_time">'+'Jeudi'+'</div>';
+                            break;
+                        case "05:00":
+                            html += '<div class="sc_time">'+'Vendredi'+'</div>';
+                            break;
+                        case "06:00":
+                            html += '<div class="sc_time">'+'Samedi'+'</div>';
+                            break;
+                    }
+
+
                     var $time = jQuery(html);
                     var cell_num = Math.floor(Number(Math.min((Math.ceil((t + setting.widthTime) / 3600) * 3600),tableEndTime) - t) / setting.widthTime);
                     $time.width((cell_num * setting.widthTimeX) - setting.headTimeBorder);

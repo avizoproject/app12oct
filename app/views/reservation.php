@@ -73,7 +73,9 @@ $gReservation = new InfoReservation();
 	                </div>
 	            </div>
 
-                <div id="schedule"></div>
+                <br>
+
+                <div class="col-md-12" id="schedule"></div>
 
 
 
@@ -306,14 +308,16 @@ $gReservation = new InfoReservation();
 
                 var nom_vehicule = reservations[index]['nom_marque'] + " " + reservations[index]['nom_modele'];
                 var nom_user = reservations[index]['prenom'] + " " + reservations[index]['nom'];
+                var dated = "Du  " +reservations[index]['date_debut'] + "  au  " + reservations[index]['date_fin'];
 
-                alert (dateDebut + " " + dateFin);
                 var schedule = [];
                 var scheduleData = {
                     start: '0' + dateDebut + ':00',
                     end: '0' + dateFin + ':00',
                     text: nom_user,
+                    dated : dated,
                     data: {}
+
                 };
 
                 schedule.push(scheduleData);
@@ -325,7 +329,7 @@ $gReservation = new InfoReservation();
                 };
 
 
-                alert(data["'" + rowNum + "'"]['title']);
+
             });
             return data;
         }
@@ -360,11 +364,8 @@ $gReservation = new InfoReservation();
                 click: function(node,data){
                     alert("click event");
                 },
-                append: function(node,data){
-                },
-                time_click: function(time,data){
-                    alert("time click event");
-                },
+
+
             });
     	});
 		

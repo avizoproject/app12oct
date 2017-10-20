@@ -25,7 +25,7 @@
 #schedule .sc_menu .sc_header_cell,
 #schedule .sc_data{
     float:left;
-    font-weight:bold;
+
     color:#FFFFFF;
     background:#333;
     position:relative;
@@ -70,7 +70,7 @@
 #schedule .sc_Bar{
     position:absolute;
     color:#FFF;
-    background:#4f93d6;
+    background:#1785AC;
     cursor:pointer;
     z-index:10;
     box-shadow: 2px 2px 4px #333;
