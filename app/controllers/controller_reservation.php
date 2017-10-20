@@ -31,11 +31,14 @@ class controller_reservation
         $this->arrayReservation[1] = isset($_GET['datefin']) ? $_GET['datefin'] : null;
         $this->arrayReservation[2] = isset($_GET['pkvehicule']) ? $_GET['pkvehicule'] : null;
 
-        if (isset($_GET['admin'])==1) {
+        if (isset($_GET['admin'])==1 || isset($_GET['mod'])==1) {
+
             $this->arrayReservation[3] = $_GET['user'];
+            $this->arrayReservation[4] = $_GET['statut'];
 
         }else{
             $this->arrayReservation[3] = $_SESSION['user']['pk_utilisateur'];
+            $this->arrayReservation[4] = "1";
         }
         $this->InfosReservation = new InfoReservation();
 
@@ -50,6 +53,16 @@ class controller_reservation
         $this->InfosReservation->addDBObject();
     }
 
+    function ajoutReservationAdmin()
+    {
+        $this->InfosReservation->setDate_debut($this->arrayReservation[0]);
+        $this->InfosReservation->setDate_fin($this->arrayReservation[1]);
+        $this->InfosReservation->setFk_vehicule($this->arrayReservation[2]);
+        $this->InfosReservation->setFk_utilisateur($this->arrayReservation[3]);
+        $this->InfosReservation->setStatut($this->arrayReservation[4]);
+        $this->InfosReservation->addDBObject();
+    }
+
     function modReservation($id)
     {
         $this->InfosReservation->setPk_reservation($id);
@@ -57,7 +70,7 @@ class controller_reservation
         $this->InfosReservation->setDate_fin($this->arrayReservation[1]);
         $this->InfosReservation->setFk_vehicule($this->arrayReservation[2]);
         $this->InfosReservation->setFk_utilisateur($this->arrayReservation[3]);
-        $this->InfosReservation->setStatut(1);
+        $this->InfosReservation->setStatut($this->arrayReservation[4]);
         $this->InfosReservation->updateDBObject();
     }
 
@@ -77,14 +90,14 @@ class controller_reservation
 }
 $reservControl = new controller_reservation();
 
-if (isset($_GET['ajout'])) {
-  $reservControl->ajoutReservation();
+if (isset($_GET['admin'])&& isset($_GET['ajout'])) {
+    $reservControl->ajoutReservationAdmin();
 } elseif (isset($_GET['mod'])) {
   $reservControl->modReservation($_GET['id']);
 } elseif (isset($_GET['supp'])) {
   $reservControl->suppReservation($_GET['id']);
-} elseif (isset($_GET['admin'])&&isset($_GET['ajout'])){
-    $reservControl->ajoutReservationAdmin();
+} elseif (isset($_GET['ajout'])){
+    $reservControl->ajoutReservation();
 }
 
     if ($_SESSION['admin'] === 1)
@@ -92,6 +105,6 @@ if (isset($_GET['ajout'])) {
     else{
         header("Location: http://localhost/app/app/views/reservation.php");
     exit();
-}
+    }
 
 ?>

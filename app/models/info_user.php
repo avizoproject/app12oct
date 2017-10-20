@@ -123,7 +123,7 @@ function getUser($email_client)
         include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
 
-        $results = $conn->query("SELECT fk_secteur, pk_utilisateur, nom, prenom FROM utilisateur ORDER BY nom");
+        $results = $conn->query("SELECT fk_secteur, pk_utilisateur, nom, prenom FROM utilisateur WHERE fk_statut!='3' ORDER BY nom");
 
 
 

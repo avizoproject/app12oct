@@ -16,6 +16,8 @@
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_user.php';
  $listVehicule = new InfoVehicule();
  $gReservation = new InfoReservation();
+$currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
+
  $listUser = new InfoUser();
  ?>
  <html>
@@ -98,6 +100,35 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_user.php';
                                              </div>
                                          </div>
 
+
+                                         <?php
+                                         if ($currentReservation['statut'] ==="1")
+                                         {
+                                             echo "<div class='row'>
+                                                     <div class='form-group col-md-12'>
+                                                         <div class='checkbox'>
+                                                             <label>
+                                                                 <input checked type='checkbox' id='active' name='optionsCheckboxes'>
+                                                                 <label for='active' class='control-label'>Réservation active</label>
+                                                             </label>
+                                                         </div>
+                                                     </div>
+                                                 </div>";
+                                         }else {
+                                             echo "<div class='row'>
+                                                     <div class='form-group col-md-12'>
+                                                         <div class='checkbox'>
+                                                             <label>
+                                                                 <input type='checkbox' id='active' name='optionsCheckboxes'>
+                                                                 <label for='active' class='control-label'>Réservation active</label>
+                                                             </label>
+                                                         </div>
+                                                     </div>
+                                                 </div>";
+                                         }
+
+                                         ?>
+                                         
                                          <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
                                          <input type="submit" id="supprimer" class="btn pull-right" value="Supprimer" style="margin-right: 10px;">
                                          <input type="submit" id="cancel" class="btn pull-right" value="Annuler" style="margin-right: 10px;">
@@ -157,7 +188,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_user.php';
                 var dateTo = deuxDates[1];
                 var utilisateurfks = $("#user").val();
                 var deuxfks = utilisateurfks.split(' ');
-                var fk_secteur = deuxfks[1];
+                var fk_secteur = deuxfks[0];
 
                 $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom + "&secteur=" + fk_secteur);
 
@@ -181,9 +212,12 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_user.php';
                 var deuxDates = date.split(' à ');
                 var dateFrom = deuxDates[0];
                 var dateTo = deuxDates[1];
+
                 var utilisateurfks = $("#user").val();
                 var deuxfks = utilisateurfks.split(' ');
-                var fk_secteur = deuxfks[1];
+                var fk_secteur = deuxfks[0];
+
+
 
                 $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom + "&secteur=" + fk_secteur);
             });
@@ -194,9 +228,10 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_user.php';
                 var deuxDates = date.split(' à ');
                 var dateFrom = deuxDates[0];
                 var dateTo = deuxDates[1];
+
                 var utilisateurfks = $("#user").val();
                 var deuxfks = utilisateurfks.split(' ');
-                var fk_secteur = deuxfks[1];
+                var fk_secteur = deuxfks[0];
 
                 $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom + "&secteur=" + fk_secteur);
             });
@@ -210,9 +245,25 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_user.php';
                  var dateFrom = deuxDates[0];
                  var dateTo = deuxDates[1];
 
-                 var pkVehicule = $("#vehicule").val();
+                 var utilisateurfks = $("#user").val();
+                 var deuxfks = utilisateurfks.split(' ');
+                 var fk_user = deuxfks[0];
 
-                 location.href = "../controllers/controller_reservation.php?mod=1&id=<?php echo $_GET['id']; ?>&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule;
+                 var vehiculesfks = $("#vehicule").val();
+                 var fksvehic = vehiculesfks.split(' ');
+                 var pkVehicule = fksvehic[0];
+
+
+
+
+                 if ($('#active').is(':checked') == true){
+                     var statut = 1;
+                 }else{
+                     var statut = 0;
+                 }
+
+
+                 location.href = "../controllers/controller_reservation.php?mod=1&id=<?php echo $_GET['id']; ?>&statut="+ statut +"&user="+ fk_user + "&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule;
 
              });
 
@@ -226,17 +277,7 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_user.php';
                 location.href = "../views/reservation.php";
             });
 
-            $("#changevehicule").click(function(event){
-                event.preventDefault();
-                $('.disabledinput').prop("disabled", false);
 
-                var date = $("#acquisition").val();
-                var deuxDates = date.split(' à ');
-                var dateFrom = deuxDates[0];
-                var dateTo = deuxDates[1];
-                $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom);
-                $('#changevehicule').addClass('hidden');
-            });
 
                  $('.navbar-header a').html("Modification de réservation");
 

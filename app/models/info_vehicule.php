@@ -134,6 +134,7 @@ function setFk_statut($fk_statut) {
 function getListVehiculeSector ($pkreservation, $user_sector, $datedebut, $datefin, $pkvehicule){
 include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
+echo $pkreservation . " " . $user_sector . " " . $datedebut . " " . $datefin . " " . $pkvehicule;
 
 $results = $conn->query("SELECT v.fk_secteur, v.pk_vehicule, m.nom_marque, o.nom_modele FROM vehicule v LEFT JOIN marque m ON v.fk_marque=m.pk_marque LEFT JOIN modele o ON o.pk_modele = v.fk_modele WHERE v.pk_vehicule NOT IN 
 ( Select vehicule.pk_vehicule 

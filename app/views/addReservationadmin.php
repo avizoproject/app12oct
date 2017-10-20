@@ -61,8 +61,8 @@ $listVehicule = new InfoVehicule();
                                 <form id="formAjout" >
 
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group label-static">
+                                        <div class="col-md-12">
+                                            <div class="form-group label-static col-md-4">
 
                                                 <label class="control-label">Choisissez un employé</label>
                                                 <select class="form-control" id="user" name="select"></select>
@@ -72,8 +72,8 @@ $listVehicule = new InfoVehicule();
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-3">
-                                            <div class="form-group label-static">
+                                        <div class="col-md-12">
+                                            <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Dates</label>
 
                                                 <input type='text' size="40" class="flatpickr form-control" data-enabletime=true data-enable-seconds=true name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation" required>
@@ -93,8 +93,8 @@ $listVehicule = new InfoVehicule();
 
 
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group label-static">
+                                        <div class="col-md-12">
+                                            <div class="form-group label-static col-md-4">
 
                                                 <label class="control-label">Choisissez un véhicule</label>
                                                 <select class="form-control" id="vehicule" name="select" required></select>
@@ -102,7 +102,20 @@ $listVehicule = new InfoVehicule();
                                         </div>
 
                                     </div>
+
+                                    <div class='row'>
+                                        <div class='form-group col-md-12'>
+                                            <div class='checkbox'>
+                                                <label>
+                                                    <input type='checkbox' id='active' name='optionsCheckboxes'>
+                                                    <label for='active' class='control-label'>Réservation active</label>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
+                                    <input type="submit" id="cancel" class="btn pull-right" value="Annuler" style="margin-right: 10px;">
                                     <div class="clearfix"></div>
                                 </form>
                             </div>
@@ -177,10 +190,23 @@ $listVehicule = new InfoVehicule();
             var secteurETuser = userstuff.split(' ');
             var user = secteurETuser[1];
 
-            var pkVehicule = $("#vehicule").val();
+            var vehiculesfks = $("#vehicule").val();
+            var fksvehic = vehiculesfks.split(' ');
+            var pkVehicule = fksvehic[0];
 
-            location.href = "../controllers/controller_reservation.php?ajout=1&admin=1&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule + "&user=" + user;
+            if ($('#active').is(':checked') == true){
+                var statut = 1;
+            }else{
+                var statut = 0;
+            }
 
+            location.href = "../controllers/controller_reservation.php?ajout=1&admin=1&statut="+ statut +"&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule + "&user=" + user;
+
+        });
+
+        $(document).on("click", "#cancel", function(e) {
+            e.preventDefault();
+            location.href = "../views/reservation.php";
         });
 
         $('.navbar-header a').html("Ajout de réservation");

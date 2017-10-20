@@ -48,9 +48,10 @@
                                  </div>
                                  <div class="card-content">
                                      <form id="formAjout" >
+                                         <label id="trigger" class="hidden"></label>
                                          <div class="row">
-                                             <div class="col-md-4">
-                                                 <div class="form-group label-static">
+                                             <div class="col-md-12">
+                                                 <div class="form-group label-static col-md-4">
                                                      <label class="control-label">Dates</label>
 
                                                      <input type='text' size="40" class="flatpickr form-control" data-enabletime=true data-enable-seconds=true name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation">
@@ -73,11 +74,11 @@
 
 
                                          <div class="row">
-                                             <div class="col-md-4">
-                                                 <input type="button" id="changevehicule" class="btn" value="Changer le véhicule">
-                                                 <div class="form-group label-static">
+                                             <div class="col-md-12">
+
+                                                 <div class="form-group label-static col-md-4">
                                                      <label class="control-label">Choisissez un véhicule</label>
-                                                     <select disabled class="disabledinput form-control" id="vehicule" name="select"><?php $listVehicule->getVehiculeReservation($_GET["id"]); ?></select>
+                                                     <select class="form-control" id="vehicule" name="select"></select>
                                                  </div>
                                              </div>
 
@@ -134,7 +135,16 @@
  	<script type="text/javascript">
      	$(document).ready(function(){
 
+            $("#trigger").load("../controllers/getSelectUsers.php?id=<?php echo $_GET['id']; ?>", function() {
 
+                var date = $("#acquisition").val();
+                var deuxDates = date.split(' à ');
+                var dateFrom = deuxDates[0];
+                var dateTo = deuxDates[1];
+
+                $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom);
+
+            });
 
              //si les dates sont changées, reload vehicules dispos
              $("#acquisition").change(function () {
@@ -169,17 +179,7 @@
                 location.href = "../views/reservation.php";
             });
 
-            $("#changevehicule").click(function(event){
-                event.preventDefault();
-                $('.disabledinput').prop("disabled", false);
 
-                var date = $("#acquisition").val();
-                var deuxDates = date.split(' à ');
-                var dateFrom = deuxDates[0];
-                var dateTo = deuxDates[1];
-                $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom);
-                $('#changevehicule').addClass('hidden');
-            });
 
                  $('.navbar-header a').html("Modification de réservation");
 

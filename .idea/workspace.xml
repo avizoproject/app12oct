@@ -11,41 +11,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="info_reservation.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/info_reservation.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="258">
+              <caret line="259" column="9" lean-forward="false" selection-start-line="259" selection-start-column="9" selection-end-line="259" selection-end-column="9" />
+              <folding>
+                <marker date="1508452575637" expanded="true" signature="1417:1896" ph="SELECT reser... reservation" />
+                <marker date="1508452575637" expanded="true" signature="3419:3902" ph="SELECT reser... reservation" />
+                <marker date="1508452575637" expanded="true" signature="5011:5612" ph="SELECT reser... reservation" />
+                <marker date="1508452575637" expanded="true" signature="6551:7010" ph="SELECT reser... reservation" />
+                <marker date="1508452575637" expanded="true" signature="8627:8670" ph="..." />
+                <marker date="1508452575637" expanded="true" signature="10406:10478" ph="SELECT * FRO... reservation" />
+                <marker date="1508452575637" expanded="true" signature="11259:11331" ph="SELECT * FRO... reservation" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="getSelectVehicules.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/getSelectVehicules.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="153">
-              <caret line="9" column="21" lean-forward="false" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="getSelectVehiculesAdmin.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/getSelectVehiculesAdmin.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="68" lean-forward="true" selection-start-line="10" selection-start-column="68" selection-end-line="10" selection-end-column="68" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="addReservationadmin.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/addReservationadmin.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="62" column="36" lean-forward="false" selection-start-line="62" selection-start-column="36" selection-end-line="71" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="reservation.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/reservation.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2282">
-              <caret line="167" column="101" lean-forward="false" selection-start-line="167" selection-start-column="101" selection-end-line="167" selection-end-column="101" />
+              <caret line="9" column="26" lean-forward="false" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -54,28 +42,28 @@
       <file leaf-file-name="updateReservationadmin.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/updateReservationadmin.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="971">
-              <caret line="66" column="66" lean-forward="false" selection-start-line="66" selection-start-column="66" selection-end-line="66" selection-end-column="66" />
-              <folding />
+            <state relative-caret-position="126">
+              <caret line="233" column="42" lean-forward="false" selection-start-line="233" selection-start-column="42" selection-end-line="233" selection-end-column="42" />
+              <folding>
+                <marker date="1508458266478" expanded="true" signature="4986:5741" ph="..." />
+                <marker date="1508458266478" expanded="true" signature="5074:5685" ph="..." />
+                <marker date="1508458266478" expanded="true" signature="5154:5625" ph="..." />
+                <marker date="1508458266478" expanded="true" signature="5223:5561" ph="..." />
+                <marker date="1508458266478" expanded="true" signature="5861:6608" ph="..." />
+                <marker date="1508458266478" expanded="true" signature="5949:6552" ph="..." />
+                <marker date="1508458266478" expanded="true" signature="6029:6492" ph="..." />
+                <marker date="1508458266478" expanded="true" signature="6098:6428" ph="..." />
+                <marker date="1508458266478" expanded="true" signature="8654:8740" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_buttons.scss" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/sass/md/_buttons.scss">
+      <file leaf-file-name="getSelectVehiculesAdmin.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/getSelectVehiculesAdmin.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="168" column="1" lean-forward="false" selection-start-line="168" selection-start-column="1" selection-end-line="168" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="material-dashboard.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/css/material-dashboard.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="3690" column="14" lean-forward="false" selection-start-line="3690" selection-start-column="14" selection-end-line="3690" selection-end-column="14" />
+            <state relative-caret-position="306">
+              <caret line="18" column="23" lean-forward="true" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -84,23 +72,19 @@
       <file leaf-file-name="getSelectUsers.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/getSelectUsers.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="16" lean-forward="true" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+            <state relative-caret-position="17">
+              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="info_user.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/info_user.php">
+      <file leaf-file-name="addReservation.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/addReservation.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="134" column="29" lean-forward="false" selection-start-line="134" selection-start-column="29" selection-end-line="134" selection-end-column="29" />
-              <folding>
-                <marker date="1508251015265" expanded="true" signature="1730:1798" ph="SELECT * FRO... utilisateur" />
-                <marker date="1508251015265" expanded="true" signature="2437:2513" ph="SELECT fk_se... utilisateur" />
-                <marker date="1508251015265" expanded="true" signature="3277:3448" ph="SELECT * FRO... reservation" />
-              </folding>
+            <state relative-caret-position="673">
+              <caret line="158" column="45" lean-forward="false" selection-start-line="158" selection-start-column="45" selection-end-line="158" selection-end-column="45" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -108,14 +92,44 @@
       <file leaf-file-name="info_vehicule.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/info_vehicule.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="133" column="9" lean-forward="false" selection-start-line="133" selection-start-column="9" selection-end-line="133" selection-end-column="9" />
+            <state relative-caret-position="199">
+              <caret line="136" column="84" lean-forward="false" selection-start-line="136" selection-start-column="84" selection-end-line="136" selection-end-column="84" />
               <folding>
-                <marker date="1508250166879" expanded="true" signature="2244:2704" ph="SELECT v.pk_... vehicule" />
-                <marker date="1508250166879" expanded="true" signature="2244:2726" ph="SELECT v.pk_... vehicule" />
-                <marker date="1508250166879" expanded="true" signature="2244:2769" ph="SELECT v.pk_... vehicule" />
-                <marker date="1508250166879" expanded="true" signature="3514:3800" ph="SELECT * FRO... reservation" />
+                <marker date="1508458052123" expanded="true" signature="2342:2802" ph="SELECT v.pk_... vehicule" />
+                <marker date="1508458052123" expanded="true" signature="2342:2824" ph="SELECT v.pk_... vehicule" />
+                <marker date="1508458052123" expanded="true" signature="2342:2867" ph="SELECT v.pk_... vehicule" />
+                <marker date="1508458052123" expanded="true" signature="3612:3898" ph="SELECT * FRO... reservation" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addReservationadmin.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/addReservationadmin.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1103">
+              <caret line="176" column="41" lean-forward="true" selection-start-line="176" selection-start-column="41" selection-end-line="176" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="updateReservation.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/updateReservation.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="557">
+              <caret line="78" column="92" lean-forward="false" selection-start-line="78" selection-start-column="92" selection-end-line="78" selection-end-column="92" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="getDatesUsers.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/getDatesUsers.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -130,12 +144,17 @@
       <find>infosReservation</find>
       <find>width</find>
       <find>sWidthOrig</find>
+      <find>checkb</find>
       <find>alert</find>
+      <find>&quot;</find>
+      <find>changevehicule</find>
+      <find>user</find>
     </findStrings>
     <replaceStrings>
       <replace />
       <replace>controller_reservation</replace>
       <replace>arrayReservation</replace>
+      <replace>'</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\wamp64\www\app</dir>
@@ -152,26 +171,28 @@
         <option value="$PROJECT_DIR$/app/controllers/controller_vehicule.php" />
         <option value="$PROJECT_DIR$/app/models/info_sector.php" />
         <option value="$PROJECT_DIR$/app/controllers/getSelectSecteur.php" />
-        <option value="$PROJECT_DIR$/app/controllers/controller_reservation.php" />
-        <option value="$PROJECT_DIR$/app/views/addReservationadmin.php" />
         <option value="$PROJECT_DIR$/app/css/bootstrap.min.css" />
         <option value="$PROJECT_DIR$/app/css/table.css" />
         <option value="$PROJECT_DIR$/app/js/jquery.dataTables.min.js" />
-        <option value="$PROJECT_DIR$/app/controllers/getSelectVehicules.php" />
         <option value="$PROJECT_DIR$/app/css/calendar.css" />
         <option value="$PROJECT_DIR$/app/views/signin.php" />
-        <option value="$PROJECT_DIR$/app/models/info_reservation.php" />
         <option value="$PROJECT_DIR$/app/views/reservationuser.php" />
         <option value="$PROJECT_DIR$/app/views/returnReservation.php" />
-        <option value="$PROJECT_DIR$/app/views/addReservation.php" />
-        <option value="$PROJECT_DIR$/app/views/updateReservation.php" />
         <option value="$PROJECT_DIR$/app/views/dashboard.php" />
         <option value="$PROJECT_DIR$/app/views/reservation.php" />
         <option value="$PROJECT_DIR$/app/css/material-dashboard.css" />
-        <option value="$PROJECT_DIR$/app/controllers/getSelectVehiculesAdmin.php" />
-        <option value="$PROJECT_DIR$/app/models/info_vehicule.php" />
-        <option value="$PROJECT_DIR$/app/controllers/getSelectUsers.php" />
+        <option value="$PROJECT_DIR$/app/models/info_reservation.php" />
+        <option value="$PROJECT_DIR$/app/models/info_model.php" />
         <option value="$PROJECT_DIR$/app/models/info_user.php" />
+        <option value="$PROJECT_DIR$/app/controllers/getSelectUsers.php" />
+        <option value="$PROJECT_DIR$/app/controllers/getSelectVehiculesAdmin.php" />
+        <option value="$PROJECT_DIR$/app/controllers/controller_reservation.php" />
+        <option value="$PROJECT_DIR$/app/views/addReservationadmin.php" />
+        <option value="$PROJECT_DIR$/app/controllers/getSelectVehicules.php" />
+        <option value="$PROJECT_DIR$/app/views/addReservation.php" />
+        <option value="$PROJECT_DIR$/app/controllers/getDatesUsers.php" />
+        <option value="$PROJECT_DIR$/app/views/updateReservation.php" />
+        <option value="$PROJECT_DIR$/app/models/info_vehicule.php" />
         <option value="$PROJECT_DIR$/app/views/updateReservationadmin.php" />
       </list>
     </option>
@@ -230,12 +251,6 @@
               <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="css" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="app" type="b2602c69:ProjectViewProjectNode" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="js" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="app" type="b2602c69:ProjectViewProjectNode" />
@@ -315,21 +330,22 @@
       <workItem from="1507816061493" duration="11023000" />
       <workItem from="1507900541503" duration="5621000" />
       <workItem from="1507907707421" duration="80000" />
-      <workItem from="1507907832051" duration="19997000" />
+      <workItem from="1507907832051" duration="27598000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52948000" />
+    <option name="totallyTimeSpent" value="60549000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15364583" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15833333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294979" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -342,9 +358,28 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="PHP-CGI Server" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294979" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15833333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3988889" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -354,34 +389,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/app/controllers/controller_reservation.php</url>
-          <line>31</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="5" />
+      <option name="time" value="7" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/controllers/getSelectVehicules.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="66" lean-forward="false" selection-start-line="8" selection-start-column="66" selection-end-line="8" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/getSecteur.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="6" column="70" lean-forward="false" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/header.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
@@ -395,10 +407,10 @@
         <state relative-caret-position="2877">
           <caret line="137" column="51" lean-forward="false" selection-start-line="137" selection-start-column="51" selection-end-line="137" selection-end-column="51" />
           <folding>
-            <marker date="1508250166879" expanded="true" signature="2244:2704" ph="SELECT v.pk_... vehicule" />
-            <marker date="1508250166879" expanded="true" signature="2244:2726" ph="SELECT v.pk_... vehicule" />
-            <marker date="1508250166879" expanded="true" signature="2244:2769" ph="SELECT v.pk_... vehicule" />
-            <marker date="1508250166879" expanded="true" signature="3514:3800" ph="SELECT * FRO... reservation" />
+            <marker date="1508458052123" expanded="true" signature="2342:2802" ph="SELECT v.pk_... vehicule" />
+            <marker date="1508458052123" expanded="true" signature="2342:2824" ph="SELECT v.pk_... vehicule" />
+            <marker date="1508458052123" expanded="true" signature="2342:2867" ph="SELECT v.pk_... vehicule" />
+            <marker date="1508458052123" expanded="true" signature="3612:3898" ph="SELECT * FRO... reservation" />
           </folding>
         </state>
       </provider>
@@ -432,12 +444,13 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1507903844766" expanded="true" signature="1417:1896" ph="SELECT reser... reservation" />
-            <marker date="1507903844766" expanded="true" signature="3419:3902" ph="SELECT reser... reservation" />
-            <marker date="1507903844766" expanded="true" signature="5011:5612" ph="SELECT reser... reservation" />
-            <marker date="1507903844766" expanded="true" signature="6551:7010" ph="SELECT reser... reservation" />
-            <marker date="1507903844766" expanded="true" signature="8627:8670" ph="..." />
-            <marker date="1507903844766" expanded="true" signature="10406:10478" ph="SELECT * FRO... reservation" />
+            <marker date="1508452575637" expanded="true" signature="1417:1896" ph="SELECT reser... reservation" />
+            <marker date="1508452575637" expanded="true" signature="3419:3902" ph="SELECT reser... reservation" />
+            <marker date="1508452575637" expanded="true" signature="5011:5612" ph="SELECT reser... reservation" />
+            <marker date="1508452575637" expanded="true" signature="6551:7010" ph="SELECT reser... reservation" />
+            <marker date="1508452575637" expanded="true" signature="8627:8670" ph="..." />
+            <marker date="1508452575637" expanded="true" signature="10406:10478" ph="SELECT * FRO... reservation" />
+            <marker date="1508452575637" expanded="true" signature="11259:11331" ph="SELECT * FRO... reservation" />
           </folding>
         </state>
       </provider>
@@ -479,10 +492,10 @@
         <state relative-caret-position="2329">
           <caret line="137" column="51" lean-forward="false" selection-start-line="137" selection-start-column="51" selection-end-line="137" selection-end-column="51" />
           <folding>
-            <marker date="1508250166879" expanded="true" signature="2244:2704" ph="SELECT v.pk_... vehicule" />
-            <marker date="1508250166879" expanded="true" signature="2244:2726" ph="SELECT v.pk_... vehicule" />
-            <marker date="1508250166879" expanded="true" signature="2244:2769" ph="SELECT v.pk_... vehicule" />
-            <marker date="1508250166879" expanded="true" signature="3514:3800" ph="SELECT * FRO... reservation" />
+            <marker date="1508458052123" expanded="true" signature="2342:2802" ph="SELECT v.pk_... vehicule" />
+            <marker date="1508458052123" expanded="true" signature="2342:2824" ph="SELECT v.pk_... vehicule" />
+            <marker date="1508458052123" expanded="true" signature="2342:2867" ph="SELECT v.pk_... vehicule" />
+            <marker date="1508458052123" expanded="true" signature="3612:3898" ph="SELECT * FRO... reservation" />
           </folding>
         </state>
       </provider>
@@ -516,12 +529,13 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1507903844766" expanded="true" signature="1417:1896" ph="SELECT reser... reservation" />
-            <marker date="1507903844766" expanded="true" signature="3419:3902" ph="SELECT reser... reservation" />
-            <marker date="1507903844766" expanded="true" signature="5011:5612" ph="SELECT reser... reservation" />
-            <marker date="1507903844766" expanded="true" signature="6551:7010" ph="SELECT reser... reservation" />
-            <marker date="1507903844766" expanded="true" signature="8627:8670" ph="..." />
-            <marker date="1507903844766" expanded="true" signature="10406:10478" ph="SELECT * FRO... reservation" />
+            <marker date="1508452575637" expanded="true" signature="1417:1896" ph="SELECT reser... reservation" />
+            <marker date="1508452575637" expanded="true" signature="3419:3902" ph="SELECT reser... reservation" />
+            <marker date="1508452575637" expanded="true" signature="5011:5612" ph="SELECT reser... reservation" />
+            <marker date="1508452575637" expanded="true" signature="6551:7010" ph="SELECT reser... reservation" />
+            <marker date="1508452575637" expanded="true" signature="8627:8670" ph="..." />
+            <marker date="1508452575637" expanded="true" signature="10406:10478" ph="SELECT * FRO... reservation" />
+            <marker date="1508452575637" expanded="true" signature="11259:11331" ph="SELECT * FRO... reservation" />
           </folding>
         </state>
       </provider>
@@ -568,14 +582,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/controller_reservation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-217">
-          <caret line="37" column="77" lean-forward="false" selection-start-line="37" selection-start-column="77" selection-end-line="37" selection-end-column="77" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/css/bootstrap.min.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="401">
@@ -616,41 +622,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/info_reservation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2023">
-          <caret line="119" column="9" lean-forward="false" selection-start-line="119" selection-start-column="9" selection-end-line="119" selection-end-column="9" />
-          <folding>
-            <marker date="1507903844766" expanded="true" signature="1417:1896" ph="SELECT reser... reservation" />
-            <marker date="1507903844766" expanded="true" signature="3419:3902" ph="SELECT reser... reservation" />
-            <marker date="1507903844766" expanded="true" signature="5011:5612" ph="SELECT reser... reservation" />
-            <marker date="1507903844766" expanded="true" signature="6551:7010" ph="SELECT reser... reservation" />
-            <marker date="1507903844766" expanded="true" signature="8627:8670" ph="..." />
-            <marker date="1507903844766" expanded="true" signature="10406:10478" ph="SELECT * FRO... reservation" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/returnReservation.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2125">
           <caret line="125" column="58" lean-forward="false" selection-start-line="125" selection-start-column="58" selection-end-line="125" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/addReservation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1377">
-          <caret line="81" column="64" lean-forward="false" selection-start-line="81" selection-start-column="64" selection-end-line="81" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/updateReservation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="51" column="65" lean-forward="false" selection-start-line="51" selection-start-column="65" selection-end-line="51" selection-end-column="65" />
           <folding />
         </state>
       </provider>
@@ -671,26 +646,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/dashboard.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4998">
-          <caret line="24" column="18" lean-forward="true" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/reservationuser.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3213">
           <caret line="189" column="16" lean-forward="false" selection-start-line="189" selection-start-column="16" selection-end-line="189" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/addReservationadmin.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="62" column="36" lean-forward="false" selection-start-line="62" selection-start-column="36" selection-end-line="71" selection-end-column="42" />
           <folding />
         </state>
       </provider>
@@ -703,63 +662,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/css/material-dashboard.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="3690" column="14" lean-forward="false" selection-start-line="3690" selection-start-column="14" selection-end-line="3690" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/info_user.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="134" column="29" lean-forward="false" selection-start-line="134" selection-start-column="29" selection-end-line="134" selection-end-column="29" />
-          <folding>
-            <marker date="1508251015265" expanded="true" signature="1730:1798" ph="SELECT * FRO... utilisateur" />
-            <marker date="1508251015265" expanded="true" signature="2437:2513" ph="SELECT fk_se... utilisateur" />
-            <marker date="1508251015265" expanded="true" signature="3277:3448" ph="SELECT * FRO... reservation" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/getSelectUsers.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="16" lean-forward="true" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/info_vehicule.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="133" column="9" lean-forward="false" selection-start-line="133" selection-start-column="9" selection-end-line="133" selection-end-column="9" />
-          <folding>
-            <marker date="1508250166879" expanded="true" signature="2244:2704" ph="SELECT v.pk_... vehicule" />
-            <marker date="1508250166879" expanded="true" signature="2244:2726" ph="SELECT v.pk_... vehicule" />
-            <marker date="1508250166879" expanded="true" signature="2244:2769" ph="SELECT v.pk_... vehicule" />
-            <marker date="1508250166879" expanded="true" signature="3514:3800" ph="SELECT * FRO... reservation" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/getSelectVehicules.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="21" lean-forward="false" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/getSelectVehiculesAdmin.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="68" lean-forward="true" selection-start-line="10" selection-start-column="68" selection-end-line="10" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/reservation.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2282">
@@ -768,11 +670,156 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/dashboard.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="599">
+          <caret line="153" column="60" lean-forward="false" selection-start-line="153" selection-start-column="60" selection-end-line="157" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/css/material-dashboard.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="398">
+          <caret line="2448" column="21" lean-forward="false" selection-start-line="2448" selection-start-column="21" selection-end-line="2448" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/info_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="709">
+          <caret line="108" column="10" lean-forward="false" selection-start-line="108" selection-start-column="10" selection-end-line="108" selection-end-column="10" />
+          <folding>
+            <marker date="1508453917588" expanded="true" signature="359:398" ph="INSERT INTO `${$this-&gt;table_name}`... " />
+            <marker date="1508453917588" expanded="true" signature="4747:4862" ph="DELETE FROM " />
+            <marker date="1508453917588" expanded="true" signature="5343:5384" ph="SELECT * FRO... ${$this-&gt;table_name}" />
+            <marker date="1508453917588" expanded="true" signature="6399:6440" ph="SELECT * FRO... ${$this-&gt;table_name}" />
+            <marker date="1508453917588" expanded="true" signature="7467:7566" ph="SELECT * FRO... ${$this-&gt;table_name}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/info_user.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2125">
+          <caret line="125" column="130" lean-forward="true" selection-start-line="125" selection-start-column="33" selection-end-line="125" selection-end-column="130" />
+          <folding>
+            <marker date="1508454291444" expanded="true" signature="1730:1798" ph="SELECT * FRO... utilisateur" />
+            <marker date="1508454291444" expanded="true" signature="2437:2534" ph="SELECT fk_se... utilisateur" />
+            <marker date="1508454291444" expanded="true" signature="3298:3469" ph="SELECT * FRO... reservation" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/controller_reservation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="514">
+          <caret line="93" column="44" lean-forward="false" selection-start-line="93" selection-start-column="44" selection-end-line="93" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/addReservation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="673">
+          <caret line="158" column="45" lean-forward="false" selection-start-line="158" selection-start-column="45" selection-end-line="158" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/getSelectVehicules.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="26" lean-forward="false" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/info_reservation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="259" column="9" lean-forward="false" selection-start-line="259" selection-start-column="9" selection-end-line="259" selection-end-column="9" />
+          <folding>
+            <marker date="1508452575637" expanded="true" signature="1417:1896" ph="SELECT reser... reservation" />
+            <marker date="1508452575637" expanded="true" signature="3419:3902" ph="SELECT reser... reservation" />
+            <marker date="1508452575637" expanded="true" signature="5011:5612" ph="SELECT reser... reservation" />
+            <marker date="1508452575637" expanded="true" signature="6551:7010" ph="SELECT reser... reservation" />
+            <marker date="1508452575637" expanded="true" signature="8627:8670" ph="..." />
+            <marker date="1508452575637" expanded="true" signature="10406:10478" ph="SELECT * FRO... reservation" />
+            <marker date="1508452575637" expanded="true" signature="11259:11331" ph="SELECT * FRO... reservation" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/getDatesUsers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/updateReservation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="557">
+          <caret line="78" column="92" lean-forward="false" selection-start-line="78" selection-start-column="92" selection-end-line="78" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/getSelectVehiculesAdmin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="23" lean-forward="true" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/info_vehicule.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="136" column="84" lean-forward="false" selection-start-line="136" selection-start-column="84" selection-end-line="136" selection-end-column="84" />
+          <folding>
+            <marker date="1508458052123" expanded="true" signature="2342:2802" ph="SELECT v.pk_... vehicule" />
+            <marker date="1508458052123" expanded="true" signature="2342:2824" ph="SELECT v.pk_... vehicule" />
+            <marker date="1508458052123" expanded="true" signature="2342:2867" ph="SELECT v.pk_... vehicule" />
+            <marker date="1508458052123" expanded="true" signature="3612:3898" ph="SELECT * FRO... reservation" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/getSelectUsers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/addReservationadmin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1103">
+          <caret line="176" column="41" lean-forward="true" selection-start-line="176" selection-start-column="41" selection-end-line="176" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/updateReservationadmin.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="971">
-          <caret line="66" column="66" lean-forward="false" selection-start-line="66" selection-start-column="66" selection-end-line="66" selection-end-column="66" />
-          <folding />
+        <state relative-caret-position="126">
+          <caret line="233" column="42" lean-forward="false" selection-start-line="233" selection-start-column="42" selection-end-line="233" selection-end-column="42" />
+          <folding>
+            <marker date="1508458266478" expanded="true" signature="4986:5741" ph="..." />
+            <marker date="1508458266478" expanded="true" signature="5074:5685" ph="..." />
+            <marker date="1508458266478" expanded="true" signature="5154:5625" ph="..." />
+            <marker date="1508458266478" expanded="true" signature="5223:5561" ph="..." />
+            <marker date="1508458266478" expanded="true" signature="5861:6608" ph="..." />
+            <marker date="1508458266478" expanded="true" signature="5949:6552" ph="..." />
+            <marker date="1508458266478" expanded="true" signature="6029:6492" ph="..." />
+            <marker date="1508458266478" expanded="true" signature="6098:6428" ph="..." />
+            <marker date="1508458266478" expanded="true" signature="8654:8740" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>

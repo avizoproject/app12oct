@@ -271,9 +271,9 @@ function getDatesReservation($id_reservation){
     }
     $size= sizeof($allreservation);
     if($size != null){
-      $debut = date_create($allreservation[0]['date_debut']);
-      $fin = date_create($allreservation[0]['date_fin']);
-      echo "['".date_format($debut,"Y/m/d")."', '".date_format($fin,"Y/m/d")."'],";
+        $debut = date_create($allreservation[0]['date_debut']);
+        $fin = date_create($allreservation[0]['date_fin']);
+        echo "['".date_format($debut,"Y/m/d")."', '".date_format($fin,"Y/m/d")."'],";
     }
 
     // Frees the memory associated with a result
@@ -282,6 +282,34 @@ function getDatesReservation($id_reservation){
     // close connection
     $conn->close();
 }
+
+    function getStatutReservation($id_reservation){
+        include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+        $results = $conn->query("SELECT * FROM reservation WHERE pk_reservation =" . $id_reservation . "");
+
+        $allreservation = array();
+        while ($row = $results->fetch_assoc()) {
+            $allreservation[] = array(
+                'date_debut' => $row['date_debut'],
+                'date_fin' => $row['date_fin']
+            );
+        }
+        $size= sizeof($allreservation);
+        if($size != null){
+            $debut = date_create($allreservation[0]['date_debut']);
+            $fin = date_create($allreservation[0]['date_fin']);
+            echo "['".date_format($debut,"Y/m/d")."', '".date_format($fin,"Y/m/d")."'],";
+        }
+
+        // Frees the memory associated with a result
+        $results->free();
+
+        // close connection
+        $conn->close();
+    }
+
+
 
 }
 ?>

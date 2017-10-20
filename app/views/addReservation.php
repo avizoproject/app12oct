@@ -154,7 +154,9 @@ $listVehicule = new InfoVehicule();
                 var dateFrom = deuxDates[0];
                 var dateTo = deuxDates[1];
 
-                var pkVehicule = $("#vehicule").val();
+                var vehiculesfks = $("#vehicule").val();
+                var fksvehic = vehiculesfks.split(' ');
+                var pkVehicule = fksvehic[0];
 
                 location.href = "../controllers/controller_reservation.php?ajout=1&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule;
 
