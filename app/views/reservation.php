@@ -72,6 +72,11 @@ $gReservation = new InfoReservation();
                             </div>
 	                </div>
 	            </div>
+
+                <div id="schedule"></div>
+
+
+
               <div class="cd-schedule loading">
               	<div style="float: left; position: relative;">
               		<ul>
@@ -84,6 +89,13 @@ $gReservation = new InfoReservation();
                     <?php $gReservation->getReservationsCalendar(); ?>
               		</ul>
               	</div>
+
+
+
+
+
+
+
 
               	<div class="event-modal">
               		<header class="header">
@@ -117,6 +129,10 @@ $gReservation = new InfoReservation();
     <!--   Core JS Files   -->
 
 
+
+
+
+
         <script src="../js/jquery-3.1.0.min.js" type="text/javascript"></script>
         <script src="../js/jquery.dataTables.min.js"></script>
 
@@ -141,6 +157,9 @@ $gReservation = new InfoReservation();
 
 	<!-- Material Dashboard DEMO methods, don't include it in your project! -->
 	<script src="../js/demo.js"></script>
+    <script src= 'https://code.jquery.com/ui/1.10.4/jquery-ui.min.js' type= 'text/javascript' language= 'javascript'></script>
+
+    <script type="text/javascript" src="../js/jq.schedule.js"></script>
 
 	<script type="text/javascript">
     	$(document).ready(function(){
@@ -217,6 +236,136 @@ $gReservation = new InfoReservation();
 
                 $('.navbar-header a').html("Réservations");
 
+
+
+                //---------------HORAIRE ALEX----------------
+
+
+
+
+            Date.prototype.getWeek = function(start)
+            {
+                //Calcing the starting point
+                start = start || 0;
+                var today = new Date(this.setHours(0, 0, 0, 0));
+                var day = today.getDay() - start;
+                var date = today.getDate() - day;
+
+                // Grabbing Start/End Dates
+                var StartDate = new Date(today.setDate(date));
+                var EndDate = new Date(today.setDate(date + 6));
+
+                return [StartDate, EndDate];
+            }
+
+
+
+            // test code
+
+
+           /* var start = new Date(Dates[0].toLocaleDateString()).getDay();
+            var end = new Date(Dates[1].toLocaleDateString()).getDay() + 1;
+            var startOfTheWeek = "0"+start+":00";
+            var endOfTheWeek = "0"+end+":00";
+*/
+
+            var reservations = <?php echo $gReservation->getWeekReservations(); ?>;
+
+
+
+
+        function getDataCalendar() {
+            var data = {};
+            $.each(reservations, function (index) {
+                //si date debut plus petite que dimanche, date debut dimanche
+                var Dates = new Date().getWeek();
+                var comp1 = new Date(Dates[0]);
+                var comp2 = new Date(toDate(reservations[index]['date_debut']));
+
+                if (comp1 > comp2) {
+
+                    var dateDebut = new Date(Dates[0].toLocaleDateString()).getDay();
+                }
+                else {
+                    var dateDebut = (new Date(toDate(reservations[index]['date_debut'])).getDay());
+                }
+
+                //si date fin plus grande que samedi, date fin samedi
+
+                var comp3 = new Date(Dates[1]);
+                var comp4 = new Date(toDate(reservations[index]['date_fin']));
+
+                if (comp3 < comp4) {
+
+                    var dateFin = new Date(Dates[1].toLocaleDateString()).getDay() + 1;
+                }
+                else {
+
+                    var dateFin = (new Date(toDate(reservations[index]['date_fin'])).getDay() + 1);
+                }
+
+                var nom_vehicule = reservations[index]['nom_marque'] + " " + reservations[index]['nom_modele'];
+                var nom_user = reservations[index]['prenom'] + " " + reservations[index]['nom'];
+
+                alert (dateDebut + " " + dateFin);
+                var schedule = [];
+                var scheduleData = {
+                    start: '0' + dateDebut + ':00',
+                    end: '0' + dateFin + ':00',
+                    text: nom_user,
+                    data: {}
+                };
+
+                schedule.push(scheduleData);
+                var rowNum = index +1;
+                data["'" + rowNum + "'"] = {
+
+                    schedule: schedule,
+                    title: nom_vehicule
+                };
+
+
+                alert(data["'" + rowNum + "'"]['title']);
+            });
+            return data;
+        }
+
+            function toDate(dateStr) {
+                var parts = dateStr.split("-");
+                return new Date(parts[0], parts[1] - 1, parts[2]);
+            }
+
+
+
+            console.log(getDataCalendar());
+
+
+
+
+
+            var $sc = $("#schedule").timeSchedule({
+                startTime: "00:00", // schedule start time(HH:ii)
+                endTime: "07:00",   // schedule end time(HH:ii)
+                widthTime:60 * 10,  // cell timestamp example 10 minutes
+                timeLineY:60,       // height(px)
+                verticalScrollbar:20,   // scrollbar (px)
+                timeLineBorder:2,   // border(top and bottom)
+                debug:"#debug",     // debug string output elements
+                rows : getDataCalendar(),
+                change: function(node,data){
+                    alert("change event");
+                },
+                init_data: function(node,data){
+                },
+                click: function(node,data){
+                    alert("click event");
+                },
+                append: function(node,data){
+                },
+                time_click: function(time,data){
+                    alert("time click event");
+                },
+            });
     	});
 		
 
@@ -241,8 +390,8 @@ function erreurNonCon(){
             }
             ?>
   <script src="../js/calendarModernizr.js"></script>
-  <script>
-  	if( !window.jQuery ) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');
-  </script>
-  <script src="../js/calendarMain.js"></script> <!-- Resource jQuery -->
+    <script>
+        if( !window.jQuery ) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');
+    </script>
+    <script src="../js/calendarMain.js"></script> <!-- Resource jQuery -->
 </html>

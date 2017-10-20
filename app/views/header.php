@@ -25,6 +25,9 @@ echo "<meta charset='utf-8' />
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link rel='stylesheet' href='../css/table.css'>
     <link rel='stylesheet' href='../css/flatpickr.css'>
+    
+   
+   
 
     <!--     Calendar     -->
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet'>
@@ -32,7 +35,12 @@ echo "<meta charset='utf-8' />
     
     <!--     Fonts and icons     -->
     <link href='http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css' rel='stylesheet'>
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>";
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+    
+    
+     <link rel= 'stylesheet' type= 'text/css' href= '../css/schedule.css'/>
+    
+    <link rel= 'stylesheet' type= 'text/css' href= 'https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css' />";
 
 ?>
 
