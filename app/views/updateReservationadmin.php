@@ -237,6 +237,18 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
             });
 
 
+            $('#active').change(function(){
+                var date = $("#acquisition").val();
+                var deuxDates = date.split(' à ');
+                var dateFrom = deuxDates[0];
+                var dateTo = deuxDates[1];
+
+                var utilisateurfks = $("#user").val();
+                var deuxfks = utilisateurfks.split(' ');
+                var fk_secteur = deuxfks[0];
+
+                $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom + "&secteur=" + fk_secteur);
+            });
 
              $(document).on("click", "#confirmer", function(e) {
                  e.preventDefault();
