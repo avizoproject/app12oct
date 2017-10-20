@@ -78,17 +78,17 @@ $gReservation = new InfoReservation();
                 <div class="col-md-12" id="schedule"></div>
 
 
-
-              <div class="cd-schedule loading">
+                <!--Fred's calendar, disabled for demo -->
+              <!--<div class="cd-schedule loading">
               	<div style="float: left; position: relative;">
               		<ul>
-                    <?php $gReservation->getReservationsNamesCalendar(); ?>
+                    <?php /*$gReservation->getReservationsNamesCalendar(); */?>
               		</ul>
               	</div>
 
               	<div class="events">
               		<ul>
-                    <?php $gReservation->getReservationsCalendar(); ?>
+                    <?php /*$gReservation->getReservationsCalendar(); */?>
               		</ul>
               	</div>
 
@@ -118,7 +118,7 @@ $gReservation = new InfoReservation();
               	</div>
 
               	<div class="cover-layer"></div>
-              </div>
+              </div>-->
 	        </div>
 
 	        <?php
@@ -190,7 +190,7 @@ $gReservation = new InfoReservation();
                     }else{
                         swal({
                                 title:"",
-                                text:"Vous devez sélectionner un client.",
+                                text:"Vous devez sélectionner une réservation",
                                 type:"warning",
                                 allowOutsideClick : true
                             });
@@ -205,7 +205,7 @@ $gReservation = new InfoReservation();
                     }else{
                         swal({
                                 title:"",
-                                text:"Vous devez sélectionner un client.",
+                                text:"Vous devez sélectionner une réservation",
                                 type:"warning",
                                 allowOutsideClick : true
                             });
