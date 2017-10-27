@@ -42,7 +42,7 @@ $gUser = new InfoUser();
                         <div class="card">
                             <div class="card-header" data-background-color="blue">
                                 <h4 class="title">Utilisateurs</h4>
-                                <p class="category">Sélectionnez avant de choisir une action</p>
+                                <p class="category">Sélectionnez un utilisateur avant de choisir une action</p>
                             </div>
                             <div class="card-content table-responsive">
                                 <table class="table" id="example">

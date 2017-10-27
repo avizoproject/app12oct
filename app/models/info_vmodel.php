@@ -13,10 +13,10 @@ class InfoVModel extends InfoModel
     protected $nom_modele = '';
 
     protected $description_modele = '';
-    
+
     function __construct()
     {}
-    
+
     function getPk_modele() {
         return $this->pk_modele;
     }
@@ -39,6 +39,23 @@ class InfoVModel extends InfoModel
 
     function setDescription_modele($description_modele) {
         $this->description_modele = $description_modele;
+    }
+
+    function getListModeles($id) {
+        include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+        $results = $conn->query("SELECT * FROM modele WHERE fk_marque=". $id ." ORDER BY nom_modele");
+
+        echo "<option value=''>Sélectionnez un modèle...</option>";
+        while ($row = $results->fetch_assoc()) {
+                echo "<option value='" . $row['pk_modele'] . "'>" . $row['nom_modele'] . "</option>";
+        }
+
+        // Frees the memory associated with a result
+        $results->free();
+
+        // close connection
+        $conn->close();
     }
 }
 

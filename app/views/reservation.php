@@ -44,7 +44,7 @@ $gReservation = new InfoReservation();
 	                        <div class="card">
 	                            <div class="card-header" data-background-color="blue">
 	                                <h4 class="title">Réservations</h4>
-	                                <p class="category">Sélectionnez avant de choisir une action</p>
+	                                <p class="category">Sélectionnez une réservation avant de choisir une action</p>
 	                            </div>
 	                            <div class="card-content table-responsive">
 	                                <table class="table" id="example">
@@ -147,7 +147,7 @@ $gReservation = new InfoReservation();
                 <!--  Sweet alert -->
         <script src="../js/sweetalert2.min.js"></script>
         <script src="../js/sweetalert2.js"></script>
-        
+
 	<!--  Notifications Plugin    -->
 	<script src="../js/bootstrap-notify.js"></script>
 
@@ -368,7 +368,7 @@ $gReservation = new InfoReservation();
 
             });
     	});
-		
+
 
 function erreurNonCon(){
             swal({
@@ -382,7 +382,7 @@ function erreurNonCon(){
                     setTimeout(function(){window.location.href='../views/signin.php';},1800);
         }
 	</script>
-        
+
         <?php
         if($_SESSION['loggedIn']==false){
                 echo '<script type="text/javascript">',

@@ -13,10 +13,10 @@ class InfoBrand extends InfoModel
     protected $nom_marque = '';
 
     protected $description_marque = '';
-    
+
     function __construct()
     {}
-    
+
     function getPk_marque() {
         return $this->pk_marque;
     }
@@ -40,6 +40,21 @@ class InfoBrand extends InfoModel
     function setDescription_marque($description_marque) {
         $this->description_marque = $description_marque;
     }
-}
 
+    function getListMarques() {
+        include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+        $results = $conn->query("SELECT * FROM marque ORDER BY nom_marque");
+
+        while ($row = $results->fetch_assoc()) {
+                echo "<option value='" . $row['pk_marque'] . "'>" . $row['nom_marque'] . "</option>";
+        }
+
+        // Frees the memory associated with a result
+        $results->free();
+
+        // close connection
+        $conn->close();
+    }
+}
 ?>

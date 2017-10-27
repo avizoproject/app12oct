@@ -42,7 +42,7 @@ $gVehicule = new InfoVehicule();
                         <div class="card">
                             <div class="card-header" data-background-color="blue">
                                 <h4 class="title">Véhicules</h4>
-                                <p class="category">Sélectionnez avant de choisir une action</p>
+                                <p class="category">Sélectionnez un véhicule avant de choisir une action</p>
                             </div>
                             <div class="card-content table-responsive">
                                 <table class="table" id="example">
@@ -162,7 +162,7 @@ $gVehicule = new InfoVehicule();
 
         //clic ajouter
         $('#Ajouter').click(function () {
-            window.location.href = "http://localhost/app/app/views/addVéhiculeadmin.php";
+            window.location.href = "http://localhost/app/app/views/addVehiculeadmin.php";
         });
 
         var activePage = window.location.href;

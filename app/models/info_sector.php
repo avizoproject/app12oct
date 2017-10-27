@@ -31,27 +31,27 @@ function setNom_secteur($nom_secteur) {
     $this->nom_secteur = $nom_secteur;
 }
 
-    function getListSecteur (){
-        include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+function getListSecteur () {
+include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
 
-        $results = $conn->query("SELECT secteur.pk_secteur, secteur.nom_secteur FROM secteur");
+$results = $conn->query("SELECT secteur.pk_secteur, secteur.nom_secteur FROM secteur");
 
 
 
-        echo "<option value=''>Sélectionnez un secteur...</option>";
-        while ($row = $results->fetch_assoc()) {
-            echo "<option value=" . $row['pk_secteur'] . ">" . $row['nom_secteur'] . "</option>";
-        }
+echo "<option value=''>Sélectionnez un secteur...</option>";
+while ($row = $results->fetch_assoc()) {
+    echo "<option value=" . $row['pk_secteur'] . ">" . $row['nom_secteur'] . "</option>";
+}
 
-        // Frees the memory associated with a result
-        $results->free();
+// Frees the memory associated with a result
+$results->free();
 
-        // close connection
-        $conn->close();
+// close connection
+$conn->close();
 
-        //return $allvehicule;
-    }
+//return $allvehicule;
+}
 
 }
 
