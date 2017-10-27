@@ -226,7 +226,9 @@ $listVehicule = new InfoVehicule();
                 var statut = 2;
             }
 
-            location.href = "../controllers/controller_vehicules.php?ajout=1&marque="+ marque +"&modele="+ modele +"&annee="+ annee +"&couleur="+ couleur +"&secteur="+ secteur +"&odometre="+ odometre +"&plaque="+ plaque +"&date="+ date +"&statut="+ statut;
+            if (marque && modele && annee && couleur && secteur && odometre && plaque && date) {
+              location.href = "../controllers/controller_vehicules.php?ajout=1&marque="+ marque +"&modele="+ modele +"&annee="+ annee +"&couleur="+ couleur +"&secteur="+ secteur +"&odometre="+ odometre +"&plaque="+ plaque +"&date="+ date +"&statut="+ statut;
+            }
         });
 
         $(document).on("click", "#cancel", function(e) {
