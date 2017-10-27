@@ -16,7 +16,7 @@ class InfoVehicule extends InfoModel
 
     protected $annee = '';
 
-    protected $couleur = '';
+    protected $fk_couleur = 0;
 
     protected $fk_secteur = 0;
 
@@ -26,9 +26,11 @@ class InfoVehicule extends InfoModel
 
     protected $photo = '';
 
-    protected $VIN = '';
-
     protected $date_achat = '';
+
+    protected $date_mise_hors_service = '';
+
+    protected $description_hors_service = '';
 
     protected $fk_statut = 0;
 
@@ -51,8 +53,8 @@ function getAnnee() {
     return $this->annee;
 }
 
-function getCouleur() {
-    return $this->couleur;
+function getFk_Couleur() {
+    return $this->fk_couleur;
 }
 
 function getFk_secteur() {
@@ -71,12 +73,16 @@ function getPhoto() {
     return $this->photo;
 }
 
-function getVIN() {
-    return $this->VIN;
-}
-
 function getDate_achat() {
     return $this->date_achat;
+}
+
+function getDate_mise_hors_service() {
+    return $this->date_mise_hors_service;
+}
+
+function getDescription_hors_service() {
+    return $this->description_hors_service;
 }
 
 function getFk_statut() {
@@ -99,8 +105,8 @@ function setAnnee($annee) {
     $this->annee = $annee;
 }
 
-function setCouleur($couleur) {
-    $this->couleur = $couleur;
+function setFk_Couleur($fk_couleur) {
+    $this->fk_couleur = $fk_couleur;
 }
 
 function setFk_secteur($fk_secteur) {
@@ -119,12 +125,16 @@ function setPhoto($photo) {
     $this->photo = $photo;
 }
 
-function setVIN($VIN) {
-    $this->VIN = $VIN;
-}
-
 function setDate_achat($date_achat) {
     $this->date_achat = $date_achat;
+}
+
+function setDate_mise_hors_service($date_mise_hors_service) {
+    $this->date_mise_hors_service = $date_mise_hors_service;
+}
+
+function setDescription_hors_service($description_hors_service) {
+    $this->description_hors_service = $description_hors_service;
 }
 
 function setFk_statut($fk_statut) {
@@ -192,6 +202,48 @@ function getVehiculeReservation ($id_reservation){
 
   // close connection
   $conn->close();
+}
+
+//Gets the list of vehicules to population de table in vehicule.php
+function getListVehicules(){
+    include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+    $results = $conn->query('SELECT vehicule.pk_vehicule, marque.nom_marque, modele.nom_modele, vehicule.annee, couleur.nom, statut_vehicule.nom_statut FROM `vehicule` LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN statut_vehicule ON vehicule.fk_statut = statut_vehicule.pk_statut_vehicule LEFT JOIN couleur ON vehicule.fk_couleur = couleur.pk_couleur');
+
+    $allvehicules= array();
+    while ($row = $results->fetch_assoc()) {
+        $allvehicules[] = array(
+            'pk_vehicule' => $row['pk_vehicule'],
+            'nom_marque' => $row['nom_marque'],
+            'nom_modele' => $row['nom_modele'],
+            'annee' => $row['annee'],
+            'nom' => $row['nom'],
+            'nom_statut' => $row['nom_statut']
+        );
+    }
+    $size= sizeof($allvehicules);
+    if($size != null){
+        for($i=0;$i<$size;$i++){
+            echo "<tr class=''>";
+            echo "<td class='hidden'>";
+            echo $allvehicules[$i]['pk_vehicule'] . "</td>";
+            echo "<td>";
+            echo $allvehicules[$i]['nom_marque'] . " ".$allvehicules[$i]['nom_modele']."</td>";
+            echo "<td>";
+            echo $allvehicules[$i]['annee'] . "</td>";
+            echo "<td>";
+            echo $allvehicules[$i]['nom'] . "</td>";
+            echo "<td>";
+            echo $allvehicules[$i]['nom_statut'] . "</td>";
+            echo "</tr>";
+        }
+    }
+
+    // Frees the memory associated with a result
+    $results->free();
+
+    // close connection
+    $conn->close();
 }
 }
 ?>

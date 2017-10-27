@@ -14,6 +14,8 @@ class InfoReservation extends InfoModel
 
     protected $date_fin = '';
 
+    protected $date_emise = '';
+
     protected $fk_vehicule = 0;
 
     protected $fk_utilisateur = 0;
@@ -34,6 +36,10 @@ function getDate_debut() {
 
 function getDate_fin() {
     return $this->date_fin;
+}
+
+function getDate_emise() {
+    return $this->date_emise;
 }
 
 function getFk_vehicule() {
@@ -58,6 +64,10 @@ function setDate_debut($date_debut) {
 
 function setDate_fin($date_fin) {
     $this->date_fin = $date_fin;
+}
+
+function setDate_emise($date_emise) {
+    $this->date_emise = $date_emise;
 }
 
 function setFk_vehicule($fk_vehicule) {
@@ -100,6 +110,50 @@ function getListReservations(){
             echo $allreservation[$i]['nom_marque'] . " ".$allreservation[$i]['nom_modele']."</td>";
             echo "<td>";
             echo $allreservation[$i]['prenom'] . " ".$allreservation[$i]['nom']."</td>";
+            echo "<td>";
+            echo $allreservation[$i]['date_debut'] . "</td>";
+            echo "<td>";
+            echo $allreservation[$i]['date_fin'] . "</td>";
+            echo "<td>";
+            echo $allreservation[$i]['statut'] . "</td>";
+            echo "</tr>";
+        }
+    }
+
+    // Frees the memory associated with a result
+    $results->free();
+
+    // close connection
+    $conn->close();
+}
+
+//List for a specific user, doesnt have to be active.
+function getListReservationsUser($id){
+    include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+    $results = $conn->query("SELECT reservation.statut,reservation.date_emise, reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM reservation LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE reservation.fk_utilisateur=" . $id . "");
+
+    $allreservation = array();
+    while ($row = $results->fetch_assoc()) {
+        $allreservation[] = array(
+            'date_emise' => $row['date_emise'],
+            'nom_marque' => $row['nom_marque'],
+            'nom_modele' => $row['nom_modele'],
+            'nom' => $row['nom'],
+            'prenom' => $row['prenom'],
+            'date_debut' => $row['date_debut'],
+            'date_fin' => $row['date_fin'],
+            'statut' => $row['statut']
+        );
+    }
+    $size= sizeof($allreservation);
+    if($size != null){
+        for($i=0;$i<$size;$i++){
+            echo "<tr class=''>";
+            echo "<td>";
+            echo $allreservation[$i]['date_emise'] . "</td>";
+            echo "<td>";
+            echo $allreservation[$i]['nom_marque'] . " ".$allreservation[$i]['nom_modele']."</td>";
             echo "<td>";
             echo $allreservation[$i]['date_debut'] . "</td>";
             echo "<td>";

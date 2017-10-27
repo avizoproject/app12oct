@@ -45,8 +45,10 @@ class controller_reservation
     }
     function ajoutReservation()
     {
+        $today = strtotime('-1 day'); //For some reason it needs - 1 day or it always thinks it's one day forward, might be a timezone thing.
         $this->InfosReservation->setDate_debut($this->arrayReservation[0]);
         $this->InfosReservation->setDate_fin($this->arrayReservation[1]);
+        $this->InfosReservation->setDate_emise(date('Y-m-d',$today));
         $this->InfosReservation->setFk_vehicule($this->arrayReservation[2]);
         $this->InfosReservation->setFk_utilisateur($this->arrayReservation[3]);
         $this->InfosReservation->setStatut(1);
@@ -55,8 +57,10 @@ class controller_reservation
 
     function ajoutReservationAdmin()
     {
+        $today = strtotime('-1 day'); //For some reason it needs - 1 day or it always thinks it's one day forward, might be a timezone thing.
         $this->InfosReservation->setDate_debut($this->arrayReservation[0]);
         $this->InfosReservation->setDate_fin($this->arrayReservation[1]);
+        $this->InfosReservation->setDate_emise(date('Y-m-d',$today));
         $this->InfosReservation->setFk_vehicule($this->arrayReservation[2]);
         $this->InfosReservation->setFk_utilisateur($this->arrayReservation[3]);
         $this->InfosReservation->setStatut($this->arrayReservation[4]);
@@ -65,9 +69,12 @@ class controller_reservation
 
     function modReservation($id)
     {
+        $object = $this->InfosReservation->getObjectFromDB($id); //Gets the date of the reservation (should think to add a date modified for the reservation, maybe.)
+
         $this->InfosReservation->setPk_reservation($id);
         $this->InfosReservation->setDate_debut($this->arrayReservation[0]);
         $this->InfosReservation->setDate_fin($this->arrayReservation[1]);
+        $this->InfosReservation->setDate_emise($object['date_emise']);
         $this->InfosReservation->setFk_vehicule($this->arrayReservation[2]);
         $this->InfosReservation->setFk_utilisateur($this->arrayReservation[3]);
         $this->InfosReservation->setStatut($this->arrayReservation[4]);

@@ -11,6 +11,8 @@ class InfoBrand extends InfoModel
     protected $pk_marque= 0;
 
     protected $nom_marque = '';
+
+    protected $description_marque = '';
     
     function __construct()
     {}
@@ -23,12 +25,20 @@ class InfoBrand extends InfoModel
         return $this->nom_marque;
     }
 
+    function getDescription_marque() {
+        return $this->description_marque;
+    }
+
     function setPk_marque($pk_marque) {
         $this->pk_marque = $pk_marque;
     }
 
     function setNom_marque($nom_marque) {
         $this->nom_marque = $nom_marque;
+    }
+
+    function setDescription_marque($description_marque) {
+        $this->description_marque = $description_marque;
     }
 }
 

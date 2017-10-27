@@ -172,6 +172,50 @@ function getUser($email_client)
         $conn->close();
     }
 
+    //Gets the list of users to population de table in user.php
+    function populateUserTable(){
+        include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+        $results = $conn->query('SELECT utilisateur.pk_utilisateur, utilisateur.nom, utilisateur.prenom, utilisateur.telephone, utilisateur.courriel, statut.nom_statut FROM `utilisateur` LEFT JOIN statut ON utilisateur.fk_statut = statut.pk_statut');
+
+        $allusers= array();
+        while ($row = $results->fetch_assoc()) {
+            $allusers[] = array(
+                'pk_utilisateur' => $row['pk_utilisateur'],
+                'nom' => $row['nom'],
+                'prenom' => $row['prenom'],
+                'telephone' => $row['telephone'],
+                'courriel' => $row['courriel'],
+                'nom_statut' => $row['nom_statut']
+            );
+        }
+        $size= sizeof($allusers);
+        if($size != null){
+            for($i=0;$i<$size;$i++){
+                echo "<tr class=''>";
+                echo "<td class='hidden'>";
+                echo $allusers[$i]['pk_utilisateur'] . "</td>";
+                echo "<td>";
+                echo $allusers[$i]['nom'] . "</td>";
+                echo "<td>";
+                echo $allusers[$i]['prenom'] . "</td>";
+                echo "<td>";
+                echo $allusers[$i]['telephone'] . "</td>";
+                echo "<td>";
+                echo $allusers[$i]['courriel'] . "</td>";
+                echo "<td>";
+                echo $allusers[$i]['nom_statut'] . "</td>";
+                echo "</tr>";
+            }
+        }
+
+        // Frees the memory associated with a result
+        $results->free();
+
+        // close connection
+        $conn->close();
+    }
+
 }
 
 ?>

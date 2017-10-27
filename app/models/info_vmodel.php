@@ -11,6 +11,8 @@ class InfoVModel extends InfoModel
     protected $pk_modele= 0;
 
     protected $nom_modele = '';
+
+    protected $description_modele = '';
     
     function __construct()
     {}
@@ -23,12 +25,20 @@ class InfoVModel extends InfoModel
         return $this->nom_modele;
     }
 
+    function getDescription_modele() {
+        return $this->description_modele;
+    }
+
     function setPk_modele($pk_modele) {
         $this->pk_modele = $pk_modele;
     }
 
     function setNom_modele($nom_modele) {
         $this->nom_modele = $nom_modele;
+    }
+
+    function setDescription_modele($description_modele) {
+        $this->description_modele = $description_modele;
     }
 }
 

@@ -22,7 +22,7 @@ class InfoEntretien extends InfoModel
     
     protected $cout_entretien = 0;
 
-    protected $detail = '';
+    protected $description = '';
 
     
     function __construct()
@@ -56,8 +56,8 @@ class InfoEntretien extends InfoModel
         return $this->cout_entretien;
     }
 
-    function getDetail() {
-        return $this->detail;
+    function getDescription() {
+        return $this->description;
     }
 
     function setPk_entretien($pk_entretien) {
@@ -88,8 +88,8 @@ class InfoEntretien extends InfoModel
         $this->cout_entretien = $cout_entretien;
     }
 
-    function setDetail($detail) {
-        $this->detail = $detail;
+    function setDescription($description) {
+        $this->description = $description;
     }
 }
 

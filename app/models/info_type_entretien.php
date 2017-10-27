@@ -14,6 +14,8 @@ class InfoTypeEntretien extends InfoModel
     
     protected $nom = '';
 
+    protected $description = '';
+
     function __construct()
     {}
 
@@ -29,6 +31,10 @@ function getNom() {
     return $this->nom;
 }
 
+function getDescription() {
+    return $this->description;
+}
+
 function setPk_type_entretien($pk_type_entretien) {
     $this->pk_type_entretien = $pk_type_entretien;
 }
@@ -39,6 +45,10 @@ function setIntervalle($intervalle) {
 
 function setNom($nom) {
     $this->nom = $nom;
+}
+
+function setDescription($description) {
+    $this->description = $description;
 }
 
 

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2017 at 07:24 PM
+-- Generation Time: Oct 27, 2017 at 03:32 AM
 -- Server version: 5.7.14
--- PHP Version: 7.0.10
+-- PHP Version: 5.6.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -78,7 +78,7 @@ CREATE TABLE `entretien` (
   `fk_vehicule` int(11) NOT NULL,
   `fk_type_entretien` int(11) NOT NULL,
   `cout_entretien` bigint(20) NOT NULL,
-  `details` text NOT NULL
+  `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -90,6 +90,7 @@ CREATE TABLE `entretien` (
 CREATE TABLE `facture` (
   `pk_facture` int(11) NOT NULL,
   `fk_entretien` int(11) NOT NULL,
+  `montant_entretien` float DEFAULT NULL,
   `photo` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -115,49 +116,50 @@ CREATE TABLE `garage` (
 
 CREATE TABLE `marque` (
   `pk_marque` int(11) NOT NULL,
-  `nom_marque` varchar(100) NOT NULL
+  `nom_marque` varchar(100) NOT NULL,
+  `description_marque` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `marque`
 --
 
-INSERT INTO `marque` (`pk_marque`, `nom_marque`) VALUES
-(1, 'Acura'),
-(2, 'Audi'),
-(3, 'BMW'),
-(4, 'Buick'),
-(5, 'Cadillac'),
-(6, 'Chevrolet'),
-(7, 'Chrysler'),
-(8, 'Dodge'),
-(9, 'FIAT'),
-(10, 'Ford'),
-(11, 'GMC'),
-(12, 'Honda'),
-(13, 'Hyundai'),
-(14, 'Infiniti'),
-(15, 'Jaguar'),
-(16, 'Jeep'),
-(17, 'Kia'),
-(18, 'Lexus'),
-(19, 'Lincoln'),
-(20, 'Mazda'),
-(21, 'Mercedes-Benz'),
-(22, 'Mitsubishi'),
-(23, 'Nissan'),
-(24, 'Pontiac'),
-(25, 'RAM'),
-(26, 'Saab'),
-(27, 'Saturn'),
-(28, 'Scion'),
-(29, 'Smart'),
-(30, 'Subaru'),
-(31, 'Suzuki'),
-(32, 'Tesla'),
-(33, 'Toyota'),
-(34, 'Volkswagen'),
-(35, 'Volvo');
+INSERT INTO `marque` (`pk_marque`, `nom_marque`, `description_marque`) VALUES
+(1, 'Acura', NULL),
+(2, 'Audi', NULL),
+(3, 'BMW', NULL),
+(4, 'Buick', NULL),
+(5, 'Cadillac', NULL),
+(6, 'Chevrolet', NULL),
+(7, 'Chrysler', NULL),
+(8, 'Dodge', NULL),
+(9, 'FIAT', NULL),
+(10, 'Ford', NULL),
+(11, 'GMC', NULL),
+(12, 'Honda', NULL),
+(13, 'Hyundai', NULL),
+(14, 'Infiniti', NULL),
+(15, 'Jaguar', NULL),
+(16, 'Jeep', NULL),
+(17, 'Kia', NULL),
+(18, 'Lexus', NULL),
+(19, 'Lincoln', NULL),
+(20, 'Mazda', NULL),
+(21, 'Mercedes-Benz', NULL),
+(22, 'Mitsubishi', NULL),
+(23, 'Nissan', NULL),
+(24, 'Pontiac', NULL),
+(25, 'RAM', NULL),
+(26, 'Saab', NULL),
+(27, 'Saturn', NULL),
+(28, 'Scion', NULL),
+(29, 'Smart', NULL),
+(30, 'Subaru', NULL),
+(31, 'Suzuki', NULL),
+(32, 'Tesla', NULL),
+(33, 'Toyota', NULL),
+(34, 'Volkswagen', NULL),
+(35, 'Volvo', NULL);
 
 -- --------------------------------------------------------
 
@@ -168,16 +170,17 @@ INSERT INTO `marque` (`pk_marque`, `nom_marque`) VALUES
 CREATE TABLE `modele` (
   `pk_modele` int(11) NOT NULL,
   `fk_marque` int(11) NOT NULL,
-  `nom_modele` varchar(100) NOT NULL
+  `nom_modele` varchar(100) NOT NULL,
+  `description_modele` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `modele`
 --
 
-INSERT INTO `modele` (`pk_modele`, `fk_marque`, `nom_modele`) VALUES
-(1, 10, 'F150'),
-(2, 10, 'Ranger');
+INSERT INTO `modele` (`pk_modele`, `fk_marque`, `nom_modele`, `description_modele`) VALUES
+(1, 10, 'F150', NULL),
+(2, 10, 'Ranger', NULL);
 
 -- --------------------------------------------------------
 
@@ -189,6 +192,7 @@ CREATE TABLE `reservation` (
   `pk_reservation` int(11) NOT NULL,
   `date_debut` date NOT NULL,
   `date_fin` date NOT NULL,
+  `date_emise` date NOT NULL,
   `fk_vehicule` int(11) NOT NULL,
   `fk_utilisateur` int(11) NOT NULL,
   `statut` tinyint(4) NOT NULL COMMENT '0 = inactif, 1 = actif'
@@ -198,11 +202,13 @@ CREATE TABLE `reservation` (
 -- Dumping data for table `reservation`
 --
 
-INSERT INTO `reservation` (`pk_reservation`, `date_debut`, `date_fin`, `fk_vehicule`, `fk_utilisateur`, `statut`) VALUES
-(1, '2017-10-08', '2017-10-12', 2, 1, 1),
-(2, '2017-10-12', '2017-10-14', 13, 1, 1),
-(3, '2017-10-17', '2017-10-21', 2, 1, 1),
-(4, '2017-10-19', '2017-10-21', 13, 1, 0);
+INSERT INTO `reservation` (`pk_reservation`, `date_debut`, `date_fin`, `date_emise`, `fk_vehicule`, `fk_utilisateur`, `statut`) VALUES
+(1, '2017-10-08', '2017-10-12', '2017-10-07', 2, 1, 1),
+(2, '2017-10-12', '2017-10-14', '2017-10-11', 13, 1, 1),
+(3, '2017-10-17', '2017-10-21', '2017-10-15', 2, 1, 1),
+(4, '2017-10-19', '2017-10-21', '2017-10-18', 13, 1, 0),
+(5, '2017-10-26', '2017-10-31', '2017-10-27', 13, 1, 1),
+(6, '2017-11-08', '2017-11-15', '2017-10-26', 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -237,17 +243,18 @@ INSERT INTO `secteur` (`pk_secteur`, `nom_secteur`) VALUES
 
 CREATE TABLE `statut` (
   `pk_statut` int(11) NOT NULL,
-  `nom_statut` varchar(50) NOT NULL
+  `nom_statut` varchar(50) NOT NULL,
+  `description_statut` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `statut`
 --
 
-INSERT INTO `statut` (`pk_statut`, `nom_statut`) VALUES
-(1, 'Administrateur'),
-(2, 'Utilisateur'),
-(3, 'Inactif');
+INSERT INTO `statut` (`pk_statut`, `nom_statut`, `description_statut`) VALUES
+(1, 'Administrateur', NULL),
+(2, 'Utilisateur', NULL),
+(3, 'Inactif', NULL);
 
 -- --------------------------------------------------------
 
@@ -257,18 +264,19 @@ INSERT INTO `statut` (`pk_statut`, `nom_statut`) VALUES
 
 CREATE TABLE `statut_vehicule` (
   `pk_statut_vehicule` int(11) NOT NULL,
-  `nom_statut` varchar(50) NOT NULL
+  `nom_statut` varchar(50) NOT NULL,
+  `description_statut_vehicule` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `statut_vehicule`
 --
 
-INSERT INTO `statut_vehicule` (`pk_statut_vehicule`, `nom_statut`) VALUES
-(1, 'Actif'),
-(2, 'Inactif'),
-(3, 'Réparation'),
-(4, 'Inspection');
+INSERT INTO `statut_vehicule` (`pk_statut_vehicule`, `nom_statut`, `description_statut_vehicule`) VALUES
+(1, 'Actif', NULL),
+(2, 'Inactif', NULL),
+(3, 'Réparation', NULL),
+(4, 'Inspection', NULL);
 
 -- --------------------------------------------------------
 
@@ -279,7 +287,8 @@ INSERT INTO `statut_vehicule` (`pk_statut_vehicule`, `nom_statut`) VALUES
 CREATE TABLE `type_entretien` (
   `pk_type_entretien` int(11) NOT NULL,
   `intervalle` int(11) NOT NULL,
-  `nom` varchar(11) NOT NULL
+  `nom` varchar(11) NOT NULL,
+  `description` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -323,8 +332,9 @@ CREATE TABLE `vehicule` (
   `odometre` bigint(20) NOT NULL,
   `plaque` varchar(50) NOT NULL,
   `photo` varchar(250) DEFAULT NULL,
-  `VIN` varchar(50) NOT NULL,
   `date_achat` date NOT NULL,
+  `date_mise_hors_service` date DEFAULT NULL,
+  `description_hors_service` varchar(250) DEFAULT NULL,
   `fk_statut` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -332,9 +342,9 @@ CREATE TABLE `vehicule` (
 -- Dumping data for table `vehicule`
 --
 
-INSERT INTO `vehicule` (`pk_vehicule`, `fk_marque`, `fk_modele`, `annee`, `fk_couleur`, `fk_secteur`, `odometre`, `plaque`, `photo`, `VIN`, `date_achat`, `fk_statut`) VALUES
-(2, 10, 1, 2006, 1, 1, 185000, '5TH6YU', NULL, 'GYHUSFHUFHUIE', '2017-10-09', 1),
-(13, 10, 2, 2007, 3, 1, 145000, 'J4H 4N5', NULL, 'SDDEFEF', '2017-08-01', 1);
+INSERT INTO `vehicule` (`pk_vehicule`, `fk_marque`, `fk_modele`, `annee`, `fk_couleur`, `fk_secteur`, `odometre`, `plaque`, `photo`, `date_achat`, `date_mise_hors_service`, `description_hors_service`, `fk_statut`) VALUES
+(2, 10, 1, 2006, 1, 1, 185000, '5TH6YU', NULL, '2017-10-09', NULL, NULL, 1),
+(13, 10, 2, 2007, 3, 1, 145000, 'J4H 4N5', NULL, '2017-08-01', NULL, NULL, 1);
 
 --
 -- Indexes for dumped tables
@@ -496,7 +506,7 @@ ALTER TABLE `modele`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `pk_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `pk_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `secteur`
 --

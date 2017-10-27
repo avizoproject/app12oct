@@ -13,6 +13,8 @@ class InfoInvoice extends InfoModel
     protected $fk_entretien = 0;
 
     protected $photo = '';
+
+    protected $montant_entretien = 0;
     
     function __construct()
     {}
@@ -29,6 +31,10 @@ class InfoInvoice extends InfoModel
         return $this->photo;
     }
 
+    function getMontant_entretien() {
+        return $this->montant_entretien;
+    }
+
     function setPk_facture($pk_facture) {
         $this->pk_facture = $pk_facture;
     }
@@ -39,6 +45,10 @@ class InfoInvoice extends InfoModel
 
     function setPhoto($photo) {
         $this->photo = $photo;
+    }
+
+    function setMontant_entretien($montant_entretien) {
+        $this->montant_entretien = $montant_entretien;
     }
 }
 

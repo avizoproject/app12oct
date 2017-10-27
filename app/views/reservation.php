@@ -1,6 +1,6 @@
 <?php
 /****************************************************************
-		File : modifyReservation.php
+		File : reservation.php
 		Authour : Jérémy Besserer-Lemay
 		Functionality : Page to modify a vehicule's reservation
 			Date: 2017-10-03
@@ -20,10 +20,10 @@ $gReservation = new InfoReservation();
     <head>
           <title>Avizo - Gestionnaire de réservations</title>
 	<?php
-            require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
-            session_start();
-            error_reporting(1);
-            ?>
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
+        session_start();
+        error_reporting(1);
+    ?>
     </head>
     <body>
 

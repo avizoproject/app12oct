@@ -49,6 +49,8 @@ $gReservation = new InfoReservation();
                                         <button class="btn btn-default center-block float-none" name="Modifier" id="Modifier">Modifier</button>
                                         <br>
                                         <button class="btn btn-default center-block float-none" name="Consulter" id="Retourner">Retourner</button>
+                                        <br>
+                                        <button class="btn btn-default center-block float-none" name="Historique" id="Historique">Historique des réservations</button>
                                     </div>
                                 </div>
 
@@ -56,46 +58,14 @@ $gReservation = new InfoReservation();
 
 	                </div>
 	            </div>
-              <div class="cd-schedule loading">
-              	<div style="float: left; position: relative;">
-              		<ul>
-                    <?php $gReservation->getReservationsNamesCalendar(); ?>
-              		</ul>
-              	</div>
-
-              	<div class="events">
-              		<ul>
-                    <?php $gReservation->getReservationsCalendar(); ?>
-              		</ul>
-              	</div>
-
-              	<div class="event-modal">
-              		<header class="header">
-              			<div class="content">
-              				<span class="event-date"></span>
-              				<h3 class="event-name"></h3>
-              			</div>
-
-              			<div class="header-bg"></div>
-              		</header>
-
-              		<div class="body">
-              			<div class="event-info"></div>
-              			<div class="body-bg"></div>
-              		</div>
-
-              		<a href="#0" class="close">Close</a>
-              	</div>
-
-              	<div class="cover-layer"></div>
-              </div>
 	        </div>
-
-	        <?php
-			require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/footer.php';
-                ?>
 	    </div>
 	</div>
+    <?php
+    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/modalUserReservations.php';
+    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/footer.php';
+
+    ?>
     </body>
 
     <!--   Core JS Files   -->
@@ -185,6 +155,11 @@ $gReservation = new InfoReservation();
                          $(this).closest("li").addClass("active");
                     }
 
+                });
+
+                //clic historique shows you all the reservations made by that user
+                $('#Historique').click(function () {
+                    $("#modalService").modal();
                 });
 
                 $('.navbar-header a').html("Réservations");
