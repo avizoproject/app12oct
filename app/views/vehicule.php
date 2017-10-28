@@ -134,7 +134,7 @@ $gVehicule = new InfoVehicule();
 
             if ($('#example tr.selected td:first').length > 0) {
                 var idcont = $('#example tr.selected td:first').html();
-                window.location.href = "http://localhost/app/app/views/updateVéhiculeadmin.php?id=" + idcont + "";
+                window.location.href = "updateVehiculeadmin.php?id=" + idcont;
             }else{
                 swal({
                     title:"",
@@ -149,7 +149,7 @@ $gVehicule = new InfoVehicule();
         $('#Consulter').click(function () {
             if ($('#example tr.selected td:first').length > 0) {
                 var idcons = $('#example tr.selected td:first').html();
-                window.location.href = "http://localhost/app/app/views/viewVéhicule.php?id=" + idcons + "";
+                window.location.href = "viewVehicule.php?id=" + idcons;
             }else{
                 swal({
                     title:"",
@@ -162,7 +162,7 @@ $gVehicule = new InfoVehicule();
 
         //clic ajouter
         $('#Ajouter').click(function () {
-            window.location.href = "http://localhost/app/app/views/addVehiculeadmin.php";
+            window.location.href = "addVehiculeadmin.php";
         });
 
         var activePage = window.location.href;

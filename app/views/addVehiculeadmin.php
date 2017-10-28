@@ -13,13 +13,10 @@ Last modification:
  ******************************************************************/
 session_start();
 error_reporting(0);
-require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_reservation.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_vehicule.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_client.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_sector.php';
 $listVehicule = new InfoVehicule();
-
-
 ?>
 <html>
 <head>
@@ -109,7 +106,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Odomètre</label>
-                                                <input type="text" class="form-control" id="odometre" maxlength="7" required></select>
+                                                <input type="text" class="form-control" id="odometre" maxlength="6" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -200,13 +197,13 @@ $listVehicule = new InfoVehicule();
 <script type="text/javascript">
     $(document).ready(function(){
 
-        $("#marque").load("../controllers/getSelectMarques.php");
-        $("#modele").load("../controllers/getSelectModeles.php?id=1");
+        $("#marque").load("../controllers/getSelectMarques.php?id=1");
+        $("#modele").load("../controllers/getSelectModeles.php?idMarque=1&idModele=0");
         $("#couleur").load("../controllers/getSelectCouleurs.php");
         $("#secteur").load("../controllers/getSelectSecteurs.php");
 
         $(document).on('change','#marque',function(){
-          $("#modele").load("../controllers/getSelectModeles.php?id=" + $('#marque').val());
+          $("#modele").load("../controllers/getSelectModeles.php?idMarque=" + $('#marque').val() + "&idModele=0");
         });
 
         $(document).on("click", "#confirmer", function(e) {

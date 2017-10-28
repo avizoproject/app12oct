@@ -41,13 +41,17 @@ class InfoBrand extends InfoModel
         $this->description_marque = $description_marque;
     }
 
-    function getListMarques() {
+    function getListMarques($id) {
         include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
         $results = $conn->query("SELECT * FROM marque ORDER BY nom_marque");
 
         while ($row = $results->fetch_assoc()) {
-                echo "<option value='" . $row['pk_marque'] . "'>" . $row['nom_marque'] . "</option>";
+          if ($id == $row['pk_marque']) {
+            echo "<option value='" . $row['pk_marque'] . "' selected>" . $row['nom_marque'] . "</option>";
+          } else {
+            echo "<option value='" . $row['pk_marque'] . "'>" . $row['nom_marque'] . "</option>";
+          }
         }
 
         // Frees the memory associated with a result

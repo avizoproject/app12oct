@@ -48,27 +48,25 @@ class controller_vehicules
 
     function modVehicule($id)
     {
-        $object = $this->infosVehicules->getObjectFromDB($id);
-
-        $this->infosVehicules->setPk_vehicule($id);
-        $this->infosVehicules->setFk_marque($this->arrayVehicules[0]);
-        $this->infosVehicules->setFk_modele($this->arrayVehicules[1]);
-        $this->infosVehicules->setAnnee($this->arrayVehicules[2]);
-        $this->infosVehicules->setFk_Couleur($this->arrayVehicules[3]);
-        $this->infosVehicules->setFk_secteur($this->arrayVehicules[4]);
-        $this->infosVehicules->setOdometre($this->arrayVehicules[5]);
-        $this->infosVehicules->setPlaque($this->arrayVehicules[6]);
-        $this->infosVehicules->setPhoto($this->arrayVehicules[7]);
-        $this->infosVehicules->setDate_achat($this->arrayVehicules[8]);
-        $this->infosVehicules->setDate_mise_hors_service($this->arrayVehicules[9]);
-        $this->infosVehicules->setDescription_hors_service($this->arrayVehicules[10]);
-        $this->infosVehicules->setFk_statut($this->arrayVehicules[11]);
-        $this->infosVehicules->updateDBObject();
+      $this->infosVehicules->setPk_vehicule($id);
+      $this->infosVehicules->setFk_marque($this->arrayVehicules[0]);
+      $this->infosVehicules->setFk_modele($this->arrayVehicules[1]);
+      $this->infosVehicules->setAnnee($this->arrayVehicules[2]);
+      $this->infosVehicules->setFk_Couleur($this->arrayVehicules[3]);
+      $this->infosVehicules->setFk_secteur($this->arrayVehicules[4]);
+      $this->infosVehicules->setOdometre($this->arrayVehicules[5]);
+      $this->infosVehicules->setPlaque($this->arrayVehicules[6]);
+      $this->infosVehicules->setPhoto($this->arrayVehicules[7]);
+      $this->infosVehicules->setDate_achat($this->arrayVehicules[8]);
+      $this->infosVehicules->setDate_mise_hors_service($this->arrayVehicules[9]);
+      $this->infosVehicules->setDescription_hors_service($this->arrayVehicules[10]);
+      $this->infosVehicules->setFk_statut($this->arrayVehicules[11]);
+      $this->infosVehicules->updateDBObject();
     }
 
     function suppVehicule($id)
     {
-      $this->infosVehicules->updateObjectDynamically("fk_statut", 0, $id);
+      $this->infosVehicules->updateObjectDynamically("fk_statut", 2, $id);
     }
 
     function getInfosVehicules() {

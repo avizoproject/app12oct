@@ -41,14 +41,18 @@ class InfoVModel extends InfoModel
         $this->description_modele = $description_modele;
     }
 
-    function getListModeles($id) {
+    function getListModeles($idMarque, $idModele) {
         include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-        $results = $conn->query("SELECT * FROM modele WHERE fk_marque=". $id ." ORDER BY nom_modele");
+        $results = $conn->query("SELECT * FROM modele WHERE fk_marque=". $idMarque ." ORDER BY nom_modele");
 
         echo "<option value=''>Sélectionnez un modèle...</option>";
         while ($row = $results->fetch_assoc()) {
-                echo "<option value='" . $row['pk_modele'] . "'>" . $row['nom_modele'] . "</option>";
+          if ($idModele == $row['pk_modele']) {
+            echo "<option value='" . $row['pk_modele'] . "' selected>" . $row['nom_modele'] . "</option>";
+          } else {
+            echo "<option value='" . $row['pk_modele'] . "'>" . $row['nom_modele'] . "</option>";
+          }
         }
 
         // Frees the memory associated with a result

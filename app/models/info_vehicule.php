@@ -146,11 +146,11 @@ include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
 echo $pkreservation . " " . $user_sector . " " . $datedebut . " " . $datefin . " " . $pkvehicule;
 
-$results = $conn->query("SELECT v.fk_secteur, v.pk_vehicule, m.nom_marque, o.nom_modele FROM vehicule v LEFT JOIN marque m ON v.fk_marque=m.pk_marque LEFT JOIN modele o ON o.pk_modele = v.fk_modele WHERE v.pk_vehicule NOT IN 
-( Select vehicule.pk_vehicule 
-FROM vehicule INNER JOIN reservation ON vehicule.pk_vehicule = reservation.fk_vehicule 
-WHERE date_fin >= '" . $datedebut . "' 
-AND date_debut <= '" . $datefin . "' 
+$results = $conn->query("SELECT v.fk_secteur, v.pk_vehicule, m.nom_marque, o.nom_modele FROM vehicule v LEFT JOIN marque m ON v.fk_marque=m.pk_marque LEFT JOIN modele o ON o.pk_modele = v.fk_modele WHERE v.pk_vehicule NOT IN
+( Select vehicule.pk_vehicule
+FROM vehicule INNER JOIN reservation ON vehicule.pk_vehicule = reservation.fk_vehicule
+WHERE date_fin >= '" . $datedebut . "'
+AND date_debut <= '" . $datefin . "'
 AND reservation.statut = '1'
 AND reservation.pk_reservation !='". $pkreservation ."')
 AND v.fk_secteur = '" . $user_sector . "'");
@@ -244,6 +244,70 @@ function getListVehicules(){
 
     // close connection
     $conn->close();
+}
+
+function getMarqueSelect($id) {
+  include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+  $results = $conn->query("SELECT * FROM vehicule LEFT OUTER JOIN marque ON vehicule.fk_marque = marque.pk_marque WHERE vehicule.pk_vehicule ='" . $id . "'");
+
+  while ($row = $results->fetch_assoc()) {
+    echo "<option selected>" . $row['nom_marque'] . "</option>";
+  }
+
+  // Frees the memory associated with a result
+  $results->free();
+
+  // close connection
+  $conn->close();
+}
+
+function getModeleSelect($id) {
+  include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+  $results = $conn->query("SELECT * FROM vehicule LEFT OUTER JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE vehicule.pk_vehicule ='" . $id . "'");
+
+  while ($row = $results->fetch_assoc()) {
+    echo "<option selected>" . $row['nom_modele'] . "</option>";
+  }
+
+  // Frees the memory associated with a result
+  $results->free();
+
+  // close connection
+  $conn->close();
+}
+
+function getCouleurSelect($id) {
+  include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+  $results = $conn->query("SELECT * FROM vehicule LEFT OUTER JOIN couleur ON vehicule.fk_couleur = couleur.pk_couleur WHERE vehicule.pk_vehicule ='" . $id . "'");
+
+  while ($row = $results->fetch_assoc()) {
+    echo "<option selected>" . $row['nom'] . "</option>";
+  }
+
+  // Frees the memory associated with a result
+  $results->free();
+
+  // close connection
+  $conn->close();
+}
+
+function getSecteurSelect($id) {
+  include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+  $results = $conn->query("SELECT * FROM vehicule LEFT OUTER JOIN secteur ON vehicule.fk_secteur = secteur.pk_secteur WHERE vehicule.pk_vehicule ='" . $id . "'");
+
+  while ($row = $results->fetch_assoc()) {
+    echo "<option selected>" . $row['nom_secteur'] . "</option>";
+  }
+
+  // Frees the memory associated with a result
+  $results->free();
+
+  // close connection
+  $conn->close();
 }
 }
 ?>
