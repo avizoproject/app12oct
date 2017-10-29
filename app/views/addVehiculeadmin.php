@@ -62,6 +62,7 @@ $listVehicule = new InfoVehicule();
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Marque</label>
                                                 <select class="form-control" id="marque" name="select" required></select>
+                                                <label onclick="ajoutMarque()" style="margin-left: 260px;">Ajouter</label>
                                             </div>
                                         </div>
                                     </div>
@@ -71,6 +72,7 @@ $listVehicule = new InfoVehicule();
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Modèle</label>
                                                 <select class="form-control" id="modele" name="select" required></select>
+                                                <label onclick="ajoutModele()" style="margin-left: 260px;">Ajouter</label>
                                             </div>
                                         </div>
                                     </div>
@@ -249,8 +251,23 @@ function erreurNonCon(){
                     animation : "pop"
                     });
                     setTimeout(function(){window.location.href='../views/signin.php';},1800);
-        }
-	</script>
+}
+
+function ajoutMarque() {
+  var answer = prompt("Veuillez entrer la nouvelle marque :");
+  if (answer != null && answer != "") {
+    location.href = "../controllers/ajouterMarqueModele.php?type=marque&nom=" + answer;
+  }
+}
+
+function ajoutModele() {
+  var answer = prompt("Veuillez entrer le nouveau modèle :");
+  if (answer != null && answer != "") {
+    location.href = "../controllers/ajouterMarqueModele.php?type=modele&marque=" + $("#marque").val() + "&nom=" + answer;
+  }
+}
+
+</script>
 
         <?php
         if($_SESSION['loggedIn']==false){
