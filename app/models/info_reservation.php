@@ -131,7 +131,7 @@ function getListReservations(){
 function getListReservationsUser($id){
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-    $results = $conn->query("SELECT reservation.statut,reservation.date_emise, reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM reservation LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE reservation.fk_utilisateur=" . $id . "");
+    $results = $conn->query("SELECT reservation.statut,reservation.date_emise, reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM reservation LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE reservation.fk_utilisateur=" . $id . " ORDER BY reservation.date_emise");
 
     $allreservation = array();
     while ($row = $results->fetch_assoc()) {

@@ -4,8 +4,9 @@
     <div class='modal-content'>
       <div class='modal-body'>
         <button type='button' class='close' data-dismiss='modal'>&times;</button>
+          <h3>Historique des réservations</h3>
          <div class='card-content table-responsive'>
-            <table class='table' id='example'>
+            <table id='example' class='table'>
                 <thead class='text-primary'>
                 <th>Date émise</th>
                 <th>Véhicule</th>
