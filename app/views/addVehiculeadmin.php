@@ -14,7 +14,6 @@ Last modification:
 session_start();
 error_reporting(0);
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_vehicule.php';
-require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_client.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_sector.php';
 $listVehicule = new InfoVehicule();
 ?>

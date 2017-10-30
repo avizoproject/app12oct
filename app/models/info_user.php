@@ -11,17 +11,17 @@ class InfoUser extends InfoModel
     protected $pk_utilisateur = 0;
 
     protected $nom = '';
-    
+
     protected $prenom = '';
-    
+
     protected $telephone = '';
-    
+
     protected $courriel = '';
-    
+
     protected $mot_de_passe = '';
-    
+
     protected $fk_statut = 0;
-    
+
     protected $fk_secteur = 0;
 
     function __construct()
@@ -94,24 +94,24 @@ function setFk_secteur($fk_secteur) {
 function getUser($email_client)
     {
         include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
-        
+
         $internalAttributes = get_object_vars($this);
-        
+
         $sql = "SELECT * FROM utilisateur u WHERE u.courriel = '". $email_client ."'";
-        
-        
-        
+
+
+
         $result = $conn->query($sql);
-        
+
         if ($result->num_rows > 0) {
             $anObject = Array();
             while ($row = $result->fetch_assoc()) {
                 foreach ($row as $aRowName => $aValue) {
                     $anObject[$aRowName] = $aValue;
                 }
-                
+
             }
-            
+
             $conn->close();
             return $anObject;
         }
@@ -216,6 +216,20 @@ function getUser($email_client)
         $conn->close();
     }
 
-}
+function getSecteurSelect($id) {
+  include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
+  $results = $conn->query("SELECT * FROM utilisateur LEFT OUTER JOIN secteur ON utilisateur.fk_secteur = secteur.pk_secteur WHERE utilisateur.pk_utilisateur ='" . $id . "'");
+
+  while ($row = $results->fetch_assoc()) {
+    echo "<option selected>" . $row['nom_secteur'] . "</option>";
+  }
+
+  // Frees the memory associated with a result
+  $results->free();
+
+  // close connection
+  $conn->close();
+}
+}
 ?>
