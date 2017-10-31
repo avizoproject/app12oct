@@ -5,7 +5,7 @@
       <paths name="avizo">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping local="$PROJECT_DIR$/app" web="/" />
           </mappings>
         </serverdata>
       </paths>

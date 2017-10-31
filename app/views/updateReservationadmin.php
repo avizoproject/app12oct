@@ -70,7 +70,7 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
                                                  <div class="form-group label-static col-md-4">
                                                      <label class="control-label">Dates</label>
 
-                                                     <input type='text' size="40" class="flatpickr form-control" data-enabletime=true data-enable-seconds=true name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation">
+                                                     <input type='text' size="40" class="flatpickr form-control" name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation">
 
                                                      <script src="../js/flatpickr.js" type="text/javascript"></script>
                                                      <script>
@@ -79,6 +79,7 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
 
 
                                                              defaultDate: <?php $gReservation->getDatesReservation($_GET["id"]); ?>
+                                                             enableTime: true,
                                                              mode: "range"
 
 
@@ -179,18 +180,23 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
 
  	<script type="text/javascript">
      	$(document).ready(function(){
+            function removeTime(dateStr) {
+                var parts = dateStr.split(" ");
+                return parts[0];
+            }
 
             $("#user").load("../controllers/getSelectUsers.php?id=<?php echo $_GET['id']; ?>", function() {
 
                 var date = $("#acquisition").val();
                 var deuxDates = date.split(' à ');
-                var dateFrom = deuxDates[0];
-                var dateTo = deuxDates[1];
+                var dateFrom = removeTime(deuxDates[0]);
+                var dateTo = removeTime(deuxDates[1]);
                 var utilisateurfks = $("#user").val();
                 var deuxfks = utilisateurfks.split(' ');
                 var fk_secteur = deuxfks[0];
 
                 $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom + "&secteur=" + fk_secteur);
+
 
             });
 
@@ -210,8 +216,8 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
             $("#user").change(function () {
                 var date = $("#acquisition").val();
                 var deuxDates = date.split(' à ');
-                var dateFrom = deuxDates[0];
-                var dateTo = deuxDates[1];
+                var dateFrom = removeTime(deuxDates[0]);
+                var dateTo = removeTime(deuxDates[1]);
 
                 var utilisateurfks = $("#user").val();
                 var deuxfks = utilisateurfks.split(' ');
@@ -226,8 +232,8 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
             $("#acquisition").change(function () {
                 var date = $("#acquisition").val();
                 var deuxDates = date.split(' à ');
-                var dateFrom = deuxDates[0];
-                var dateTo = deuxDates[1];
+                var dateFrom = removeTime(deuxDates[0]);
+                var dateTo = removeTime(deuxDates[1]);
 
                 var utilisateurfks = $("#user").val();
                 var deuxfks = utilisateurfks.split(' ');
@@ -240,8 +246,8 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
             $('#active').change(function(){
                 var date = $("#acquisition").val();
                 var deuxDates = date.split(' à ');
-                var dateFrom = deuxDates[0];
-                var dateTo = deuxDates[1];
+                var dateFrom = removeTime(deuxDates[0]);
+                var dateTo = removeTime(deuxDates[1]);
 
                 var utilisateurfks = $("#user").val();
                 var deuxfks = utilisateurfks.split(' ');

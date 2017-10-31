@@ -132,11 +132,8 @@ $gReservation = new InfoReservation();
 
 
 
-
-
-
-        <script src="../js/jquery-3.1.0.min.js" type="text/javascript"></script>
-        <script src="../js/jquery.dataTables.min.js"></script>
+    <script src="../js/jquery-3.1.0.min.js" type="text/javascript"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
 
 	<script src="../js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="../js/material.min.js" type="text/javascript"></script>
@@ -243,8 +240,6 @@ $gReservation = new InfoReservation();
                 //---------------HORAIRE ALEX----------------
 
 
-
-
             Date.prototype.getWeek = function(start)
             {
                 //Calcing the starting point
@@ -282,40 +277,52 @@ $gReservation = new InfoReservation();
                 //si date debut plus petite que dimanche, date debut dimanche
                 var Dates = new Date().getWeek();
                 var comp1 = new Date(Dates[0]);
-                var comp2 = new Date(toDate(reservations[index]['date_debut']));
+                var comp2 = new Date(toDate(removeTime(reservations[index]['date_debut'])));
 
                 if (comp1 > comp2) {
 
-                    var dateDebut = new Date(Dates[0].toLocaleDateString()).getDay();
+                    var dateDebut = '0' + new Date(Dates[0].toLocaleDateString()).getDay() + ':00';
                 }
                 else {
-                    var dateDebut = (new Date(toDate(reservations[index]['date_debut'])).getDay());
+                    if (getTime(splitDate(reservations[index]['date_debut'])[2])[0] < 12) {
+                        var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':00';
+                    }else{
+                        var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':30';
+                    }
                 }
 
                 //si date fin plus grande que samedi, date fin samedi
 
                 var comp3 = new Date(Dates[1]);
-                var comp4 = new Date(toDate(reservations[index]['date_fin']));
+                var comp4 = new Date(toDate(removeTime(reservations[index]['date_fin'])));
 
                 if (comp3 < comp4) {
 
-                    var dateFin = new Date(Dates[1].toLocaleDateString()).getDay() + 1;
+                    var dateFin = '0' + new Date(Dates[1].toLocaleDateString()).getDay() + 1 + ':00';
+
                 }
                 else {
+                    if (getTime(splitDate(reservations[index]['date_fin'])[2])[0] <= 12) {
+                        var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay()) + ':30';
 
-                    var dateFin = (new Date(toDate(reservations[index]['date_fin'])).getDay() + 1);
+                    }else{
+                        var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay() + 1) + ':00';
+
+                    }
                 }
 
                 var nom_vehicule = reservations[index]['nom_marque'] + " " + reservations[index]['nom_modele'];
                 var nom_user = reservations[index]['prenom'] + " " + reservations[index]['nom'];
-                var dated = "Du  " +reservations[index]['date_debut'] + "  au  " + reservations[index]['date_fin'];
+                var dated = removeTime(splitDate(reservations[index]['date_debut'])[2]) + "-" + removeTime(splitDate(reservations[index]['date_fin'])[2]) + " " + getTime(splitDate(reservations[index]['date_fin'])[2])[0]+"h" ;
+                var pk = reservations[index]['pk_reservation']+"";
 
                 var schedule = [];
                 var scheduleData = {
-                    start: '0' + dateDebut + ':00',
-                    end: '0' + dateFin + ':00',
+                    start: dateDebut+'',
+                    end: dateFin + '',
                     text: nom_user,
                     dated : dated,
+                    pk: pk,
                     data: {}
 
                 };
@@ -339,6 +346,21 @@ $gReservation = new InfoReservation();
                 return new Date(parts[0], parts[1] - 1, parts[2]);
             }
 
+            function splitDate(dateStr) {
+                var parts = dateStr.split("-");
+                return parts;
+            }
+            function removeTime(dateStr) {
+                var parts = dateStr.split(" ");
+                return parts[0];
+            }
+
+            function getTime(dateStr) {
+                var parts = dateStr.split(" ");
+                var timeparts = parts[1].split(":")
+                return timeparts;
+            }
+
 
 
             console.log(getDataCalendar());
@@ -350,8 +372,8 @@ $gReservation = new InfoReservation();
             var $sc = $("#schedule").timeSchedule({
                 startTime: "00:00", // schedule start time(HH:ii)
                 endTime: "07:00",   // schedule end time(HH:ii)
-                widthTime:60 * 10,  // cell timestamp example 10 minutes
-                timeLineY:60,       // height(px)
+                widthTime:60 * 30,  // cell timestamp example 10 minutes
+                timeLineY:40,       // height(px)
                 verticalScrollbar:20,   // scrollbar (px)
                 timeLineBorder:2,   // border(top and bottom)
                 debug:"#debug",     // debug string output elements
@@ -362,7 +384,9 @@ $gReservation = new InfoReservation();
                 init_data: function(node,data){
                 },
                 click: function(node,data){
-                    alert("click event");
+                    //sweetalert moé ca
+                    var pk = node.find('.hidden').text();
+                    window.location.href = "http://localhost/app/app/views/updateReservationadmin.?id="+pk;
                 },
 
 

@@ -76,13 +76,14 @@ $listVehicule = new InfoVehicule();
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Dates</label>
 
-                                                <input type='text' size="40" class="flatpickr form-control" data-enabletime=true data-enable-seconds=true name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation" required>
+                                                <input type='text' size="40" class="flatpickr form-control" name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation" required>
 
                                                 <script src="../js/flatpickr.js" type="text/javascript"></script>
                                                 <script>
                                                     flatpickr(".selector", {});
                                                     document.getElementById("acquisition").flatpickr({
                                                         minDate: "today",
+                                                        enableTime: true,
                                                         mode: "range"
                                                     });
                                                 </script>
@@ -170,13 +171,18 @@ $listVehicule = new InfoVehicule();
         $("#acquisition").change(function () {
             var date = $("#acquisition").val();
             var deuxDates = date.split(' à ');
-            var dateFrom = deuxDates[0];
-            var dateTo = deuxDates[1];
+            var dateFrom = removeTime(deuxDates[0]);
+            var dateTo = removeTime(deuxDates[1]);
             var user = $("#user").val();
             var secteurETuser = user.split(' ');
             var secteur = secteurETuser[0];
 
             $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&datedebut=" + dateFrom + "&secteur=" + secteur);
+
+            function removeTime(dateStr) {
+                var parts = dateStr.split(" ");
+                return parts[0];
+            }
         });
 
         $(document).on("click", "#confirmer", function(e) {
@@ -201,6 +207,8 @@ $listVehicule = new InfoVehicule();
             }
 
             location.href = "../controllers/controller_reservation.php?ajout=1&admin=1&statut="+ statut +"&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule + "&user=" + user;
+
+
 
         });
 

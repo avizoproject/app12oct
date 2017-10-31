@@ -35,31 +35,55 @@ $gReservation = new InfoReservation();
 	    <div class="main-panel">
 			<?php
                         require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/navigation.php';
+
                         ?>
 
 	        <div class="content">
 	            <div class="container-fluid">
 	                <div class="row">
 	                    <div class="col-md-12">
-
-                                <div class="buttons">
-                                    <div class="centerbuttons">
-                                        <button class="btn btn-default center-block float-none" name="Ajouter" id="Ajouter">Ajouter</button>
-                                        <br>
-                                        <button class="btn btn-default center-block float-none" name="Modifier" id="Modifier">Modifier</button>
-                                        <br>
-                                        <button class="btn btn-default center-block float-none" name="Consulter" id="Retourner">Retourner</button>
-                                        <br>
-                                        <button class="btn btn-default center-block float-none" name="Historique" id="Historique">Historique des réservations</button>
-                                    </div>
+                            <div class="card">
+                                <div class="card-header" data-background-color="blue">
+                                    <h4 class="title">Réservations</h4>
+                                    <p class="category">Sélectionnez une réservation avant de choisir une action</p>
                                 </div>
+                                <div class="card-content table-responsive">
 
+
+                                            <div class="row col-md-4 center-block float-none">
+                                                <div class="buttons col-md-7 float-none" >
+                                                    <button class="btn btn-default" name="Ajouter" id="Ajouter">Ajouter</button>
+
+                                                    <button class="btn btn-default" name="Modifier" id="Modifier">Modifier</button>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row col-md-4 center-block float-none">
+                                                <div class="buttons center-block float-none" >
+                                                    <button class="btn btn-default" name="Consulter" id="Retourner">Retourner</button>
+
+                                                    <button class="btn btn-default" name="Historique" id="Historique">Historique</button>
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                </div>
+                            </div>
 	                    </div>
 
 	                </div>
 	            </div>
+                <br>
+
+                <div class="col-md-12" id="schedule"></div>
 	        </div>
+
 	    </div>
+
+
 	</div>
     <?php
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/modalUserReservations.php';
@@ -93,6 +117,8 @@ $gReservation = new InfoReservation();
 
 	<!-- Material Dashboard DEMO methods, don't include it in your project! -->
 	<script src="../js/demo.js"></script>
+    <script src= 'https://code.jquery.com/ui/1.10.4/jquery-ui.min.js' type= 'text/javascript' language= 'javascript'></script>
+    <script type="text/javascript" src="../js/jq.schedule.js"></script>
 
 	<script type="text/javascript">
     	$(document).ready(function(){
@@ -133,6 +159,11 @@ $gReservation = new InfoReservation();
                     }
                 });
 
+            //clic historique shows you all the reservations made by that user
+            $('#Historique').click(function () {
+                $("#modalService").modal();
+            });
+
                 //clic ajouter
                 $('#Ajouter').click(function () {
                     window.location.href = "http://localhost/app/app/views/addReservation.php";
@@ -157,12 +188,164 @@ $gReservation = new InfoReservation();
 
                 });
 
-                //clic historique shows you all the reservations made by that user
-                $('#Historique').click(function () {
-                    $("#modalService").modal();
-                });
+
 
                 $('.navbar-header a').html("Réservations");
+
+            //---------------HORAIRE ALEX----------------
+
+
+            Date.prototype.getWeek = function(start)
+            {
+                //Calcing the starting point
+                start = start || 0;
+                var today = new Date(this.setHours(0, 0, 0, 0));
+                var day = today.getDay() - start;
+                var date = today.getDate() - day;
+
+                // Grabbing Start/End Dates
+                var StartDate = new Date(today.setDate(date));
+                var EndDate = new Date(today.setDate(date + 6));
+
+                return [StartDate, EndDate];
+            }
+
+
+
+            // test code
+
+
+            /* var start = new Date(Dates[0].toLocaleDateString()).getDay();
+             var end = new Date(Dates[1].toLocaleDateString()).getDay() + 1;
+             var startOfTheWeek = "0"+start+":00";
+             var endOfTheWeek = "0"+end+":00";
+ */
+
+            var reservations = <?php echo $gReservation->getWeekReservationsForUser($_SESSION['user']['pk_utilisateur']); ?>;
+
+
+
+
+            function getDataCalendar() {
+                var data = {};
+                $.each(reservations, function (index) {
+                    //si date debut plus petite que dimanche, date debut dimanche
+                    var Dates = new Date().getWeek();
+                    var comp1 = new Date(Dates[0]);
+                    var comp2 = new Date(toDate(removeTime(reservations[index]['date_debut'])));
+
+                    if (comp1 > comp2) {
+
+                        var dateDebut = '0' + new Date(Dates[0].toLocaleDateString()).getDay() + ':00';
+                    }
+                    else {
+                        if (getTime(splitDate(reservations[index]['date_debut'])[2])[0] < 12) {
+                            var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':00';
+                        }else{
+                            var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':30';
+                        }
+                    }
+
+                    //si date fin plus grande que samedi, date fin samedi
+
+                    var comp3 = new Date(Dates[1]);
+                    var comp4 = new Date(toDate(removeTime(reservations[index]['date_fin'])));
+
+                    if (comp3 < comp4) {
+
+                        var dateFin = '0' + new Date(Dates[1].toLocaleDateString()).getDay() + 1 + ':00';
+
+                    }
+                    else {
+                        if (getTime(splitDate(reservations[index]['date_fin'])[2])[0] <= 12) {
+                            var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay()) + ':30';
+
+                        }else{
+                            var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay() + 1) + ':00';
+
+                        }
+                    }
+
+                    var nom_vehicule = reservations[index]['nom_marque'] + " " + reservations[index]['nom_modele'];
+                    var nom_user = reservations[index]['prenom'] + " " + reservations[index]['nom'];
+                    var dated = removeTime(splitDate(reservations[index]['date_debut'])[2]) + "-" + removeTime(splitDate(reservations[index]['date_fin'])[2]) + " à " + getTime(splitDate(reservations[index]['date_fin'])[2])[0]+"h" ;
+                    var pk = reservations[index]['pk_reservation']+"";
+
+                    var schedule = [];
+                    var scheduleData = {
+                        start: dateDebut+'',
+                        end: dateFin + '',
+                        text: dated,
+                        dated : nom_user,
+                        pk: pk,
+                        data: {}
+
+                    };
+
+                    schedule.push(scheduleData);
+                    var rowNum = index +1;
+                    data["'" + rowNum + "'"] = {
+
+                        schedule: schedule,
+                        title: nom_vehicule
+                    };
+
+
+
+                });
+                return data;
+            }
+
+            function toDate(dateStr) {
+                var parts = dateStr.split("-");
+                return new Date(parts[0], parts[1] - 1, parts[2]);
+            }
+
+            function splitDate(dateStr) {
+                var parts = dateStr.split("-");
+                return parts;
+            }
+            function removeTime(dateStr) {
+                var parts = dateStr.split(" ");
+                return parts[0];
+            }
+
+            function getTime(dateStr) {
+                var parts = dateStr.split(" ");
+                var timeparts = parts[1].split(":")
+                return timeparts;
+            }
+
+
+
+            console.log(getDataCalendar());
+
+
+
+
+
+            var $sc = $("#schedule").timeSchedule({
+                startTime: "00:00", // schedule start time(HH:ii)
+                endTime: "07:00",   // schedule end time(HH:ii)
+                widthTime:60 * 30,  // cell timestamp example 10 minutes
+                timeLineY:40,       // height(px)
+                verticalScrollbar:20,   // scrollbar (px)
+                timeLineBorder:2,   // border(top and bottom)
+                debug:"#debug",     // debug string output elements
+                rows : getDataCalendar(),
+                change: function(node,data){
+                    alert("change event");
+                },
+                init_data: function(node,data){
+                },
+                click: function(node,data){
+                    //sweetalert moé ca
+                    var pk = node.find('.hidden').text();
+                    window.location.href = "http://localhost/app/app/views/updateReservation.?id="+pk;
+                },
+
+
+            });
 
     	});
 		

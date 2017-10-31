@@ -59,6 +59,7 @@
                                                          flatpickr(".selector", {});
                                                          document.getElementById("acquisition").flatpickr({
                                                              defaultDate: <?php $gReservation->getDatesReservation($_GET["id"]); ?>
+                                                             enableTime: true,
                                                              mode: "range"
                                                          });
                                                      </script>
@@ -125,6 +126,11 @@
 
  	<script type="text/javascript">
      	$(document).ready(function(){
+
+            function removeTime(dateStr) {
+                var parts = dateStr.split(" ");
+                return parts[0];
+            }
              $(document).on("click", "#modifier", function(e) {
                  e.preventDefault();
                  location.href = "http://localhost/app/app/views/updateReservation.php?id=<?php echo $_GET["id"]; ?>";
@@ -135,8 +141,8 @@
 
                 var date = $("#acquisition").val();
                 var deuxDates = date.split(' à ');
-                var dateFrom = deuxDates[0];
-                var dateTo = deuxDates[1];
+                var dateFrom = removeTime(deuxDates[0]);
+                var dateTo = removeTime(deuxDates[1]);
 
                 $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom);
 

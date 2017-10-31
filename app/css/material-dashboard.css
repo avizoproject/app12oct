@@ -686,7 +686,8 @@ h2.title {
   border: none;
   border-radius: 3px;
   position: relative;
-  padding: 12px 30px;
+
+  /*padding: 12px 30px;* fixes mobile support   */
   
   font-size: 12px;
   font-weight: 400;

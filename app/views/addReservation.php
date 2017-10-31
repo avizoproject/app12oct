@@ -62,13 +62,14 @@ $listVehicule = new InfoVehicule();
                                                 <div class="form-group label-static">
                                                     <label class="control-label">Dates</label>
 
-                                                    <input type='text' size="40" class="flatpickr form-control" data-enabletime=true data-enable-seconds=true name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation" required>
+                                                    <input type='text' size="40" class="flatpickr form-control" name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation" required>
 
                                                     <script src="../js/flatpickr.js" type="text/javascript"></script>
                                                     <script>
                                                         flatpickr(".selector", {});
                                                         document.getElementById("acquisition").flatpickr({
                                                             minDate: "today",
+                                                            enableTime: true,
                                                             mode: "range"
                                                         });
                                                     </script>
@@ -141,8 +142,8 @@ $listVehicule = new InfoVehicule();
             $("#acquisition").change(function () {
                 var date = $("#acquisition").val();
                 var deuxDates = date.split(' à ');
-                var dateFrom = deuxDates[0];
-                var dateTo = deuxDates[1];
+                var dateFrom = removeTime(deuxDates[0]);
+                var dateTo = removeTime(deuxDates[1]);
 
                 $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&datedebut=" + dateFrom);
             });
@@ -163,6 +164,11 @@ $listVehicule = new InfoVehicule();
             });
 
                 $('.navbar-header a').html("Ajout de réservation");
+
+            function removeTime(dateStr) {
+                var parts = dateStr.split(" ");
+                return parts[0];
+            }
 
     	});
 

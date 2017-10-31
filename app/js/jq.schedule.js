@@ -5,7 +5,7 @@
             rows : {},
             startTime: "07:00",
             endTime: "14:00",
-            widthTimeX:25,		// 1 cell zone width(px)
+            widthTimeX:50,		// 1 cell zone width(px)
             widthTime:600,		// 区切り時間(seconds)
             timeLineY:50,		// timeline height(px)
             timeLineBorder:1,	// timeline height border
@@ -13,7 +13,7 @@
             timeLinePaddingTop:0,
             timeLinePaddingBottom:0,
             headTimeBorder:1,	// time border width
-            dataWidth:160,		// data width
+            dataWidth:60,		// data width
             verticalScrollbar:0,	// vertical scrollbar width
             // event
             init_data: null,
@@ -105,18 +105,22 @@
         this.addScheduleData = function(data){
             var st = Math.ceil((data["start"] - tableStartTime) / setting.widthTime);
             var et = Math.floor((data["end"] - tableStartTime) / setting.widthTime);
-            var $bar = jQuery('<div class="sc_Bar"><span class="head"><span class="time"></span></span><span class="text"></span></div>');
+            var $bar = jQuery('<div class="sc_Bar"><span class="head"><span class="hidden"></span><span class="time"></span></span><span class="text"></span></div>');
             var stext = data["dated"];
-
+            var pk = data["pk"];
 
             var snum = element.getScheduleCount(data["timeline"]);
             $bar.css({
                 left : (st * setting.widthTimeX),
                 top : ((snum * setting.timeLineY) + setting.timeLinePaddingTop),
                 width : ((et - st) * setting.widthTimeX),
-                height : (setting.timeLineY)
+                height : (setting.timeLineY - 1)
             });
             $bar.find(".time").text(""+stext+"");
+            $bar.find(".hidden").text(""+pk+"");
+            if(data["pk"]){
+                $bar.find(".hidden").text(data["pk"]);
+            }
             if(data["text"]){
                 $bar.find(".text").text(data["text"]);
             }
@@ -280,7 +284,7 @@
             var $timeline = jQuery(html);
             for(var t=tableStartTime;t<tableEndTime;t+=setting.widthTime){
                 var $tl = jQuery('<div class="tl"></div>');
-                $tl.width(setting.widthTimeX - setting.timeBorder);
+                $tl.width(setting.widthTimeX);
 
                 $tl.data("time",element.formatTime(t));
                 $tl.data("timeline",timeline);
@@ -312,6 +316,9 @@
                     data["start"] = s;
                     data["end"] = e;
                     data["dated"] = bdata["dated"];
+                    if(bdata["pk"]){
+                        data["pk"] = bdata["pk"];
+                    }
                     if(bdata["text"]){
                         data["text"] = bdata["text"];
                     }
@@ -501,32 +508,32 @@
 
                     switch (element.formatTime(t)) {
                         case "00:00":
-                            html += '<div class="sc_time">'+'Dimanche'+'</div>';
+                            html += '<div class="sc_time">'+'Dim'+'</div>';
                             break;
                         case "01:00":
-                            html += '<div class="sc_time">'+'Lundi'+'</div>';
+                            html += '<div class="sc_time">'+'Lun'+'</div>';
                             break;
                         case "02:00":
-                            html += '<div class="sc_time">'+'Mardi'+'</div>';
+                            html += '<div class="sc_time">'+'Mar'+'</div>';
                             break;
                         case "03:00":
-                            html += '<div class="sc_time">'+'Mercredi'+'</div>';
+                            html += '<div class="sc_time">'+'Mer'+'</div>';
                             break;
                         case "04:00":
-                            html += '<div class="sc_time">'+'Jeudi'+'</div>';
+                            html += '<div class="sc_time">'+'Jeu'+'</div>';
                             break;
                         case "05:00":
-                            html += '<div class="sc_time">'+'Vendredi'+'</div>';
+                            html += '<div class="sc_time">'+'Ven'+'</div>';
                             break;
                         case "06:00":
-                            html += '<div class="sc_time">'+'Samedi'+'</div>';
+                            html += '<div class="sc_time">'+'Sam'+'</div>';
                             break;
                     }
 
 
                     var $time = jQuery(html);
                     var cell_num = Math.floor(Number(Math.min((Math.ceil((t + setting.widthTime) / 3600) * 3600),tableEndTime) - t) / setting.widthTime);
-                    $time.width((cell_num * setting.widthTimeX) - setting.headTimeBorder);
+                    $time.width((cell_num * setting.widthTimeX));
                     $element.find(".sc_header_scroll").append($time);
 
                     before_time = t;

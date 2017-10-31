@@ -58,6 +58,7 @@
     float:left;
     overflow-x:auto;
     overflow-y:auto;
+    border-right:1 px solid #666;
 }
 #schedule .sc_main_scroll{
 }
@@ -83,16 +84,24 @@
 }
 #schedule .sc_Bar .head{
     display:block;
-    padding:6px 8px 0;
+    padding-left: 2px;
     font-size:12px;
 
     overflow:hidden;
 }
-#schedule .sc_Bar .text{
+#schedule .sc_Bar .head .time{
     display:block;
-    padding:5px 15px 0;
-    font-weight:bold;
+    padding-left: 2px;
+    font-size:10px;
 
+
+    overflow:hidden;
+}
+#schedule .sc_Bar .text{
+    font-size:12px;
+    padding-left:2px;
+    font-weight:bold;
+    line-height: normal;
     overflow:hidden;
 }
 #schedule .timeline,
@@ -103,8 +112,10 @@
     overflow:hidden;
 }
 #schedule .sc_data .timeline span{
-    padding:10px;
+    font-size:12px;
+    padding:2px;
     display:block;
+    line-height: normal;
 }
 #schedule .sc_data .timeline span.photo{
     float:left;
@@ -122,7 +133,7 @@
 #schedule .sc_main_scroll .sc_main .tl{
     float:left;
     height:100%;
-    border-right:solid 1px #CCC;
+    border-left:solid 1px #CCC;
 }
 #schedule .sc_main_scroll .sc_main .tl:hover{
     background:#F0F0F0;

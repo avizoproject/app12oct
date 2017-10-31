@@ -54,7 +54,7 @@
                                                  <div class="form-group label-static col-md-4">
                                                      <label class="control-label">Dates</label>
 
-                                                     <input type='text' size="40" class="flatpickr form-control" data-enabletime=true data-enable-seconds=true name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation">
+                                                     <input type='text' size="40" class="flatpickr form-control" name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation">
 
                                                      <script src="../js/flatpickr.js" type="text/javascript"></script>
                                                      <script>
@@ -63,6 +63,7 @@
 
 
                                                              defaultDate: <?php $gReservation->getDatesReservation($_GET["id"]); ?>
+                                                             enableTime: true,
                                                              mode: "range"
 
 
@@ -134,13 +135,17 @@
 
  	<script type="text/javascript">
      	$(document).ready(function(){
+            function removeTime(dateStr) {
+                var parts = dateStr.split(" ");
+                return parts[0];
+            }
 
             $("#trigger").load("../controllers/getSelectUsers.php?id=<?php echo $_GET['id']; ?>", function() {
 
                 var date = $("#acquisition").val();
                 var deuxDates = date.split(' à ');
-                var dateFrom = deuxDates[0];
-                var dateTo = deuxDates[1];
+                var dateFrom = removeTime(deuxDates[0]);
+                var dateTo = removeTime(deuxDates[1]);
 
                 $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom);
 
@@ -150,8 +155,8 @@
              $("#acquisition").change(function () {
                  var date = $("#acquisition").val();
                  var deuxDates = date.split(' à ');
-                 var dateFrom = deuxDates[0];
-                 var dateTo = deuxDates[1];
+                 var dateFrom = removeTime(deuxDates[0]);
+                 var dateTo = removeTime(deuxDates[1]);
 
                  $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom);
              });
