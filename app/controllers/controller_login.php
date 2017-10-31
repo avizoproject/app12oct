@@ -4,13 +4,12 @@
  Auteur :
  Fonctionnalité :
  Vérification:
- 
+
  ======================================================
- 
+
  Dernière modification:
- 
+
  *****************************************************************/
-require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_client.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_user.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_sector.php';
 // Start the session
@@ -37,11 +36,11 @@ class controller_login
         $this->InfosUtilisateur = new infoUser();
         $this->InfosSecteur = new InfoSector();
         $this->allUsers = $this->InfosUtilisateur->getListOfAllDBObjects();
-       
+
     }
     function login()
     {
-        
+
         foreach ($this->allUsers as $row) {
             if ($row['courriel'] == $this->infosLogin[0] && $row['mot_de_passe'] == $this->infosLogin[1]) {
                 echo "success ";
@@ -49,15 +48,15 @@ class controller_login
             }
         }
     }
-    
+
     function getInfosUtilisateur(){
         return $this->InfosUtilisateur;
     }
-    
+
     function getInfos_Sector(){
         return $this->InfosSecteur;
     }
-    
+
     function getInfosLogin(){
         return $this->infosLogin;
     }
@@ -77,18 +76,18 @@ if ($loginControl->getHs() == true) {
     $_SESSION['admin'] = $user['fk_statut'];
     $_SESSION['email'] =$user['courriel'];
     $_SESSION['firstTime']=true;
-    
+
     $_SESSION['loggedIn']=true;
     echo $_SESSION['admin'];
     if ($_SESSION['admin'] === 1)
         header("Location: http://localhost/app/app/views/dashboard.php");
-    else 
+    else
         header("Location: http://localhost/app/app/views/dashboard.php");
     exit();
 }
 else{
    $message = "Le nom d\'utilisateur ou le mot de passe est erronné.";
-    
+
     echo ("<SCRIPT LANGUAGE='JavaScript'>
     window.alert('Succesfully Updated')
     window.location.href='http://localhost/app/app/views/signin.php';

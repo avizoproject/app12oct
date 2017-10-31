@@ -13,16 +13,13 @@ Last modification:
  ******************************************************************/
 session_start();
 error_reporting(0);
-require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_reservation.php';
-require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_vehicule.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_user.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_sector.php';
-$listVehicule = new InfoVehicule();
-
-
+$listUser = new InfoUser();
 ?>
 <html>
 <head>
-    <title>Avizo - Ajout d'une réservation</title>
+    <title>Avizo - Ajout d'un utilisateur</title>
     <?php
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
     session_start();
@@ -62,45 +59,64 @@ $listVehicule = new InfoVehicule();
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
-
-                                                <label class="control-label">Choisissez un employé</label>
-                                                <select class="form-control" id="user" name="select"></select>
+                                                <label class="control-label">Nom</label>
+                                                <input type="text" class="form-control" id="nom" maxlength="100" required>
                                             </div>
                                         </div>
-
                                     </div>
 
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
-                                                <label class="control-label">Dates</label>
-
-                                                <input type='text' size="40" class="flatpickr form-control" name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation" required>
-
-                                                <script src="../js/flatpickr.js" type="text/javascript"></script>
-                                                <script>
-                                                    flatpickr(".selector", {});
-                                                    document.getElementById("acquisition").flatpickr({
-                                                        minDate: "today",
-                                                        enableTime: true,
-                                                        mode: "range"
-                                                    });
-                                                </script>
-
+                                                <label class="control-label">Prénom</label>
+                                                <input type="text" class="form-control" id="prenom" maxlength="100" required>
                                             </div>
                                         </div>
                                     </div>
 
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group label-static col-md-4">
+                                                <label class="control-label">Téléphone</label>
+                                                <input type="text" class="form-control" id="telephone" maxlength="12" required>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
-
-                                                <label class="control-label">Choisissez un véhicule</label>
-                                                <select class="form-control" id="vehicule" name="select" required></select>
+                                                <label class="control-label">Courriel</label>
+                                                <input type="text" class="form-control" id="courriel" maxlength="150" required>
                                             </div>
                                         </div>
+                                    </div>
 
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group label-static col-md-4">
+                                                <label class="control-label">Mot de passe</label>
+                                                <input type="password" class="form-control" id="password" maxlength="50" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group label-static col-md-4">
+                                                <label class="control-label">Confirmation du mot de passe</label>
+                                                <input type="password" class="form-control" id="passwordConfirmed" maxlength="50" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group label-static col-md-4">
+                                                <label class="control-label">Secteur</label>
+                                                <select class="form-control" id="secteur" name="select" required></select>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class='row'>
@@ -108,7 +124,11 @@ $listVehicule = new InfoVehicule();
                                             <div class='checkbox'>
                                                 <label>
                                                     <input type='checkbox' id='active' name='optionsCheckboxes'>
-                                                    <label for='active' class='control-label'>Réservation active</label>
+                                                    <label for='active' class='control-label'>Utilisateur actif</label>
+                                                </label>
+                                                <label style="margin-left: 100px;">
+                                                    <input type='checkbox' id='admin' name='optionsCheckboxes'>
+                                                    <label for='admin' class='control-label'>Administrateur</label>
                                                 </label>
                                             </div>
                                         </div>
@@ -164,59 +184,43 @@ $listVehicule = new InfoVehicule();
 <script type="text/javascript">
     $(document).ready(function(){
 
-        $("#user").load("../controllers/getSelectUsers.php");
-
-        //si les dates sont changées, reload vehicules dispos
-        $("#acquisition").change(function () {
-            var date = $("#acquisition").val();
-            var deuxDates = date.split(' à ');
-            var dateFrom = removeTime(deuxDates[0]);
-            var dateTo = removeTime(deuxDates[1]);
-            var user = $("#user").val();
-            var secteurETuser = user.split(' ');
-            var secteur = secteurETuser[0];
-
-            $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&datedebut=" + dateFrom + "&secteur=" + secteur);
-
-            function removeTime(dateStr) {
-                var parts = dateStr.split(" ");
-                return parts[0];
-            }
-        });
+        $("#secteur").load("../controllers/getSelectSecteurs.php");
 
         $(document).on("click", "#confirmer", function(e) {
             e.preventDefault();
-            var date = $("#acquisition").val();
-            var deuxDates = date.split(' à ');
-            var dateFrom = deuxDates[0];
-            var dateTo = deuxDates[1];
+            var nom = $("#nom").val();
+            var prenom = $("#prenom").val();
+            var telephone = $("#telephone").val();
+            var courriel = $("#courriel").val();
+            var secteur = $("#secteur").val();
 
-            var userstuff = $("#user").val();
-            var secteurETuser = userstuff.split(' ');
-            var user = secteurETuser[1];
-
-            var vehiculesfks = $("#vehicule").val();
-            var fksvehic = vehiculesfks.split(' ');
-            var pkVehicule = fksvehic[0];
-
-            if ($('#active').is(':checked') == true){
-                var statut = 1;
-            }else{
-                var statut = 0;
+            if ($("#password").val() === $("#passwordConfirmed").val()) {
+              var password = $("#password").val();
+            } else {
+              alert("Les mots de passe entrés ne sont pas identiques !!");
             }
 
-            location.href = "../controllers/controller_reservation.php?ajout=1&admin=1&statut="+ statut +"&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule + "&user=" + user;
+            if ($('#active').is(':checked') == true) {
+              var statut = 2;
+            } else {
+              var statut = 3;
+            }
 
+          if ($('#admin').is(':checked') == true) {
+              var statut = 1;
+          }
 
-
+          if (nom && prenom && telephone && courriel && password && secteur) {
+            location.href = "../controllers/controller_users.php?ajout=1&nom="+ nom +"&prenom="+ prenom +"&telephone="+ telephone +"&courriel="+ courriel +"&password="+ password +"&secteur="+ secteur +"&statut="+ statut;
+          }
         });
 
         $(document).on("click", "#cancel", function(e) {
             e.preventDefault();
-            location.href = "../views/reservation.php";
+            location.href = "../views/user.php";
         });
 
-        $('.navbar-header a').html("Ajout de réservation");
+        $('.navbar-header a').html("Ajout d'utilisateur");
 
     });
 
@@ -232,8 +236,8 @@ function erreurNonCon(){
                     animation : "pop"
                     });
                     setTimeout(function(){window.location.href='../views/signin.php';},1800);
-        }
-	</script>
+}
+</script>
 
         <?php
         if($_SESSION['loggedIn']==false){

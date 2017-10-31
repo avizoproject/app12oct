@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.6.4
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 27 oct. 2017 à 17:08
--- Version du serveur :  5.7.19
--- Version de PHP :  5.6.31
+-- Host: 127.0.0.1
+-- Generation Time: Oct 29, 2017 at 11:44 PM
+-- Server version: 5.7.14
+-- PHP Version: 5.6.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,139 +17,114 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `avizobd`
+-- Database: `avizobd`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `adresse`
+-- Table structure for table `adresse`
 --
 
-DROP TABLE IF EXISTS `adresse`;
-CREATE TABLE IF NOT EXISTS `adresse` (
-  `pk_adresse` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `adresse` (
+  `pk_adresse` int(11) NOT NULL,
   `no_civique` int(11) NOT NULL,
-  `nom_rue` text NOT NULL,
-  PRIMARY KEY (`pk_adresse`)
+  `nom_rue` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `alerte`
+-- Table structure for table `alerte`
 --
 
-DROP TABLE IF EXISTS `alerte`;
-CREATE TABLE IF NOT EXISTS `alerte` (
-  `pk_alerte` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `alerte` (
+  `pk_alerte` int(11) NOT NULL,
   `fk_reservation` int(11) NOT NULL,
-  `fk_type_entretien` int(11) NOT NULL,
-  PRIMARY KEY (`pk_alerte`),
-  KEY `fk_reservation` (`fk_reservation`),
-  KEY `fk_type_entretien` (`fk_type_entretien`)
+  `fk_type_entretien` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `couleur`
+-- Table structure for table `couleur`
 --
 
-DROP TABLE IF EXISTS `couleur`;
-CREATE TABLE IF NOT EXISTS `couleur` (
-  `pk_couleur` int(11) NOT NULL AUTO_INCREMENT,
-  `nom` varchar(50) NOT NULL,
-  PRIMARY KEY (`pk_couleur`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+CREATE TABLE `couleur` (
+  `pk_couleur` int(11) NOT NULL,
+  `nom` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `couleur`
+-- Dumping data for table `couleur`
 --
 
 INSERT INTO `couleur` (`pk_couleur`, `nom`) VALUES
 (1, 'Blanc'),
 (2, 'Noir'),
 (3, 'Gris'),
-(4, 'Argent'),
-(5, 'Bleu'),
-(6, 'Rouge'),
-(7, 'Brun'),
-(8, 'Vert'),
-(9, 'Jaune');
+(4, 'Vert'),
+(5, 'Rouge'),
+(6, 'Bleu');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `entretien`
+-- Table structure for table `entretien`
 --
 
-DROP TABLE IF EXISTS `entretien`;
-CREATE TABLE IF NOT EXISTS `entretien` (
-  `pk_entretien` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `entretien` (
+  `pk_entretien` int(11) NOT NULL,
   `date_entretien` date NOT NULL,
   `odometre_entretien` bigint(20) NOT NULL,
   `fk_garage` int(11) NOT NULL,
   `fk_vehicule` int(11) NOT NULL,
   `fk_type_entretien` int(11) NOT NULL,
   `cout_entretien` bigint(20) NOT NULL,
-  `description` text NOT NULL,
-  PRIMARY KEY (`pk_entretien`),
-  KEY `fk_garage` (`fk_garage`),
-  KEY `fk_vehicule` (`fk_vehicule`),
-  KEY `fk_type_entretien` (`fk_type_entretien`)
+  `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `facture`
+-- Table structure for table `facture`
 --
 
-DROP TABLE IF EXISTS `facture`;
-CREATE TABLE IF NOT EXISTS `facture` (
-  `pk_facture` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `facture` (
+  `pk_facture` int(11) NOT NULL,
   `fk_entretien` int(11) NOT NULL,
   `montant_entretien` float DEFAULT NULL,
-  `photo` longblob NOT NULL,
-  PRIMARY KEY (`pk_facture`),
-  KEY `fk_entretien` (`fk_entretien`)
+  `photo` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `garage`
+-- Table structure for table `garage`
 --
 
-DROP TABLE IF EXISTS `garage`;
-CREATE TABLE IF NOT EXISTS `garage` (
-  `pk_garage` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `garage` (
+  `pk_garage` int(11) NOT NULL,
   `nom` varchar(11) NOT NULL,
   `fk_adresse` int(11) NOT NULL,
   `telephone` bigint(20) NOT NULL,
-  `fk_statut` int(11) NOT NULL,
-  PRIMARY KEY (`pk_garage`),
-  KEY `fk_adresse` (`fk_adresse`),
-  KEY `fk_statut` (`fk_statut`)
+  `fk_statut` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `marque`
+-- Table structure for table `marque`
 --
 
-DROP TABLE IF EXISTS `marque`;
-CREATE TABLE IF NOT EXISTS `marque` (
-  `pk_marque` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `marque` (
+  `pk_marque` int(11) NOT NULL,
   `nom_marque` varchar(100) NOT NULL,
-  `description_marque` varchar(250) DEFAULT NULL,
-  PRIMARY KEY (`pk_marque`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+  `description_marque` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
--- Déchargement des données de la table `marque`
+-- Dumping data for table `marque`
 --
 
 INSERT INTO `marque` (`pk_marque`, `nom_marque`, `description_marque`) VALUES
@@ -194,74 +167,80 @@ INSERT INTO `marque` (`pk_marque`, `nom_marque`, `description_marque`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `modele`
+-- Table structure for table `modele`
 --
 
-DROP TABLE IF EXISTS `modele`;
-CREATE TABLE IF NOT EXISTS `modele` (
-  `pk_modele` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `modele` (
+  `pk_modele` int(11) NOT NULL,
   `fk_marque` int(11) NOT NULL,
   `nom_modele` varchar(100) NOT NULL,
-  `description_modele` varchar(250) DEFAULT NULL,
-  PRIMARY KEY (`pk_modele`),
-  KEY `fk_marque` (`fk_marque`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `description_modele` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `modele`
+-- Dumping data for table `modele`
 --
 
 INSERT INTO `modele` (`pk_modele`, `fk_marque`, `nom_modele`, `description_modele`) VALUES
 (1, 10, 'F150', NULL),
-(2, 10, 'Ranger', NULL);
+(2, 10, 'Ranger', NULL),
+(3, 11, 'Savana 2500', NULL),
+(4, 11, 'Savana', NULL),
+(5, 24, 'Vibe', NULL),
+(6, 30, 'Outback', NULL),
+(7, 6, 'S10', NULL),
+(8, 6, 'Silverado 1500', NULL),
+(9, 33, 'Yaris', NULL),
+(10, 30, 'Forester', NULL),
+(11, 33, 'Tacoma', NULL),
+(12, 11, 'Sierra', NULL),
+(13, 23, 'Pathfinder', NULL),
+(14, 21, 'Sprinter', NULL),
+(15, 10, 'Explorer', NULL),
+(16, 30, 'Impreza', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `reservation`
+-- Table structure for table `reservation`
 --
 
-DROP TABLE IF EXISTS `reservation`;
-CREATE TABLE IF NOT EXISTS `reservation` (
-  `pk_reservation` int(11) NOT NULL AUTO_INCREMENT,
-  `date_debut` date NOT NULL,
-  `date_fin` date NOT NULL,
+CREATE TABLE `reservation` (
+  `pk_reservation` int(11) NOT NULL,
+  `date_debut` datetime NOT NULL,
+  `date_fin` datetime NOT NULL,
   `date_emise` date NOT NULL,
   `fk_vehicule` int(11) NOT NULL,
   `fk_utilisateur` int(11) NOT NULL,
-  `statut` tinyint(4) NOT NULL COMMENT '0 = inactif, 1 = actif',
-  PRIMARY KEY (`pk_reservation`),
-  KEY `fk_utilisateur` (`fk_utilisateur`),
-  KEY `fk_vehicule` (`fk_vehicule`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  `statut` tinyint(4) NOT NULL COMMENT '0 = inactif, 1 = actif'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `reservation`
+-- Dumping data for table `reservation`
 --
 
 INSERT INTO `reservation` (`pk_reservation`, `date_debut`, `date_fin`, `date_emise`, `fk_vehicule`, `fk_utilisateur`, `statut`) VALUES
-(1, '2017-10-08', '2017-10-12', '2017-10-07', 2, 1, 1),
-(2, '2017-10-12', '2017-10-14', '2017-10-11', 13, 1, 1),
-(3, '2017-10-17', '2017-10-21', '2017-10-15', 2, 1, 1),
-(4, '2017-10-19', '2017-10-21', '2017-10-18', 13, 1, 0),
-(5, '2017-10-26', '2017-10-31', '2017-10-27', 13, 1, 1),
-(6, '2017-11-08', '2017-11-15', '2017-10-26', 2, 1, 1);
+(1, '2017-10-08 00:00:00', '2017-10-12 00:00:00', '2017-10-07', 2, 1, 1),
+(2, '2017-10-12 00:00:00', '2017-10-14 00:00:00', '2017-10-11', 13, 1, 1),
+(3, '2017-10-17 00:00:00', '2017-10-21 00:00:00', '2017-10-15', 2, 1, 1),
+(4, '2017-10-19 00:00:00', '2017-10-21 00:00:00', '2017-10-18', 13, 1, 0),
+(5, '2017-10-26 00:00:00', '2017-10-31 00:00:00', '2017-10-27', 13, 1, 1),
+(6, '2017-11-08 00:00:00', '2017-11-15 00:00:00', '2017-10-26', 2, 1, 1),
+(7, '2017-10-29 00:00:00', '2017-10-29 00:00:00', '2017-10-28', 2, 2, 1);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `secteur`
+-- Table structure for table `secteur`
 --
 
-DROP TABLE IF EXISTS `secteur`;
-CREATE TABLE IF NOT EXISTS `secteur` (
-  `pk_secteur` int(11) NOT NULL AUTO_INCREMENT,
-  `nom_secteur` varchar(50) NOT NULL,
-  PRIMARY KEY (`pk_secteur`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+CREATE TABLE `secteur` (
+  `pk_secteur` int(11) NOT NULL,
+  `nom_secteur` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `secteur`
+-- Dumping data for table `secteur`
 --
 
 INSERT INTO `secteur` (`pk_secteur`, `nom_secteur`) VALUES
@@ -277,19 +256,17 @@ INSERT INTO `secteur` (`pk_secteur`, `nom_secteur`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `statut`
+-- Table structure for table `statut`
 --
 
-DROP TABLE IF EXISTS `statut`;
-CREATE TABLE IF NOT EXISTS `statut` (
-  `pk_statut` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `statut` (
+  `pk_statut` int(11) NOT NULL,
   `nom_statut` varchar(50) NOT NULL,
-  `description_statut` varchar(250) DEFAULT NULL,
-  PRIMARY KEY (`pk_statut`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `description_statut` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `statut`
+-- Dumping data for table `statut`
 --
 
 INSERT INTO `statut` (`pk_statut`, `nom_statut`, `description_statut`) VALUES
@@ -300,19 +277,17 @@ INSERT INTO `statut` (`pk_statut`, `nom_statut`, `description_statut`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `statut_vehicule`
+-- Table structure for table `statut_vehicule`
 --
 
-DROP TABLE IF EXISTS `statut_vehicule`;
-CREATE TABLE IF NOT EXISTS `statut_vehicule` (
-  `pk_statut_vehicule` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `statut_vehicule` (
+  `pk_statut_vehicule` int(11) NOT NULL,
   `nom_statut` varchar(50) NOT NULL,
-  `description_statut_vehicule` varchar(250) DEFAULT NULL,
-  PRIMARY KEY (`pk_statut_vehicule`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  `description_statut_vehicule` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `statut_vehicule`
+-- Dumping data for table `statut_vehicule`
 --
 
 INSERT INTO `statut_vehicule` (`pk_statut_vehicule`, `nom_statut`, `description_statut_vehicule`) VALUES
@@ -324,41 +299,35 @@ INSERT INTO `statut_vehicule` (`pk_statut_vehicule`, `nom_statut`, `description_
 -- --------------------------------------------------------
 
 --
--- Structure de la table `type_entretien`
+-- Table structure for table `type_entretien`
 --
 
-DROP TABLE IF EXISTS `type_entretien`;
-CREATE TABLE IF NOT EXISTS `type_entretien` (
-  `pk_type_entretien` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `type_entretien` (
+  `pk_type_entretien` int(11) NOT NULL,
   `intervalle` int(11) NOT NULL,
   `nom` varchar(11) NOT NULL,
-  `description` varchar(250) DEFAULT NULL,
-  PRIMARY KEY (`pk_type_entretien`)
+  `description` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `utilisateur`
+-- Table structure for table `utilisateur`
 --
 
-DROP TABLE IF EXISTS `utilisateur`;
-CREATE TABLE IF NOT EXISTS `utilisateur` (
-  `pk_utilisateur` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `utilisateur` (
+  `pk_utilisateur` int(11) NOT NULL,
   `nom` varchar(100) NOT NULL,
   `prenom` varchar(100) NOT NULL,
   `telephone` varchar(12) NOT NULL,
   `courriel` varchar(150) NOT NULL,
   `mot_de_passe` varchar(50) NOT NULL,
   `fk_statut` int(11) NOT NULL,
-  `fk_secteur` int(11) NOT NULL,
-  PRIMARY KEY (`pk_utilisateur`),
-  KEY `fk_secteur` (`fk_secteur`),
-  KEY `fk_statut` (`fk_statut`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `fk_secteur` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `utilisateur`
+-- Dumping data for table `utilisateur`
 --
 
 INSERT INTO `utilisateur` (`pk_utilisateur`, `nom`, `prenom`, `telephone`, `courriel`, `mot_de_passe`, `fk_statut`, `fk_secteur`) VALUES
@@ -368,53 +337,265 @@ INSERT INTO `utilisateur` (`pk_utilisateur`, `nom`, `prenom`, `telephone`, `cour
 -- --------------------------------------------------------
 
 --
--- Structure de la table `vehicule`
+-- Table structure for table `vehicule`
 --
 
-DROP TABLE IF EXISTS `vehicule`;
-CREATE TABLE IF NOT EXISTS `vehicule` (
-  `pk_vehicule` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `vehicule` (
+  `pk_vehicule` int(11) NOT NULL,
   `fk_marque` int(11) NOT NULL,
   `fk_modele` int(11) NOT NULL,
   `annee` bigint(20) NOT NULL,
   `fk_couleur` int(11) NOT NULL,
   `fk_secteur` int(11) NOT NULL,
   `odometre` bigint(20) NOT NULL,
-  `plaque` varchar(50) NOT NULL,
+  `plaque` varchar(50) DEFAULT NULL,
   `photo` varchar(250) DEFAULT NULL,
   `date_achat` date NOT NULL,
   `date_mise_hors_service` date DEFAULT NULL,
   `description_hors_service` varchar(250) DEFAULT NULL,
-  `fk_statut` int(11) NOT NULL,
-  PRIMARY KEY (`pk_vehicule`),
-  KEY `fk_marque` (`fk_marque`,`fk_modele`,`fk_secteur`,`fk_statut`),
-  KEY `fk_modele` (`fk_modele`),
-  KEY `fk_statut` (`fk_statut`),
-  KEY `fk_secteur` (`fk_secteur`),
-  KEY `fk_couleur` (`fk_couleur`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+  `fk_statut` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `vehicule`
+-- Dumping data for table `vehicule`
 --
 
 INSERT INTO `vehicule` (`pk_vehicule`, `fk_marque`, `fk_modele`, `annee`, `fk_couleur`, `fk_secteur`, `odometre`, `plaque`, `photo`, `date_achat`, `date_mise_hors_service`, `description_hors_service`, `fk_statut`) VALUES
-(2, 10, 1, 2006, 1, 1, 185000, '5TH6YU', NULL, '2017-10-09', NULL, NULL, 1),
-(13, 10, 2, 2007, 3, 1, 145000, 'J4H 4N5', NULL, '2017-08-01', NULL, NULL, 1);
+(2, 10, 1, 2006, 1, 1, 163214, 'FHZ2396', NULL, '2017-10-09', NULL, NULL, 1),
+(6, 11, 3, 2004, 2, 2, 351685, 'FHZ2353', NULL, '2017-10-01', NULL, NULL, 1),
+(7, 11, 4, 2004, 2, 2, 400495, 'FHZ2352', NULL, '2015-12-17', NULL, NULL, 1),
+(8, 11, 4, 2004, 2, 2, 353731, 'FBY2469', NULL, '2015-12-17', NULL, NULL, 1),
+(9, 10, 2, 2009, 2, 2, 156685, 'FFX9121', NULL, '2015-12-17', NULL, NULL, 1),
+(10, 10, 2, 2011, 1, 2, 105784, 'FHZ2424', NULL, '2017-07-04', NULL, NULL, 1),
+(11, 10, 2, 2010, 1, 2, 232825, 'FHZ2358', NULL, '2015-12-01', NULL, NULL, 1),
+(12, 11, 4, 2008, 2, 1, 380007, 'FHZ2362', NULL, '2016-01-01', NULL, NULL, 1),
+(13, 10, 2, 2007, 3, 1, 260386, 'FDD7842', NULL, '2017-08-01', NULL, NULL, 1),
+(14, 24, 5, 2009, 3, 1, 266644, 'FFW7902', NULL, '2015-04-01', NULL, NULL, 1),
+(15, 11, 4, 2009, 1, 1, 344750, 'FHZ2360', NULL, '2015-01-01', NULL, NULL, 1),
+(16, 24, 5, 2010, 2, 1, 240011, 'FHZ2359', NULL, '2016-01-01', NULL, NULL, 1),
+(17, 30, 6, 2010, 3, 1, 173435, 'FHZ2364', NULL, '2015-01-01', NULL, NULL, 1),
+(22, 11, 4, 2014, 2, 1, 153624, 'FHY4535', NULL, '2016-01-01', NULL, NULL, 1),
+(23, 6, 7, 2003, 1, 1, 156200, 'FHZ2373', NULL, '2015-01-01', NULL, NULL, 1),
+(24, 30, 6, 2013, 4, 1, 51692, NULL, NULL, '2015-01-01', NULL, NULL, 1),
+(25, 6, 8, 2009, 1, 1, 150854, 'FHF7513', NULL, '2015-01-01', NULL, NULL, 1),
+(26, 33, 9, 2010, 1, 1, 147153, 'FHZ2357', NULL, '2016-01-01', NULL, NULL, 1),
+(29, 30, 10, 2011, 3, 1, 197333, 'FHZ2395', NULL, '2015-01-01', NULL, NULL, 1),
+(32, 11, 4, 2014, 1, 1, 146072, 'FK29497', NULL, '2015-01-01', NULL, NULL, 1),
+(33, 33, 11, 2015, 2, 1, 114550, NULL, NULL, '2015-01-01', NULL, NULL, 1),
+(34, 11, 12, 2015, 5, 1, 114502, NULL, NULL, '2015-12-17', NULL, NULL, 1),
+(35, 10, 1, 2015, 1, 1, 49166, 'FMC2483', NULL, '2015-12-17', NULL, NULL, 1),
+(36, 23, 13, 2016, 6, 1, 44105, 'FEE3649', NULL, '2016-01-08', NULL, NULL, 1),
+(37, 21, 14, 2015, 1, 1, 59002, NULL, NULL, '2016-02-29', NULL, NULL, 1),
+(38, 10, 15, 2016, 2, 1, 29757, 'FJT1280', NULL, '2016-06-28', NULL, NULL, 1),
+(39, 30, 6, 2016, 3, 1, 29818, 'FRE5680', NULL, '2016-01-01', NULL, NULL, 1),
+(42, 21, 14, 2016, 1, 1, 4669, 'FJZ2179', NULL, '2017-01-01', NULL, NULL, 1),
+(43, 24, 5, 2010, 5, 1, 232806, 'FHZ2359', NULL, '2016-01-01', NULL, NULL, 1),
+(44, 30, 16, 2017, 1, 1, 21408, 'FKE5629', NULL, '2017-02-22', NULL, NULL, 1);
 
 --
--- Contraintes pour les tables déchargées
+-- Indexes for dumped tables
 --
 
 --
--- Contraintes pour la table `alerte`
+-- Indexes for table `adresse`
+--
+ALTER TABLE `adresse`
+  ADD PRIMARY KEY (`pk_adresse`);
+
+--
+-- Indexes for table `alerte`
+--
+ALTER TABLE `alerte`
+  ADD PRIMARY KEY (`pk_alerte`),
+  ADD KEY `fk_reservation` (`fk_reservation`),
+  ADD KEY `fk_type_entretien` (`fk_type_entretien`);
+
+--
+-- Indexes for table `couleur`
+--
+ALTER TABLE `couleur`
+  ADD PRIMARY KEY (`pk_couleur`);
+
+--
+-- Indexes for table `entretien`
+--
+ALTER TABLE `entretien`
+  ADD PRIMARY KEY (`pk_entretien`),
+  ADD KEY `fk_garage` (`fk_garage`),
+  ADD KEY `fk_vehicule` (`fk_vehicule`),
+  ADD KEY `fk_type_entretien` (`fk_type_entretien`);
+
+--
+-- Indexes for table `facture`
+--
+ALTER TABLE `facture`
+  ADD PRIMARY KEY (`pk_facture`),
+  ADD KEY `fk_entretien` (`fk_entretien`);
+
+--
+-- Indexes for table `garage`
+--
+ALTER TABLE `garage`
+  ADD PRIMARY KEY (`pk_garage`),
+  ADD KEY `fk_adresse` (`fk_adresse`),
+  ADD KEY `fk_statut` (`fk_statut`);
+
+--
+-- Indexes for table `marque`
+--
+ALTER TABLE `marque`
+  ADD PRIMARY KEY (`pk_marque`);
+
+--
+-- Indexes for table `modele`
+--
+ALTER TABLE `modele`
+  ADD PRIMARY KEY (`pk_modele`),
+  ADD KEY `fk_marque` (`fk_marque`);
+
+--
+-- Indexes for table `reservation`
+--
+ALTER TABLE `reservation`
+  ADD PRIMARY KEY (`pk_reservation`),
+  ADD KEY `fk_utilisateur` (`fk_utilisateur`),
+  ADD KEY `fk_vehicule` (`fk_vehicule`);
+
+--
+-- Indexes for table `secteur`
+--
+ALTER TABLE `secteur`
+  ADD PRIMARY KEY (`pk_secteur`);
+
+--
+-- Indexes for table `statut`
+--
+ALTER TABLE `statut`
+  ADD PRIMARY KEY (`pk_statut`);
+
+--
+-- Indexes for table `statut_vehicule`
+--
+ALTER TABLE `statut_vehicule`
+  ADD PRIMARY KEY (`pk_statut_vehicule`);
+
+--
+-- Indexes for table `type_entretien`
+--
+ALTER TABLE `type_entretien`
+  ADD PRIMARY KEY (`pk_type_entretien`);
+
+--
+-- Indexes for table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+  ADD PRIMARY KEY (`pk_utilisateur`),
+  ADD KEY `fk_secteur` (`fk_secteur`),
+  ADD KEY `fk_statut` (`fk_statut`);
+
+--
+-- Indexes for table `vehicule`
+--
+ALTER TABLE `vehicule`
+  ADD PRIMARY KEY (`pk_vehicule`),
+  ADD KEY `fk_marque` (`fk_marque`,`fk_modele`,`fk_secteur`,`fk_statut`),
+  ADD KEY `fk_modele` (`fk_modele`),
+  ADD KEY `fk_statut` (`fk_statut`),
+  ADD KEY `fk_secteur` (`fk_secteur`),
+  ADD KEY `fk_couleur` (`fk_couleur`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `adresse`
+--
+ALTER TABLE `adresse`
+  MODIFY `pk_adresse` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `alerte`
+--
+ALTER TABLE `alerte`
+  MODIFY `pk_alerte` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `couleur`
+--
+ALTER TABLE `couleur`
+  MODIFY `pk_couleur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `entretien`
+--
+ALTER TABLE `entretien`
+  MODIFY `pk_entretien` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `facture`
+--
+ALTER TABLE `facture`
+  MODIFY `pk_facture` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `garage`
+--
+ALTER TABLE `garage`
+  MODIFY `pk_garage` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `marque`
+--
+ALTER TABLE `marque`
+  MODIFY `pk_marque` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+--
+-- AUTO_INCREMENT for table `modele`
+--
+ALTER TABLE `modele`
+  MODIFY `pk_modele` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `reservation`
+--
+ALTER TABLE `reservation`
+  MODIFY `pk_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `secteur`
+--
+ALTER TABLE `secteur`
+  MODIFY `pk_secteur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `statut`
+--
+ALTER TABLE `statut`
+  MODIFY `pk_statut` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `statut_vehicule`
+--
+ALTER TABLE `statut_vehicule`
+  MODIFY `pk_statut_vehicule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `type_entretien`
+--
+ALTER TABLE `type_entretien`
+  MODIFY `pk_type_entretien` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `utilisateur`
+--
+ALTER TABLE `utilisateur`
+  MODIFY `pk_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `vehicule`
+--
+ALTER TABLE `vehicule`
+  MODIFY `pk_vehicule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `alerte`
 --
 ALTER TABLE `alerte`
   ADD CONSTRAINT `alerte_ibfk_1` FOREIGN KEY (`fk_reservation`) REFERENCES `reservation` (`pk_reservation`),
   ADD CONSTRAINT `alerte_ibfk_2` FOREIGN KEY (`fk_type_entretien`) REFERENCES `type_entretien` (`pk_type_entretien`);
 
 --
--- Contraintes pour la table `entretien`
+-- Constraints for table `entretien`
 --
 ALTER TABLE `entretien`
   ADD CONSTRAINT `entretien_ibfk_1` FOREIGN KEY (`fk_vehicule`) REFERENCES `vehicule` (`pk_vehicule`),
@@ -422,40 +603,40 @@ ALTER TABLE `entretien`
   ADD CONSTRAINT `entretien_ibfk_3` FOREIGN KEY (`fk_garage`) REFERENCES `garage` (`pk_garage`);
 
 --
--- Contraintes pour la table `facture`
+-- Constraints for table `facture`
 --
 ALTER TABLE `facture`
   ADD CONSTRAINT `facture_ibfk_1` FOREIGN KEY (`fk_entretien`) REFERENCES `entretien` (`pk_entretien`);
 
 --
--- Contraintes pour la table `garage`
+-- Constraints for table `garage`
 --
 ALTER TABLE `garage`
   ADD CONSTRAINT `garage_ibfk_1` FOREIGN KEY (`fk_adresse`) REFERENCES `adresse` (`pk_adresse`),
   ADD CONSTRAINT `garage_ibfk_2` FOREIGN KEY (`fk_statut`) REFERENCES `statut` (`pk_statut`);
 
 --
--- Contraintes pour la table `modele`
+-- Constraints for table `modele`
 --
 ALTER TABLE `modele`
   ADD CONSTRAINT `modele_ibfk_1` FOREIGN KEY (`fk_marque`) REFERENCES `marque` (`pk_marque`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `reservation`
+-- Constraints for table `reservation`
 --
 ALTER TABLE `reservation`
   ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`fk_utilisateur`) REFERENCES `utilisateur` (`pk_utilisateur`),
   ADD CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`fk_vehicule`) REFERENCES `vehicule` (`pk_vehicule`);
 
 --
--- Contraintes pour la table `utilisateur`
+-- Constraints for table `utilisateur`
 --
 ALTER TABLE `utilisateur`
   ADD CONSTRAINT `utilisateur_ibfk_1` FOREIGN KEY (`fk_statut`) REFERENCES `statut` (`pk_statut`),
   ADD CONSTRAINT `utilisateur_ibfk_2` FOREIGN KEY (`fk_secteur`) REFERENCES `secteur` (`pk_secteur`);
 
 --
--- Contraintes pour la table `vehicule`
+-- Constraints for table `vehicule`
 --
 ALTER TABLE `vehicule`
   ADD CONSTRAINT `vehicule_ibfk_1` FOREIGN KEY (`fk_marque`) REFERENCES `marque` (`pk_marque`),
@@ -463,7 +644,6 @@ ALTER TABLE `vehicule`
   ADD CONSTRAINT `vehicule_ibfk_4` FOREIGN KEY (`fk_secteur`) REFERENCES `secteur` (`pk_secteur`),
   ADD CONSTRAINT `vehicule_ibfk_5` FOREIGN KEY (`fk_statut`) REFERENCES `statut_vehicule` (`pk_statut_vehicule`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `vehicule_ibfk_6` FOREIGN KEY (`fk_couleur`) REFERENCES `couleur` (`pk_couleur`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
