@@ -227,7 +227,11 @@ $currentUser = $listUser->getObjectFromDB($_GET["id"]);
           var nom = $("#nom").val();
           var prenom = $("#prenom").val();
           var telephone = $("#telephone").val();
-          var courriel = $("#courriel").val();
+          if (/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test($("#courriel").val())) {
+            var courriel = $("#courriel").val();
+          } else {
+            alert("Le courriel entré est incorrect !!");
+          }
           var secteur = $("#secteur").val();
 
           if ($('#active').is(':checked') == true) {

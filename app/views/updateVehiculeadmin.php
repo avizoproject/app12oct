@@ -72,7 +72,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            <div class="col-md-12">
                                                <div class="form-group label-static col-md-4">
                                                    <label class="control-label">Année</label>
-                                                   <input type='text' class='form-control' id='annee' maxlength='4' value='<?php echo $currentVehicule['annee']; ?>' required>
+                                                   <input type='number' class='form-control' id='annee' maxlength='4' value='<?php echo $currentVehicule['annee']; ?>' required>
                                                </div>
                                            </div>
                                        </div>
@@ -99,7 +99,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            <div class="col-md-12">
                                                <div class="form-group label-static col-md-4">
                                                    <label class="control-label">Odomètre</label>
-                                                   <input type='text' class='form-control' id='odometre' maxlength='6' value='<?php echo $currentVehicule['odometre']; ?>' required>
+                                                   <input type='number' class='form-control' id='odometre' maxlength='6' value='<?php echo $currentVehicule['odometre']; ?>' required>
                                                </div>
                                            </div>
                                        </div>
