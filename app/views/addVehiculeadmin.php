@@ -80,7 +80,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Année</label>
-                                                <input type="text" class="form-control" id="annee" maxlength="4" required></select>
+                                                <input type="number" class="form-control" id="annee" maxlength="4" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -107,7 +107,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Odomètre</label>
-                                                <input type="text" class="form-control" id="odometre" maxlength="6" required></select>
+                                                <input type="number" class="form-control" id="odometre" maxlength="6" required></select>
                                             </div>
                                         </div>
                                     </div>
