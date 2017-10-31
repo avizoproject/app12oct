@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2017 at 11:44 PM
+-- Generation Time: Oct 31, 2017 at 03:45 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -244,14 +244,14 @@ CREATE TABLE `secteur` (
 --
 
 INSERT INTO `secteur` (`pk_secteur`, `nom_secteur`) VALUES
-(1, 'Assainissement'),
-(2, 'Environnement'),
-(3, 'Génie municipal'),
-(4, 'Qualité des eaux'),
-(5, 'Milieux naturels'),
-(6, 'Ventes'),
-(7, 'Administration'),
-(8, 'Dessins');
+(1, 'AEU'),
+(2, 'ENV'),
+(3, 'GMDU'),
+(4, 'MSQE'),
+(5, 'AXIO'),
+(6, 'VDS'),
+(7, 'FA'),
+(8, 'SD');
 
 -- --------------------------------------------------------
 
@@ -319,7 +319,7 @@ CREATE TABLE `utilisateur` (
   `pk_utilisateur` int(11) NOT NULL,
   `nom` varchar(100) NOT NULL,
   `prenom` varchar(100) NOT NULL,
-  `telephone` varchar(12) NOT NULL,
+  `telephone` varchar(12) DEFAULT NULL,
   `courriel` varchar(150) NOT NULL,
   `mot_de_passe` varchar(50) NOT NULL,
   `fk_statut` int(11) NOT NULL,
@@ -332,7 +332,76 @@ CREATE TABLE `utilisateur` (
 
 INSERT INTO `utilisateur` (`pk_utilisateur`, `nom`, `prenom`, `telephone`, `courriel`, `mot_de_passe`, `fk_statut`, `fk_secteur`) VALUES
 (1, 'Bédard', 'Alain', '819 574-1994', 'alain.bedard@avizo.ca', 'avizo', 2, 1),
-(2, 'Bolduc', 'Michel', '819 571-8946', 'michel.bolduc@avizo.ca', 'avizo', 1, 1);
+(2, 'Bolduc', 'Michel', '819 571-8946', 'michel.bolduc@avizo.ca', 'avizo', 1, 1),
+(3, 'Harrer', 'Alan', '450 204-1519', 'alan.harrer@avizo.ca', 'avizo', 2, 3),
+(4, 'Mayrand', 'Alexandre', '514 220-7216', 'alexandre.mayrand@avizo.ca', 'avizo', 2, 4),
+(5, 'Paiement', 'Amélie', NULL, 'amelie.paiement@avizo.ca', 'avizo', 2, 5),
+(6, 'Duquette', 'André', NULL, 'andre.duquette@avizo.ca', 'avizo', 2, 7),
+(7, 'Forret', 'Andrew', NULL, 'andrew.forret@avizo.ca', 'avizo', 2, 3),
+(8, 'Morais', 'Anne', '418 425-0847', 'anne.morais@avizo.ca', 'avizo', 2, 1),
+(9, 'Trudeau', 'Antoine', '819 342-0612', 'antoine.trudeau@avizo.ca', 'avizo', 2, 4),
+(10, 'Hourlay', 'Axel', NULL, 'axel.hourlay@avizo.ca', 'avizo', 2, 1),
+(11, 'Couture', 'Benoit', '819 432-6236', 'benoit.couture@axioenvironnement.ca', 'avizo', 2, 5),
+(12, 'Boucher', 'Brigitte', NULL, 'brigitte.boucher@avizo.ca', 'avizo', 2, 7),
+(13, 'Perreault', 'Carolane', NULL, 'carolane.perreault@avizo.ca', 'avizo', 2, 4),
+(14, 'Gendron', 'Caroline', NULL, 'caroline.gendron@avizo.ca', 'avizo', 2, 1),
+(15, 'Lussier', 'Catherine', '819 575-7796', 'catherine.lussier@avizo.ca', 'avizo', 2, 1),
+(16, 'Duguay', 'Charles', '819 571-8324', 'charles.duguay@avizo.ca', 'avizo', 2, 7),
+(17, 'Vézina', 'Christian', '418 571-3412', 'christian.vezina@avizo.ca', 'avizo', 2, 6),
+(18, 'Viau', 'Christian', '450 541-3055', 'christian.viau@avizo.ca', 'avizo', 2, 4),
+(19, 'Audit', 'Claudia', NULL, 'claudia.audit@avizo.ca', 'avizo', 2, 1),
+(20, 'Pinsonneault', 'Daniel', '819 446-5525', 'daniel.pinsonneault@avizo.ca', 'avizo', 2, 3),
+(21, 'Ducharme', 'Danny', '514 318-2488', 'danny.ducharme@avizo.ca', 'avizo', 2, 4),
+(22, 'Rosenfeld', 'David', '819 640-1874', 'david.rosenfeld@avizo.ca', 'avizo', 2, 4),
+(23, 'Massée', 'Dorothée', NULL, 'dorothee.massee@avizo.ca', 'avizo', 2, 6),
+(24, 'Rouleau', 'Étienne', NULL, 'etienne.rouleau@avizo.ca', 'avizo', 2, 7),
+(25, 'Morin', 'Flore', NULL, 'flore.morin@avizo.ca', 'avizo', 2, 7),
+(26, 'Asfar', 'Francesca', '450 775-6141', 'francesca.asfar@avizo.ca', 'avizo', 2, 3),
+(27, 'Girard', 'Gabrielle', NULL, 'gabrielle.girard@avizo.ca', 'avizo', 2, 7),
+(28, 'Jetté', 'Gaétan', NULL, 'gaetan.jette@avizo.ca', 'avizo', 2, 4),
+(29, 'Lachance', 'Gaston', '579 488-1194', 'gaston.lachance@avizo.ca', 'avizo', 2, 3),
+(30, 'Girard', 'Geneviève', '819 571-8453', 'genevieve.girard@avizo.ca', 'avizo', 2, 1),
+(31, 'Roger', 'Geneviève', '819 817-5664', 'genevieve.roger@avizo.ca', 'avizo', 2, 3),
+(32, 'Thibault', 'Germain', '819 574-7563', 'germain.thibault@avizo.ca', 'avizo', 2, 6),
+(33, 'St-Hilaire', 'Guy', NULL, 'guy.st-hilaire@avizo.ca', 'avizo', 2, 7),
+(34, 'Lefebvre', 'Hugo', '819 212-3120', 'hugo.lefebvre@avizo.ca', 'avizo', 2, 4),
+(35, 'Lemay', 'Hugo', '514 608-3343', 'hugo.lemay@avizo.ca', 'avizo', 2, 4),
+(36, 'Parent', 'Isabelle', '418 802-2944', 'isabelle.parent@avizo.ca', 'avizo', 2, 1),
+(37, 'Labrecque', 'Jacinthe', NULL, 'jacinthe.labrecque@avizo.ca', 'avizo', 2, 7),
+(38, 'Lacasse', 'Jean-Christophe', NULL, 'jean-christophe.lacasse@avizo.ca', 'avizo', 2, 1),
+(39, 'Lacroix', 'Jean-Félix', NULL, 'jean-felix.lacroix@axioenvironnement.ca', 'avizo', 2, 5),
+(40, 'Lafond', 'Jean-François', '819 588-1367', 'jean-francois.lafond@axioenvironnement.ca', 'avizo', 2, 5),
+(41, 'Bédard', 'Jean-Simon', '819 342-3390', 'jean-simon.bedard@axioenvironnement.ca', 'avizo', 2, 5),
+(42, 'Dompierre', 'Jonathan', '819 570-2930', 'jonathan.dompierre@avizo.ca', 'avizo', 2, 1),
+(43, 'Morin', 'Jonathan', NULL, 'jonathan.morin@avizo.ca', 'avizo', 2, 3),
+(44, 'Avard', 'Karine', NULL, 'karine.avard@avizo.ca', 'avizo', 2, 2),
+(45, 'Paulin', 'Karl', '819 342-6599', 'karl.paulin@avizo.ca', 'avizo', 2, 4),
+(46, 'Richard', 'Kevin', NULL, 'kevin.richard@avizo.ca', 'avizo', 2, 2),
+(47, 'Ghorbel', 'Leila', '418 425-0847', 'leila.ghorbel@avizo.ca', 'avizo', 2, 1),
+(48, 'de Serres', 'Lucie', NULL, 'lucie.deserres@axioenvironnement.ca', 'avizo', 2, 5),
+(49, 'Colmenares', 'Manuel', NULL, 'manuel.colmenares@avizo.ca', 'avizo', 2, 7),
+(50, 'Desmarais', 'Marc', '819 640-6865', 'marc.desmarais@axioenvironnement.ca', 'avizo', 2, 5),
+(51, 'Harbec', 'Marc-Antoine', '819 342-3895', 'marc-antoine.harbec@avizo.ca', 'avizo', 2, 3),
+(52, 'Binet', 'Marco', '819 640-6935', 'marco.binet@axioenvironnement.ca', 'avizo', 2, 5),
+(53, 'Désalliers', 'Marjorie', NULL, 'marjorie.desalliers@avizo.ca', 'avizo', 2, 6),
+(54, 'Deshaies', 'Martin', '819 342-4386', 'martin.deshaies@avizo.ca', 'avizo', 2, 4),
+(55, 'Leduc', 'Mathieu', '819 620-5405', 'mathieu.leduc@avizo.ca', 'avizo', 2, 3),
+(56, 'Chalifoux', 'Maxime', '819 816-6596', 'maxime.chalifoux@avizo.ca', 'avizo', 2, 7),
+(57, 'Godue', 'Michel', '819 571-8946', 'michel.godue@avizo.ca', 'avizo', 2, 4),
+(59, 'Amirault', 'Nicolas', NULL, 'nicolas.amirault@avizo.ca', 'avizo', 2, 8),
+(60, 'Paquet', 'Nicolas', NULL, 'nicolas.paquet@avizo.ca', 'avizo', 2, 8),
+(61, 'Chabrol', 'Olivier', '819 570-5337', 'olivier.chabrol@avizo.ca', 'avizo', 2, 4),
+(62, 'Gravel', 'Paskal', '819 640-0672', 'paskal.gravel@avizo.ca', 'avizo', 2, 4),
+(63, 'Drouin', 'Philippe', '819 342-5316', 'philippe.drouin@avizo.ca', 'avizo', 2, 1),
+(64, 'Rouleau', 'Pierre', '819 574-7562', 'pierre.rouleau@avizo.ca', 'avizo', 2, 4),
+(65, 'Poulin', 'Russell', NULL, 'russell.poulin@avizo.ca', 'avizo', 2, 4),
+(66, 'Dostie', 'Sandra', NULL, 'sandra.dostie@avizo.ca', 'avizo', 2, 1),
+(67, 'de Léséleuc', 'Sébastien', '819 574-7561', 'sebastien.deleseleuc@avizo.ca', 'avizo', 2, 4),
+(68, 'Doiron', 'Sébastien', NULL, 'sebastien.doiron@avizo.ca', 'avizo', 2, 8),
+(69, 'Croteau', 'Sylvain', '819 574-7361', 'sylvain.croteau@avizo.ca', 'avizo', 2, 4),
+(70, 'Petit', 'Sylvie', NULL, 'sylvie.petit@avizo.ca', 'avizo', 2, 8),
+(71, 'Duguay', 'Victor', '819 588-6412', 'victor.duguay@avizo.ca', 'avizo', 2, 4),
+(72, 'Lafontaine', 'Yannick', '819 640-6934', 'yannick.lafontaine@axioenvironnement.ca', 'avizo', 2, 5);
 
 -- --------------------------------------------------------
 
@@ -577,7 +646,7 @@ ALTER TABLE `type_entretien`
 -- AUTO_INCREMENT for table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `pk_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `pk_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT for table `vehicule`
 --

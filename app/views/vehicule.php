@@ -47,10 +47,11 @@ $gVehicule = new InfoVehicule();
                             <div class="card-content table-responsive">
                                 <table class="table" id="example">
                                     <thead class="text-primary">
-                                    <th class="hidden">ID Véhicule</th>
+                                    <th class="tableColWidth">ID Véhicule</th>
                                     <th>Vehicule</th>
                                     <th>Année</th>
                                     <th>Couleur</th>
+                                    <th>Kilométrage</th>
                                     <th>Statut</th>
                                     </thead>
                                     <tbody>

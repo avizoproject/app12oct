@@ -13,7 +13,7 @@
 
 	<div class="wrapper">
 
-	    <?php 
+	    <?php
             if(intval($_SESSION['admin'])===1)
             require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapper.php';
             else require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapperUser.php';

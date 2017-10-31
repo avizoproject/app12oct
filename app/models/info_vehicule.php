@@ -208,7 +208,7 @@ function getVehiculeReservation ($id_reservation){
 function getListVehicules(){
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-    $results = $conn->query('SELECT vehicule.pk_vehicule, marque.nom_marque, modele.nom_modele, vehicule.annee, couleur.nom, statut_vehicule.nom_statut FROM `vehicule` LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN statut_vehicule ON vehicule.fk_statut = statut_vehicule.pk_statut_vehicule LEFT JOIN couleur ON vehicule.fk_couleur = couleur.pk_couleur');
+    $results = $conn->query('SELECT vehicule.odometre, vehicule.pk_vehicule, marque.nom_marque, modele.nom_modele, vehicule.annee, couleur.nom, statut_vehicule.nom_statut FROM `vehicule` LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN statut_vehicule ON vehicule.fk_statut = statut_vehicule.pk_statut_vehicule LEFT JOIN couleur ON vehicule.fk_couleur = couleur.pk_couleur');
 
     $allvehicules= array();
     while ($row = $results->fetch_assoc()) {
@@ -216,6 +216,7 @@ function getListVehicules(){
             'pk_vehicule' => $row['pk_vehicule'],
             'nom_marque' => $row['nom_marque'],
             'nom_modele' => $row['nom_modele'],
+            'odometre' => $row['odometre'],
             'annee' => $row['annee'],
             'nom' => $row['nom'],
             'nom_statut' => $row['nom_statut']
@@ -225,7 +226,7 @@ function getListVehicules(){
     if($size != null){
         for($i=0;$i<$size;$i++){
             echo "<tr class=''>";
-            echo "<td class='hidden'>";
+            echo "<td>";
             echo $allvehicules[$i]['pk_vehicule'] . "</td>";
             echo "<td>";
             echo $allvehicules[$i]['nom_marque'] . " ".$allvehicules[$i]['nom_modele']."</td>";
@@ -233,6 +234,8 @@ function getListVehicules(){
             echo $allvehicules[$i]['annee'] . "</td>";
             echo "<td>";
             echo $allvehicules[$i]['nom'] . "</td>";
+            echo "<td>";
+            echo $allvehicules[$i]['odometre'] . "</td>";
             echo "<td>";
             echo $allvehicules[$i]['nom_statut'] . "</td>";
             echo "</tr>";

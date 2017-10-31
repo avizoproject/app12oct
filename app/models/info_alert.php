@@ -10,7 +10,7 @@ class InfoAlert extends InfoModel
 
     protected $pk_alerte = 0;
 
-    protected $fk_reservation = '';
+    protected $fk_reservation = 0;
 
     protected $fk_type_entretien = 0;
     
