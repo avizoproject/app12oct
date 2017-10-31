@@ -9,17 +9,9 @@ $currentUser = $listUser->getObjectFromDB($_SESSION['user']['pk_utilisateur']);
 ?>
 <html>
 <head>
-    <title>Avizo - Modifier mon profil</title>
+    <title>Avizo - Profil</title>
     <?php
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
-    session_start();
-    error_reporting(1);
-    //            if($_SESSION['loggedIn']==false){
-    //                echo '<script type="text/javascript">';
-    //                echo 'alert("Vous n\'êtes pas connecté.");';
-    //                echo 'window.location.href = "../views/signin.php";';
-    //                echo '</script>';
-    //            }
     ?>
 </head>
 <body>
@@ -115,9 +107,9 @@ $currentUser = $listUser->getObjectFromDB($_SESSION['user']['pk_utilisateur']);
 	<!--  Charts Plugin -->
 	<script src="../js/chartist.min.js"></script>
 
-                <!--  Sweet alert -->
-        <script src="../js/sweetalert2.min.js"></script>
-        <script src="../js/sweetalert2.js"></script>
+    <!--  Sweet alert -->
+    <script src="../js/sweetalert2.min.js"></script>
+    <script src="../js/sweetalert2.js"></script>
         
 	<!--  Notifications Plugin    -->
 	<script src="../js/bootstrap-notify.js"></script>
@@ -130,10 +122,7 @@ $currentUser = $listUser->getObjectFromDB($_SESSION['user']['pk_utilisateur']);
 
 	<!-- Material Dashboard DEMO methods, don't include it in your project! -->
 	<script src="../js/demo.js"></script>
-        <script type="text/javascript">
-            
-            
-            
+    <script type="text/javascript">
     	$(document).ready(function(){
 
             //clic modifier, envoie en get le id selectionné
@@ -142,88 +131,50 @@ $currentUser = $listUser->getObjectFromDB($_SESSION['user']['pk_utilisateur']);
                 window.location.href = "http://localhost/app/app/views/modifierMotDePasse.php";
             });
 
+            var activePage = window.location.href;
+            console.log(activePage);
+            var active = activePage.substring(activePage.lastIndexOf('/') + 1);
 
-                var activePage = window.location.href;
-            	console.log(activePage);
-                var active = activePage.substring(activePage.lastIndexOf('/') + 1);
-                
-                $('.sidebar-wrapper a').each(function () {
-                    var linkPage = this.href;
-					console.log(linkPage);
-                    if (activePage == linkPage) {
-                        $(this).closest("li").addClass("active");
-                        $('li').each(function () {                       
-                    	//$(this).closest("a").removeClass("navigation1");
-                        
-                        $(this).closest("li").removeClass("active");
-                         });
-                         $(this).closest("li").addClass("active");
+            $('.sidebar-wrapper a').each(function () {
+                var linkPage = this.href;
+                console.log(linkPage);
+                if (activePage == linkPage) {
+                    $(this).closest("li").addClass("active");
+                    $('li').each(function () {
+                    //$(this).closest("a").removeClass("navigation1");
+
+                    $(this).closest("li").removeClass("active");
+                     });
+                     $(this).closest("li").addClass("active");
+                }
+
+            });
+
+            $("#secteur").load("../controllers/getSelectSecteurs.php" + "?id=<?php echo $currentUser['fk_secteur']; ?>");
+
+            $(document).on("click", "#confirmer", function(e) {
+                e.preventDefault();
+                var passwordOld = $("#passwordOld").val();
+                var passwordOldTrue = "<?php echo $currentUser['mot_de_passe']; ?>";
+                var telephone = $("#telephone").val();
+                var password = $("#password").val();
+                var passwordConfirmed = $("#passwordConfirmed").val();
+
+                if ((passwordOld == passwordOldTrue) && telephone) {
+                    if ($("#password").val() != null && $("#password").val() === $("#passwordConfirmed").val()) {
+                        location.href = "../controllers/controller_users.php?profil=1&id=<?php echo $_SESSION['user']['pk_utilisateur']; ?>&telephone="+ telephone +"&password="+ password;
+                    } else {
+                        location.href = "../controllers/controller_users.php?profil=1&id=<?php echo $_SESSION['user']['pk_utilisateur']; ?>&telephone="+ telephone;
                     }
-                    
-                });
+                } else {
+                    alert("Le mot de passe actuel entré est incorrect !!");
+                }
+            });
 
-
-
-                $('.navbar-header a').html("Mon profil");
+            $('.navbar-header a').html("Mon profil");
     	});
-	
-<!--   Core JS Files   -->
-
-
-<script src="../js/jquery-3.1.0.min.js" type="text/javascript"></script>
-<script src="../js/jquery.dataTables.min.js"></script>
-
-<script src="../js/bootstrap.min.js" type="text/javascript"></script>
-<script src="../js/material.min.js" type="text/javascript"></script>
-
-<!--  Charts Plugin -->
-<script src="../js/chartist.min.js"></script>
-
-<!--  Sweet alert -->
-<script src="../js/sweetalert2.min.js"></script>
-<script src="../js/sweetalert2.js"></script>
-
-<!--  Notifications Plugin    -->
-<script src="../js/bootstrap-notify.js"></script>
-
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-
-<!-- Material Dashboard javascript methods -->
-<script src="../js/material-dashboard.js"></script>
-
-<!-- Material Dashboard DEMO methods, don't include it in your project! -->
-<script src="../js/demo.js"></script>
-
+	</script>
 <script type="text/javascript">
-    $(document).ready(function(){
-
-      $("#secteur").load("../controllers/getSelectSecteurs.php" + "?id=<?php echo $currentUser['fk_secteur']; ?>");
-
-        $(document).on("click", "#confirmer", function(e) {
-          e.preventDefault();
-          var passwordOld = $("#passwordOld").val();
-          var passwordOldTrue = "<?php echo $currentUser['mot_de_passe']; ?>";
-          var telephone = $("#telephone").val();
-          var password = $("#password").val();
-          var passwordConfirmed = $("#passwordConfirmed").val();
-
-          if ((passwordOld == passwordOldTrue) && telephone) {
-            if ($("#password").val() != null && $("#password").val() === $("#passwordConfirmed").val()) {
-              location.href = "../controllers/controller_users.php?profil=1&id=<?php echo $_SESSION['user']['pk_utilisateur']; ?>&telephone="+ telephone +"&password="+ password;
-            } else {
-              location.href = "../controllers/controller_users.php?profil=1&id=<?php echo $_SESSION['user']['pk_utilisateur']; ?>&telephone="+ telephone;
-            }
-          } else {
-            alert("Le mot de passe actuel entré est incorrect !!");
-          }
-        });
-
-        $('.navbar-header a').html("Modifier mon profil");
-    });
-
-
-
 function erreurNonCon(){
             swal({
                     title: "Erreur",
