@@ -149,7 +149,8 @@ $currentUser = $listUser->getObjectFromDB($_GET["id"]);
                                           </div>";
                                     }
                                     ?>
-                                    <input type="submit" id="modifier" class="btn pull-right" value="Modifier">
+                                    <input type="submit" id="modifier" class="btn pull-right margin-button2" value="Modifier">
+                                    <button id="retour" class="btn pull-right">Retour</button>
                                     <div class="clearfix"></div>
                                 </form>
                             </div>
@@ -197,6 +198,12 @@ $currentUser = $listUser->getObjectFromDB($_GET["id"]);
 
 <script type="text/javascript">
     $(document).ready(function(){
+
+            $(document).on("click", "#retour", function (e) {
+                e.preventDefault();
+                location.href = "http://localhost/app/app/views/user.php";
+            });
+
            $(document).on("click", "#modifier", function(e) {
                e.preventDefault();
                location.href = "updateUseradmin.php?id=<?php echo $_GET["id"]; ?>";

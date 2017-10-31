@@ -20,12 +20,7 @@ $gReservation = new InfoReservation();
         require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
         session_start();
         error_reporting(1);
-        //            if($_SESSION['loggedIn']==false){
-        //                echo '<script type="text/javascript">';
-        //                echo 'alert("Vous n\'êtes pas connecté.");';
-        //                echo 'window.location.href = "../views/signin.php";';
-        //                echo '</script>';
-        //            }
+
         ?>
     </head>
     <body>

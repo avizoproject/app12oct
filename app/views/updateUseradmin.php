@@ -224,44 +224,70 @@ $currentUser = $listUser->getObjectFromDB($_GET["id"]);
 
         $(document).on("click", "#confirmer", function(e) {
           e.preventDefault();
-          var nom = $("#nom").val();
-          var prenom = $("#prenom").val();
-          var telephone = $("#telephone").val();
-          var courriel = $("#courriel").val();
-          var secteur = $("#secteur").val();
+            swal({
+                title: "Modifié",
+                text: "L'utilisateur a bien été modifié.",
+                type: "success"
+            }).then(function () {
+                var nom = $("#nom").val();
+                var prenom = $("#prenom").val();
+                var telephone = $("#telephone").val();
+                var courriel = $("#courriel").val();
+                var secteur = $("#secteur").val();
 
-          if ($('#active').is(':checked') == true) {
-            var statut = 2;
-          } else {
-            var statut = 3;
-          }
+                if ($('#active').is(':checked') == true) {
+                    var statut = 2;
+                } else {
+                    var statut = 3;
+                }
 
-          if ($('#admin').is(':checked') == true) {
-              var statut = 1;
-          }
+                if ($('#admin').is(':checked') == true) {
+                    var statut = 1;
+                }
 
-          if ($("#password").val() != null && $("#password").val() === $("#passwordConfirmed").val()) {
-            var password = $("#password").val();
-            if (nom && prenom && telephone && courriel && password && secteur) {
-              location.href = "../controllers/controller_users.php?mod=1&id=<?php echo $_GET['id']; ?>&nom="+ nom +"&prenom="+ prenom +"&telephone="+ telephone +"&courriel="+ courriel +"&password="+ password +"&secteur="+ secteur +"&statut="+ statut;
-            }
-          } else {
-            alert("Les mots de passe entrés ne sont pas identiques !!");
-          }
+                if ($("#password").val() != null && $("#password").val() === $("#passwordConfirmed").val()) {
+                    var password = $("#password").val();
+                    if (nom && prenom && telephone && courriel && password && secteur) {
+                        location.href = "../controllers/controller_users.php?mod=1&id=<?php echo $_GET['id']; ?>&nom=" + nom + "&prenom=" + prenom + "&telephone=" + telephone + "&courriel=" + courriel + "&password=" + password + "&secteur=" + secteur + "&statut=" + statut;
+                    }
+                } else {
+                    alert("Les mots de passe entrés ne sont pas identiques !!");
+                }
 
-          if (nom && prenom && telephone && courriel && secteur && $("#password").val() == "") {
-            location.href = "../controllers/controller_users.php?mod=1&id=<?php echo $_GET['id']; ?>&nom="+ nom +"&prenom="+ prenom +"&telephone="+ telephone +"&courriel="+ courriel +"&secteur="+ secteur +"&statut="+ statut;
-          }
+                if (nom && prenom && telephone && courriel && secteur && $("#password").val() == "") {
+                    location.href = "../controllers/controller_users.php?mod=1&id=<?php echo $_GET['id']; ?>&nom=" + nom + "&prenom=" + prenom + "&telephone=" + telephone + "&courriel=" + courriel + "&secteur=" + secteur + "&statut=" + statut;
+                }
+            })
         });
 
         $(document).on("click", "#supprimer", function(e) {
             e.preventDefault();
-            location.href = "../controllers/controller_users.php?supp=1&id=<?php echo $_GET['id']; ?>";
+            swal({
+                title: "",
+                text: "L'utilisateur va être supprimé.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ok",
+                cancelButtonColor: "#969696",
+                cancelButtonText: "Annuler"
+            }).then(function () {
+                location.href = "../controllers/controller_users.php?supp=1&id=<?php echo $_GET['id']; ?>";
+            })
         });
 
         $(document).on("click", "#cancel", function(e) {
             e.preventDefault();
-            location.href = "../views/user.php";
+            swal({
+                title: "",
+                text: "Les changements vont être annulés.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ok",
+                cancelButtonColor: "#969696",
+                cancelButtonText: "Annuler"
+            }).then(function () {
+                location.href = "../views/reservation.php";
+            })
         });
 
         $('.navbar-header a').html("Modification d'utilisateur");

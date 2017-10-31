@@ -198,7 +198,7 @@ $gReservation = new InfoReservation();
                 $('#Consulter').click(function () {
                     if ($('#example tr.selected td:first').length > 0) {
                         var idcons = $('#example tr.selected td:first').html();
-                        window.location.href = "http://localhost/app/app/views/viewReservation.php?id=" + idcons + "";
+                        window.location.href = "http://localhost/app/app/views/viewReservationAdmin.php?id=" + idcons + "";
                     }else{
                         swal({
                                 title:"",

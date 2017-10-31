@@ -78,7 +78,8 @@
                                              </div>
 
                                          </div>
-                                         <input type="submit" id="modifier" class="btn pull-right" value="Modifier">
+                                         <input type="submit" id="modifier" class="btn pull-right margin-button2" value="Modifier">
+                                         <button id="retour" class="btn pull-right">Retour</button>
                                          <div class="clearfix"></div>
                                      </form>
                                  </div>
@@ -131,6 +132,12 @@
                 var parts = dateStr.split(" ");
                 return parts[0];
             }
+
+            $(document).on("click", "#retour", function (e) {
+                e.preventDefault();
+                location.href = "http://localhost/app/app/reservationuser.php";
+            });
+
              $(document).on("click", "#modifier", function(e) {
                  e.preventDefault();
                  location.href = "http://localhost/app/app/views/updateReservation.php?id=<?php echo $_GET["id"]; ?>";

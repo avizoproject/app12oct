@@ -1,13 +1,12 @@
 <?php
 /****************************************************************
-		File : updateReservation.php
+		File : viewReservation.php
 		Author : Frédérick Morin
-		Functionality : Page to modify a vehicule's reservation
-		Date: 2017-10-06
+		Functionality : Page to view a vehicule's reservation
+		Date: 2017-10-11
 
 		Last modification:
-		2017-10-06     Frédérick Morin   1 Creation
-    2017-10-11     Frédérick Morin   2 Ajout PHP
+    2017-10-11     Frédérick Morin   1 Création
  ******************************************************************/
  session_start();
  error_reporting(0);
@@ -18,7 +17,7 @@
  ?>
  <html>
      <head>
-           <title>Avizo - Modification d'une réservation</title>
+           <title>Avizo - Consulter une réservation</title>
  	<?php
              require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
              session_start();
@@ -43,30 +42,25 @@
                          <div class="col-md-8 center-block float-none">
                              <div class="card">
                                  <div class="card-header" data-background-color="blue">
-                                     <h4 class="title">Formulaire de modification</h4>
-                                     <p class="category">Tous les champs sont obligatoires.</p>
+                                     <h4 class="title">Consultation d'une réservation</h4>
                                  </div>
                                  <div class="card-content">
                                      <form id="formAjout" >
-                                         <label id="trigger" class="hidden"></label>
                                          <div class="row">
-                                             <div class="col-md-12">
-                                                 <div class="form-group label-static col-md-4">
+                                             <div class="col-md-3">
+                                                 <div class="form-group label-static">
+                                                     <label id="trigger" class="hidden"></label>
                                                      <label class="control-label">Dates</label>
 
-                                                     <input type='text' size="40" class="flatpickr form-control" name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation">
+                                                     <input type='text' size="40" class="flatpickr form-control" data-enabletime=true data-enable-seconds=true name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation" disabled>
 
                                                      <script src="../js/flatpickr.js" type="text/javascript"></script>
                                                      <script>
                                                          flatpickr(".selector", {});
                                                          document.getElementById("acquisition").flatpickr({
-
-
                                                              defaultDate: <?php $gReservation->getDatesReservation($_GET["id"]); ?>
                                                              enableTime: true,
                                                              mode: "range"
-
-
                                                          });
                                                      </script>
                                                  </div>
@@ -75,19 +69,17 @@
 
 
                                          <div class="row">
-                                             <div class="col-md-12">
+                                             <div class="col-md-4">
+                                                 <div class="form-group label-static">
 
-                                                 <div class="form-group label-static col-md-4">
-                                                     <label class="control-label">Choisissez un véhicule</label>
-                                                     <select class="form-control" id="vehicule" name="select"></select>
+                                                     <label class="control-label">Véhicule</label>
+                                                     <select class="form-control" id="vehicule" name="select" disabled><?php $listVehicule->getVehiculeReservation($_GET["id"]); ?></select>
                                                  </div>
                                              </div>
 
                                          </div>
-
-                                         <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
-                                         <input type="submit" id="supprimer" class="btn pull-right" value="Supprimer" style="margin-right: 10px;">
-                                         <input type="submit" id="cancel" class="btn pull-right" value="Annuler" style="margin-right: 10px;">
+                                         <input type="submit" id="modifier" class="btn pull-right margin-button2" value="Modifier">
+                                         <button id="retour" class="btn pull-right">Retour</button>
                                          <div class="clearfix"></div>
                                      </form>
                                  </div>
@@ -135,10 +127,22 @@
 
  	<script type="text/javascript">
      	$(document).ready(function(){
+
             function removeTime(dateStr) {
                 var parts = dateStr.split(" ");
                 return parts[0];
             }
+
+            $(document).on("click", "#retour", function (e) {
+                e.preventDefault();
+                location.href = "http://localhost/app/app/reservation.php";
+            });
+
+             $(document).on("click", "#modifier", function(e) {
+                 e.preventDefault();
+                 location.href = "http://localhost/app/app/views/updateReservationAdmin.php?id=<?php echo $_GET["id"]; ?>";
+
+             });
 
             $("#trigger").load("../controllers/getSelectUsers.php?id=<?php echo $_GET['id']; ?>", function() {
 
@@ -151,67 +155,7 @@
 
             });
 
-             //si les dates sont changées, reload vehicules dispos
-             $("#acquisition").change(function () {
-                 var date = $("#acquisition").val();
-                 var deuxDates = date.split(' à ');
-                 var dateFrom = removeTime(deuxDates[0]);
-                 var dateTo = removeTime(deuxDates[1]);
-
-                 $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom);
-             });
-
-             $(document).on("click", "#confirmer", function(e) {
-                 e.preventDefault();
-                 swal({
-                     title: "Ajouté",
-                     text: "La réservation a bien été modifiée.",
-                     type: "success"
-                 }).then(function () {
-                     var date = $("#acquisition").val();
-                     var deuxDates = date.split(' à ');
-                     var dateFrom = deuxDates[0];
-                     var dateTo = deuxDates[1];
-
-                     var pkVehicule = $("#vehicule").val();
-
-                     location.href = "../controllers/controller_reservation.php?mod=1&id=<?php echo $_GET['id']; ?>&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule;
-                 })
-             });
-
-             $(document).on("click", "#supprimer", function(e) {
-                 e.preventDefault();
-                 swal({
-                     title: "",
-                     text: "La réservation va être annulée.",
-                     type: "warning",
-                     showCancelButton: true,
-                     confirmButtonText: "Ok",
-                     cancelButtonColor: "#969696",
-                     cancelButtonText: "Annuler"
-                 }).then(function () {
-                     location.href = "../controllers/controller_reservation.php?supp=1&id=<?php echo $_GET['id']; ?>";
-                 })
-             });
-
-            $(document).on("click", "#cancel", function(e) {
-                e.preventDefault();
-                swal({
-                    title: "",
-                    text: "Les changements vont être annulés.",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "Ok",
-                    cancelButtonColor: "#969696",
-                    cancelButtonText: "Annuler"
-                }).then(function () {
-                location.href = "../views/reservation.php";
-                })
-            });
-
-
-
-                 $('.navbar-header a').html("Modification de réservation");
+                 $('.navbar-header a').html("Consultation de réservation");
 
      	});
 

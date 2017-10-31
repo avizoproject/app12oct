@@ -52,9 +52,8 @@
 	                                        </div>
 	                                    </div>
 	                                    </div>
-
 	                                    
-	                                    <button type="submit" class="btn margin-button pull-right">Modifier</button>
+	                                    <button type="submit" name="modifier" id="modifier" class="btn margin-button pull-right">Modifier le mot de passe</button>
 	                                    <div class="clearfix"></div>
 	                                </form>
 	                            </div>
@@ -103,9 +102,13 @@
             
     	$(document).ready(function(){
 
-			// Javascript method's body can be found in assets/js/demos.js
-        	
-                
+            //clic modifier, envoie en get le id selectionné
+            $(document).on("click", "#modifier", function(e) {
+                e.preventDefault();
+                window.location.href = "http://localhost/app/app/views/modifierMotDePasse.php";
+            });
+
+
                 var activePage = window.location.href;
             	console.log(activePage);
                 var active = activePage.substring(activePage.lastIndexOf('/') + 1);
@@ -124,6 +127,9 @@
                     }
                     
                 });
+
+
+
                 $('.navbar-header a').html("Mon profil");
     	});
 	

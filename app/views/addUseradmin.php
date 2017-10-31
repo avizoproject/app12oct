@@ -24,12 +24,7 @@ $listUser = new InfoUser();
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
     session_start();
     error_reporting(1);
-    //            if($_SESSION['loggedIn']==false){
-    //                echo '<script type="text/javascript">';
-    //                echo 'alert("Vous n\'êtes pas connecté.");';
-    //                echo 'window.location.href = "../views/signin.php";';
-    //                echo '</script>';
-    //            }
+
     ?>
 </head>
 <body>
@@ -188,36 +183,52 @@ $listUser = new InfoUser();
 
         $(document).on("click", "#confirmer", function(e) {
             e.preventDefault();
-            var nom = $("#nom").val();
-            var prenom = $("#prenom").val();
-            var telephone = $("#telephone").val();
-            var courriel = $("#courriel").val();
-            var secteur = $("#secteur").val();
+            swal({
+                title: "Ajouté",
+                text: "L'utilisateur a bien été ajouté.",
+                type: "success"
+            }).then(function () {
+                var nom = $("#nom").val();
+                var prenom = $("#prenom").val();
+                var telephone = $("#telephone").val();
+                var courriel = $("#courriel").val();
+                var secteur = $("#secteur").val();
 
-            if ($("#password").val() === $("#passwordConfirmed").val()) {
-              var password = $("#password").val();
-            } else {
-              alert("Les mots de passe entrés ne sont pas identiques !!");
-            }
+                if ($("#password").val() === $("#passwordConfirmed").val()) {
+                    var password = $("#password").val();
+                } else {
+                    alert("Les mots de passe entrés ne sont pas identiques !!");
+                }
 
-            if ($('#active').is(':checked') == true) {
-              var statut = 2;
-            } else {
-              var statut = 3;
-            }
+                if ($('#active').is(':checked') == true) {
+                    var statut = 2;
+                } else {
+                    var statut = 3;
+                }
 
-          if ($('#admin').is(':checked') == true) {
-              var statut = 1;
-          }
+                if ($('#admin').is(':checked') == true) {
+                    var statut = 1;
+                }
 
-          if (nom && prenom && telephone && courriel && password && secteur) {
-            location.href = "../controllers/controller_users.php?ajout=1&nom="+ nom +"&prenom="+ prenom +"&telephone="+ telephone +"&courriel="+ courriel +"&password="+ password +"&secteur="+ secteur +"&statut="+ statut;
-          }
+                if (nom && prenom && telephone && courriel && password && secteur) {
+                    location.href = "../controllers/controller_users.php?ajout=1&nom=" + nom + "&prenom=" + prenom + "&telephone=" + telephone + "&courriel=" + courriel + "&password=" + password + "&secteur=" + secteur + "&statut=" + statut;
+                }
+            })
         });
 
         $(document).on("click", "#cancel", function(e) {
             e.preventDefault();
-            location.href = "../views/user.php";
+            swal({
+                title: "",
+                text: "L'ajout de l'utilisateur va être annulé.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ok",
+                cancelButtonColor: "#969696",
+                cancelButtonText: "Annuler"
+            }).then(function () {
+                location.href = "../views/user.php";
+            })
         });
 
         $('.navbar-header a').html("Ajout d'utilisateur");

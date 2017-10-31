@@ -200,18 +200,6 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
 
             });
 
-            /*$(document).delegate('select', 'DOMNodeInserted', function () {
-
-                var date = $("#acquisition").val();
-                var deuxDates = date.split(' à ');
-                var dateFrom = deuxDates[0];
-                var dateTo = deuxDates[1];
-                var utilisateurfks = $("#user").val();
-                var deuxfks = utilisateurfks.split(' ');
-                var fk_secteur = deuxfks[1];
-
-                $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom + "&secteur=" + fk_secteur);
-            });*/
 
             $("#user").change(function () {
                 var date = $("#acquisition").val();
@@ -258,41 +246,64 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
 
              $(document).on("click", "#confirmer", function(e) {
                  e.preventDefault();
-                 var date = $("#acquisition").val();
-                 var deuxDates = date.split(' à ');
-                 var dateFrom = deuxDates[0];
-                 var dateTo = deuxDates[1];
+                 swal({
+                     title: "Ajouté",
+                     text: "La réservation a bien été ajoutée.",
+                     type: "success"
+                 }).then(function () {
+                     var date = $("#acquisition").val();
+                     var deuxDates = date.split(' à ');
+                     var dateFrom = deuxDates[0];
+                     var dateTo = deuxDates[1];
 
-                 var utilisateurfks = $("#user").val();
-                 var deuxfks = utilisateurfks.split(' ');
-                 var fk_user = deuxfks[0];
+                     var utilisateurfks = $("#user").val();
+                     var deuxfks = utilisateurfks.split(' ');
+                     var fk_user = deuxfks[0];
 
-                 var vehiculesfks = $("#vehicule").val();
-                 var fksvehic = vehiculesfks.split(' ');
-                 var pkVehicule = fksvehic[0];
-
-
-
-
-                 if ($('#active').is(':checked') == true){
-                     var statut = 1;
-                 }else{
-                     var statut = 0;
-                 }
+                     var vehiculesfks = $("#vehicule").val();
+                     var fksvehic = vehiculesfks.split(' ');
+                     var pkVehicule = fksvehic[0];
 
 
-                 location.href = "../controllers/controller_reservation.php?mod=1&id=<?php echo $_GET['id']; ?>&statut="+ statut +"&user="+ fk_user + "&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule;
+                     if ($('#active').is(':checked') == true) {
+                         var statut = 1;
+                     } else {
+                         var statut = 0;
+                     }
 
+
+                     location.href = "../controllers/controller_reservation.php?mod=1&id=<?php echo $_GET['id']; ?>&statut=" + statut + "&user=" + fk_user + "&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule;
+                 })
              });
 
              $(document).on("click", "#supprimer", function(e) {
                  e.preventDefault();
-                 location.href = "../controllers/controller_reservation.php?supp=1&id=<?php echo $_GET['id']; ?>";
+                 swal({
+                     title: "",
+                     text: "La réservation va être supprimée.",
+                     type: "warning",
+                     showCancelButton: true,
+                     confirmButtonText: "Ok",
+                     cancelButtonColor: "#969696",
+                     cancelButtonText: "Annuler"
+                 }).then(function () {
+                     location.href = "../controllers/controller_reservation.php?supp=1&id=<?php echo $_GET['id']; ?>";
+                 })
              });
 
             $(document).on("click", "#cancel", function(e) {
                 e.preventDefault();
-                location.href = "../views/reservation.php";
+                swal({
+                    title: "",
+                    text: "Les changements vont être annulés.",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Ok",
+                    cancelButtonColor: "#969696",
+                    cancelButtonText: "Annuler"
+                }).then(function () {
+                    location.href = "../views/reservation.php";
+                })
             });
 
 

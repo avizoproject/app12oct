@@ -24,12 +24,6 @@ $listVehicule = new InfoVehicule();
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
     session_start();
     error_reporting(1);
-    //            if($_SESSION['loggedIn']==false){
-    //                echo '<script type="text/javascript">';
-    //                echo 'alert("Vous n\'êtes pas connecté.");';
-    //                echo 'window.location.href = "../views/signin.php";';
-    //                echo '</script>';
-    //            }
     ?>
 </head>
 <body>
@@ -209,29 +203,45 @@ $listVehicule = new InfoVehicule();
 
         $(document).on("click", "#confirmer", function(e) {
             e.preventDefault();
-            var marque = $("#marque").val();
-            var modele = $("#modele").val();
-            var annee = $("#annee").val();
-            var couleur = $("#couleur").val();
-            var secteur = $("#secteur").val();
-            var odometre = $("#odometre").val();
-            var plaque = $("#plaque").val();
-            var date = $("#acquisition").val();
+            swal({
+                title: "Ajouté",
+                text: "Le véhicule a bien été ajouté.",
+                type: "success"
+            }).then(function () {
+                var marque = $("#marque").val();
+                var modele = $("#modele").val();
+                var annee = $("#annee").val();
+                var couleur = $("#couleur").val();
+                var secteur = $("#secteur").val();
+                var odometre = $("#odometre").val();
+                var plaque = $("#plaque").val();
+                var date = $("#acquisition").val();
 
-            if ($('#active').is(':checked') == true){
-                var statut = 1;
-            }else{
-                var statut = 2;
-            }
+                if ($('#active').is(':checked') == true) {
+                    var statut = 1;
+                } else {
+                    var statut = 2;
+                }
 
-            if (marque && modele && annee && couleur && secteur && odometre && plaque && date) {
-              location.href = "../controllers/controller_vehicules.php?ajout=1&marque="+ marque +"&modele="+ modele +"&annee="+ annee +"&couleur="+ couleur +"&secteur="+ secteur +"&odometre="+ odometre +"&plaque="+ plaque +"&date="+ date +"&statut="+ statut;
-            }
+                if (marque && modele && annee && couleur && secteur && odometre && plaque && date) {
+                    location.href = "../controllers/controller_vehicules.php?ajout=1&marque=" + marque + "&modele=" + modele + "&annee=" + annee + "&couleur=" + couleur + "&secteur=" + secteur + "&odometre=" + odometre + "&plaque=" + plaque + "&date=" + date + "&statut=" + statut;
+                }
+            })
         });
 
         $(document).on("click", "#cancel", function(e) {
             e.preventDefault();
-            location.href = "../views/vehicule.php";
+            swal({
+                title: "",
+                text: "L'ajout du véhicule va être annulé.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ok",
+                cancelButtonColor: "#969696",
+                cancelButtonText: "Annuler"
+            }).then(function () {
+                location.href = "../views/vehicule.php";
+            })
         });
 
         $('.navbar-header a').html("Ajout de véhicule");

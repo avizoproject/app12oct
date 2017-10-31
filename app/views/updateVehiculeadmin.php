@@ -219,34 +219,60 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
 
         $(document).on("click", "#confirmer", function(e) {
             e.preventDefault();
-            var marque = $("#marque").val();
-            var modele = $("#modele").val();
-            var annee = $("#annee").val();
-            var couleur = $("#couleur").val();
-            var secteur = $("#secteur").val();
-            var odometre = $("#odometre").val();
-            var plaque = $("#plaque").val();
-            var date = $("#acquisition").val();
+            swal({
+                title: "Modifié",
+                text: "Le véhicule a bien été modifié",
+                type: "success"
+            }).then(function () {
+                var marque = $("#marque").val();
+                var modele = $("#modele").val();
+                var annee = $("#annee").val();
+                var couleur = $("#couleur").val();
+                var secteur = $("#secteur").val();
+                var odometre = $("#odometre").val();
+                var plaque = $("#plaque").val();
+                var date = $("#acquisition").val();
 
-            if ($('#active').is(':checked') == true){
-                var statut = 1;
-            }else{
-                var statut = 2;
-            }
+                if ($('#active').is(':checked') == true) {
+                    var statut = 1;
+                } else {
+                    var statut = 2;
+                }
 
-            if (marque && modele && annee && couleur && secteur && odometre && plaque && date) {
-              location.href = "../controllers/controller_vehicules.php?mod=1&id=<?php echo $_GET['id']; ?>&marque="+ marque +"&modele="+ modele +"&annee="+ annee +"&couleur="+ couleur +"&secteur="+ secteur +"&odometre="+ odometre +"&plaque="+ plaque +"&date="+ date +"&statut="+ statut;
-            }
+                if (marque && modele && annee && couleur && secteur && odometre && plaque && date) {
+                    location.href = "../controllers/controller_vehicules.php?mod=1&id=<?php echo $_GET['id']; ?>&marque=" + marque + "&modele=" + modele + "&annee=" + annee + "&couleur=" + couleur + "&secteur=" + secteur + "&odometre=" + odometre + "&plaque=" + plaque + "&date=" + date + "&statut=" + statut;
+                }
+            })
         });
 
              $(document).on("click", "#supprimer", function(e) {
                  e.preventDefault();
-                 location.href = "../controllers/controller_vehicules.php?supp=1&id=<?php echo $_GET['id']; ?>";
+                 swal({
+                     title: "",
+                     text: "Le véhicule va être supprimé.",
+                     type: "warning",
+                     showCancelButton: true,
+                     confirmButtonText: "Ok",
+                     cancelButtonColor: "#969696",
+                     cancelButtonText: "Annuler"
+                 }).then(function () {
+                     location.href = "../controllers/controller_vehicules.php?supp=1&id=<?php echo $_GET['id']; ?>";
+                 })
              });
 
             $(document).on("click", "#cancel", function(e) {
                 e.preventDefault();
-                location.href = "../views/vehicule.php";
+                swal({
+                    title: "",
+                    text: "Les modifications vont être annulées.",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Ok",
+                    cancelButtonColor: "#969696",
+                    cancelButtonText: "Annuler"
+                }).then(function () {
+                    location.href = "../views/vehicule.php";
+                })
             });
 
                  $('.navbar-header a').html("Modification de véhicule");
