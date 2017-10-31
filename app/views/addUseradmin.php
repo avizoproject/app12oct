@@ -73,7 +73,7 @@ $listUser = new InfoUser();
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Téléphone</label>
-                                                <input type="text" class="form-control" id="telephone" maxlength="12" required>
+                                                <input type="text" class="form-control" id="telephone" placeholder="000 000-0000" maxlength="12" required>
                                             </div>
                                         </div>
                                     </div>
@@ -214,6 +214,36 @@ $listUser = new InfoUser();
                     location.href = "../controllers/controller_users.php?ajout=1&nom=" + nom + "&prenom=" + prenom + "&telephone=" + telephone + "&courriel=" + courriel + "&password=" + password + "&secteur=" + secteur + "&statut=" + statut;
                 }
             })
+=======
+            var nom = $("#nom").val();
+            var prenom = $("#prenom").val();
+            var telephone = $("#telephone").val();
+            if (/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test($("#courriel").val())) {
+              var courriel = $("#courriel").val();
+            } else {
+              alert("Le courriel entré est incorrect !!");
+            }
+            var secteur = $("#secteur").val();
+
+            if ($("#password").val() === $("#passwordConfirmed").val()) {
+              var password = $("#password").val();
+            } else {
+              alert("Les mots de passe entrés ne sont pas identiques !!");
+            }
+
+            if ($('#active').is(':checked') == true) {
+              var statut = 2;
+            } else {
+              var statut = 3;
+            }
+
+          if ($('#admin').is(':checked') == true) {
+              var statut = 1;
+          }
+
+          if (nom && prenom && telephone && courriel && password && secteur) {
+            location.href = "../controllers/controller_users.php?ajout=1&nom="+ nom +"&prenom="+ prenom +"&telephone="+ telephone +"&courriel="+ courriel +"&password="+ password +"&secteur="+ secteur +"&statut="+ statut;
+          }
         });
 
         $(document).on("click", "#cancel", function(e) {

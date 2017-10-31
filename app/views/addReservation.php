@@ -37,8 +37,8 @@ $listVehicule = new InfoVehicule();
     <body>
 
 	<div class="wrapper">
-	    <?php 
-            require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapper.php';
+	    <?php
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapperUser.php';
         ?>
 
 	    <div class="main-panel">

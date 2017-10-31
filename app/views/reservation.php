@@ -54,7 +54,7 @@ $gReservation = new InfoReservation();
 	                                    	<th>Réservé par</th>
 						                    <th>Date de début</th>
                                             <th>Date de retour prévu</th>
-                                            <th>Statut (1=actif , 0=inactif)</th>
+                                            <th class="tableColWidth">Statut</th>
 	                                    </thead>
 	                                    <tbody>
                                                 <?php $gReservation->getListReservations(); ?>
