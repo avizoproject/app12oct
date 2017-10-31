@@ -23,69 +23,6 @@ $currentUser = $listUser->getObjectFromDB($_SESSION['user']['pk_utilisateur']);
     ?>
 </head>
 <body>
-
-	<div class="wrapper">
-        <?php
-        if(intval($_SESSION['admin'])===1)
-            require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapper.php';
-            ?>
-
-	    <div class="main-panel">
-			<?php 
-                        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/navigation.php';
-                        ?>
-
-
-	        <div class="content">
-	            <div class="container-fluid">
-	                <div class="row">
-	                    <div class="col-md-8 center-block float-none">
-	                        <div class="card">
-	                            <div class="card-header" data-background-color="blue">
-	                                <h4 class="title">Modifier mon profil</h4>
-									<p class="category">Tous les champs sont obligatoires</p>
-	                            </div>
-	                            <div class="card-content">
-	                                <form>
-	                                    <div class="row">	                                        
-	                                        
-	                                        <div class="col-md-5 center-block float-none">
-												<div class="form-group label-floating">
-													<label class="control-label">Adresse courriel</label>
-													<input type="email" disabled="true" class="form-control" value="<?php echo $_SESSION['user']['courriel']?>">
-												</div>
-	                                        </div>
-                                                
-	                                    </div>
-                                            <div class="row">	 
-	                                    <div class="col-md-5 center-block float-none">
-												<div class="form-group label-floating">
-													<label class="control-label">Mot de passe</label>
-													<input type="password" class="form-control" value="<?php echo $_SESSION['user']['mot_de_passe']?>">
-												</div>
-	                                        </div>
-	                                    </div>
-	                                    </div>
-	                                    
-	                                    <button type="submit" name="modifier" id="modifier" class="btn margin-button pull-right">Modifier le mot de passe</button>
-	                                    <div class="clearfix"></div>
-	                                </form>
-	                            </div>
-	                        </div>
-	                    </div>
-					
-	                </div>
-	            </div>
-                <?php
-			require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/footer.php';
-                        ?>
-	        </div>
-
-	        
-	    </div>
-	
-        else require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapperUser.php';
-        ?>
 <div class="wrapper">
     <?php
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapper.php';
