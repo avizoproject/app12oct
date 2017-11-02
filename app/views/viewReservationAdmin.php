@@ -112,7 +112,7 @@
                 <!--  Sweet alert -->
         <script src="../js/sweetalert2.min.js"></script>
         <script src="../js/sweetalert2.js"></script>
-        
+
  	<!--  Notifications Plugin    -->
  	<script src="../js/bootstrap-notify.js"></script>
 
@@ -135,7 +135,7 @@
 
             $(document).on("click", "#retour", function (e) {
                 e.preventDefault();
-                location.href = "http://localhost/app/app/reservation.php";
+                location.href = "http://localhost/app/app/views/reservation.php";
             });
 
              $(document).on("click", "#modifier", function(e) {
@@ -172,7 +172,7 @@ function erreurNonCon(){
                     setTimeout(function(){window.location.href='../views/signin.php';},1800);
         }
 	</script>
-        
+
         <?php
         if($_SESSION['loggedIn']==false){
                 echo '<script type="text/javascript">',

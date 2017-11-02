@@ -53,7 +53,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                                <div class="form-group label-static col-md-4">
                                                    <label class="control-label">Marque</label>
                                                    <select class="form-control" id="marque" name="select" required></select>
-                                                   <label onclick="ajoutMarque()" style="margin-left: 260px;">Ajouter</label>
+                                                   <label onclick="modMarque()">Modifier</label><label onclick="ajoutMarque()" style="float: right;">Ajouter</label>
                                                </div>
                                            </div>
                                        </div>
@@ -63,7 +63,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                                <div class="form-group label-static col-md-4">
                                                    <label class="control-label">Modèle</label>
                                                    <select class="form-control" id="modele" name="select" required></select>
-                                                   <label onclick="ajoutModele()" style="margin-left: 260px;">Ajouter</label>
+                                                   <label onclick="modModele()">Modifier</label><label onclick="ajoutModele()" style="float: right;">Ajouter</label>
                                                </div>
                                            </div>
                                        </div>
@@ -82,6 +82,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                                <div class="form-group label-static col-md-4">
                                                    <label class="control-label">Couleur</label>
                                                    <select class="form-control" id="couleur" name="select" required></select>
+                                                   <label onclick="modCouleur()">Modifier</label><label onclick="ajoutCouleur()" style="float: right;">Ajouter</label>
                                                </div>
                                            </div>
                                        </div>
@@ -295,14 +296,42 @@ function erreurNonCon(){
 function ajoutMarque() {
   var answer = prompt("Veuillez entrer la nouvelle marque :");
   if (answer != null && answer != "") {
-    location.href = "../controllers/ajouterMarqueModele.php?type=marque&nom=" + answer;
+    location.href = "../controllers/ajouterMarqueModeleCouleur.php?type=marque&nom=" + answer;
   }
 }
 
 function ajoutModele() {
   var answer = prompt("Veuillez entrer le nouveau modèle :");
   if (answer != null && answer != "") {
-    location.href = "../controllers/ajouterMarqueModele.php?type=modele&marque=" + $("#marque").val() + "&nom=" + answer;
+    location.href = "../controllers/ajouterMarqueModeleCouleur.php?type=modele&marque=" + $("#marque").val() + "&nom=" + answer;
+  }
+}
+
+function ajoutCouleur() {
+  var answer = prompt("Veuillez entrer la nouvelle couleur :");
+  if (answer != null && answer != "") {
+    location.href = "../controllers/ajouterMarqueModeleCouleur.php?type=couleur&nom=" + answer;
+  }
+}
+
+function modMarque() {
+  var answer = prompt("Veuillez modifier la marque :", $("#marque option:selected").text());
+  if (answer != null && answer != "") {
+    location.href = "../controllers/ajouterMarqueModeleCouleur.php?type=marque&mod=1&id="+$("#marque").val()+"&nom=" + answer;
+  }
+}
+
+function modModele() {
+  var answer = prompt("Veuillez modifier le modèle :", $("#modele option:selected").text());
+  if (answer != null && answer != "") {
+    location.href = "../controllers/ajouterMarqueModeleCouleur.php?type=modele&mod=1&id="+$("#modele").val()+"&nom=" + answer;
+  }
+}
+
+function modCouleur() {
+  var answer = prompt("Veuillez modifier la couleur :", $("#couleur option:selected").text());
+  if (answer != null && answer != "") {
+    location.href = "../controllers/ajouterMarqueModeleCouleur.php?type=couleur&mod=1&id="+$("#couleur").val()+"&nom=" + answer;
   }
 }
 </script>

@@ -318,7 +318,7 @@ $currentUser = $listUser->getObjectFromDB($_GET["id"]);
                 cancelButtonColor: "#969696",
                 cancelButtonText: "Annuler"
             }).then(function () {
-                location.href = "../views/reservation.php";
+                location.href = "../views/user.php";
             })
         });
 
