@@ -233,11 +233,12 @@ function getReservationsNamesCalendar(){
     $conn->close();
 }
 
-function getWeekReservations()
+function getWeekReservations($plusmoinsWeek)
 {
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+    $plusmoinsWeek = (int)$plusmoinsWeek;
 
-    $results = $conn->query('SELECT reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE()) AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE()) AND reservation.statut !=0');
+    $results = $conn->query('SELECT reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE())+ '. $plusmoinsWeek .' AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE())+ '. $plusmoinsWeek .'  AND reservation.statut !=0');
 
 
 
@@ -254,14 +255,19 @@ function getWeekReservations()
         );
     }
 
+    // Frees the memory associated with a result
+    $results->free();
+
+    // close connection
+    $conn->close();
     return json_encode($allreservation);
 }
 
-    function getWeekReservationsForUser($iduser)
+    function getWeekReservationsForUser($iduser, $week)
     {
         include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-        $results = $conn->query("SELECT reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE()) AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE()) AND utilisateur.pk_utilisateur='". $iduser ."' AND reservation.statut !=0");
+        $results = $conn->query("SELECT reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE())+ " . $week . " AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE())+ " . $week . "  AND utilisateur.pk_utilisateur='". $iduser ."' AND reservation.statut !=0");
 
 
 

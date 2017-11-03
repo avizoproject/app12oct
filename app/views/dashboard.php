@@ -319,41 +319,41 @@
 						<div class="col-lg-6 col-md-12">
 							<div class="card">
 	                            <div class="card-header" data-background-color="orange">
-	                                <h4 class="title">Employees Stats</h4>
-	                                <p class="category">New employees on 15th September, 2016</p>
+	                                <h4 class="title">Les explorateurs</h4>
+	                                <p class="category">Qui a couvert le plus de terrain?</p>
 	                            </div>
 	                            <div class="card-content table-responsive">
 	                                <table class="table table-hover">
-	                                    <thead class="text-warning">
-	                                        <th>ID</th>
-	                                    	<th>Name</th>
-	                                    	<th>Salary</th>
-	                                    	<th>Country</th>
+	                                    <thead id="Ajouter odometre avant/apres sur réservation? stats amusantes" class="text-warning">
+
+	                                    	<th>Nom</th>
+	                                    	<th>Kilométrage</th>
+	                                    	<th>Véhicule favoris</th>
 	                                    </thead>
 	                                    <tbody>
 	                                        <tr>
-	                                        	<td>1</td>
+
 	                                        	<td>Dakota Rice</td>
-	                                        	<td>$36,738</td>
-	                                        	<td>Niger</td>
+	                                        	<td>36,738KM</td>
+	                                        	<td>Ford Ranger Bleu</td>
 	                                        </tr>
 	                                        <tr>
-	                                        	<td>2</td>
+
 	                                        	<td>Minerva Hooper</td>
-	                                        	<td>$23,789</td>
-	                                        	<td>Curaçao</td>
+	                                        	<td>23,789KM</td>
+	                                        	<td>Ford Escape Vert</td>
 	                                        </tr>
 	                                        <tr>
-	                                        	<td>3</td>
+
 	                                        	<td>Sage Rodriguez</td>
-	                                        	<td>$56,142</td>
-	                                        	<td>Netherlands</td>
+	                                        	<td>56,142KM</td>
+	                                        	<td>Trotinette rouge</td>
 	                                        </tr>
 	                                        <tr>
-	                                        	<td>4</td>
+
 	                                        	<td>Philip Chaney</td>
-	                                        	<td>$38,735</td>
-	                                        	<td>Korea, South</td>
+	                                        	<td>48,735KM</td>
+	                                        	<td>Cheval blanc</td>
 	                                        </tr>
 	                                    </tbody>
 	                                </table>

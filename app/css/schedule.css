@@ -93,15 +93,15 @@
     display:block;
     padding-left: 2px;
     font-size:10px;
-
-
+    line-height:normal;
     overflow:hidden;
 }
 #schedule .sc_Bar .text{
-    font-size:12px;
+    font-size:11px;
     padding-left:2px;
     font-weight:bold;
-    line-height: normal;
+    line-height: 1;
+
     overflow:hidden;
 }
 #schedule .timeline,

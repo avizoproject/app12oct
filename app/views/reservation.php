@@ -14,7 +14,9 @@
 session_start();
 error_reporting(0);
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_reservation.php';
+
 $gReservation = new InfoReservation();
+$_SESSION['plusmoinsWeek'] = 0;
 ?>
 <html>
     <head>
@@ -74,51 +76,17 @@ $gReservation = new InfoReservation();
 	            </div>
 
                 <br>
+                <div class="card">
+                    <div class="card-header" data-background-color="blue">
+                        <h4 class="title">Horaire</h4>
+                        <p class="category">Cliquez sur une réservation pour la modifier</p>
+                    </div>
+                    <div class="card-content table-responsive col-md-12">
+                        <div class="row padding-md"><button class="btn btn-default" name="" id="previousWeek"><i class='material-icons'>fast_rewind</i></button><button class="pull-right btn btn-default" name="" id="nextWeek"><i class='material-icons'>fast_forward</i></button></div>
 
-                <div class="col-md-12" id="schedule"></div>
+                        <div class="col-md-11 margin-left-lg center-block float-none" id="schedule"></div>
 
-
-                <!--Fred's calendar, disabled for demo -->
-              <!--<div class="cd-schedule loading">
-              	<div style="float: left; position: relative;">
-              		<ul>
-                    <?php /*$gReservation->getReservationsNamesCalendar(); */?>
-              		</ul>
-              	</div>
-
-              	<div class="events">
-              		<ul>
-                    <?php /*$gReservation->getReservationsCalendar(); */?>
-              		</ul>
-              	</div>
-
-
-
-
-
-
-
-
-              	<div class="event-modal">
-              		<header class="header">
-              			<div class="content">
-              				<span class="event-date"></span>
-              				<h3 class="event-name"></h3>
-              			</div>
-
-              			<div class="header-bg"></div>
-              		</header>
-
-              		<div class="body">
-              			<div class="event-info"></div>
-              			<div class="body-bg"></div>
-              		</div>
-
-              		<a href="#0" class="close">Close</a>
-              	</div>
-
-              	<div class="cover-layer"></div>
-              </div>-->
+                    </div>
 	        </div>
 
 	        <?php
@@ -141,9 +109,9 @@ $gReservation = new InfoReservation();
 	<!--  Charts Plugin -->
 	<script src="../js/chartist.min.js"></script>
 
-                <!--  Sweet alert -->
-        <script src="../js/sweetalert2.min.js"></script>
-        <script src="../js/sweetalert2.js"></script>
+    <!--  Sweet alert -->
+    <script src="../js/sweetalert2.min.js"></script>
+    <script src="../js/sweetalert2.js"></script>
 
 	<!--  Notifications Plugin    -->
 	<script src="../js/bootstrap-notify.js"></script>
@@ -161,6 +129,192 @@ $gReservation = new InfoReservation();
     <script type="text/javascript" src="../js/jq.schedule.js"></script>
 
 	<script type="text/javascript">
+
+        function CreateHoraire(numberofWeeks) {
+
+            Date.prototype.getWeek = function (start, weekNum) {
+                var weekmultiplicator = 7;
+                var numberofWeeks =  weekNum || 0;
+
+                if (numberofWeeks >=2){
+                    $('#nextWeek').prop('disabled',true);
+                }else{
+                    $('#nextWeek').prop('disabled',false);
+                }
+                if (numberofWeeks <=-2){
+                    $('#previousWeek').prop('disabled',true);
+                }else{
+                    $('#previousWeek').prop('disabled',false);
+                }
+
+                //Calcing the starting point
+                start = start || 0;
+                var today = new Date(this.setHours(0, 0, 0, 0));
+
+                var day = today.getDay() - start;
+                var date = today.getDate() - day;
+
+                // Grabbing Start/End Dates
+                var StartDate = new Date(today.setDate(date + (numberofWeeks * weekmultiplicator)));
+                //var EndDate = new Date(today.setDate(date + 6 + (numberofWeeks * weekmultiplicator)));
+                if (numberofWeeks >=0) {
+                    var EndDate = new Date().addDays(date + 3 + (numberofWeeks * weekmultiplicator));
+                }else {
+                    var EndDate = new Date().addDays(date + 3 + (numberofWeeks * weekmultiplicator));
+                }
+                console.log(StartDate +" "+ EndDate);
+                return [StartDate, EndDate];
+
+            }
+
+            Date.prototype.addDays = function(days) {
+                var dat = new Date(this.valueOf());
+                dat.setDate(dat.getDate() + days);
+                return dat;
+            }
+
+            function toDate(dateStr) {
+                var parts = dateStr.split("-");
+                return new Date(parts[0], parts[1] - 1, parts[2]);
+            }
+
+            function splitDate(dateStr) {
+                var parts = dateStr.split("-");
+                return parts;
+            }
+
+            function removeTime(dateStr) {
+                var parts = dateStr.split(" ");
+                return parts[0];
+            }
+
+            function getTime(dateStr) {
+                var parts = dateStr.split(" ");
+                var timeparts = parts[1].split(":")
+                return timeparts;
+            }
+
+            var numofWeeks = numberofWeeks || 0;
+            var reservations = null;
+            $.ajax({
+                url: "../controllers/getReservationsCalendar.php",
+                type: "POST",
+                data: {Week: numofWeeks},
+                success: function (data) {
+
+
+                    reservations = JSON.parse(data);
+                    printHoraire();
+                },
+                error: function (trace) {
+                    alert(trace);
+                }
+            });
+
+
+
+
+            function printHoraire() {
+
+                function getDataCalendar() {
+                    var data = {};
+                    $.each(reservations, function (index) {
+                        //si date debut plus petite que dimanche, date debut dimanche
+                        var Dates = new Date().getWeek(0, numberofWeeks);
+
+                        var comp1 = new Date(Dates[0]);
+                        var comp2 = new Date(toDate(removeTime(reservations[index]['date_debut'])));
+
+                        if (comp1 > comp2) {
+
+                            var dateDebut = '0' + new Date(Dates[0].toLocaleDateString()).getDay() + ':00';
+                        }
+                        else {
+                            if (getTime(splitDate(reservations[index]['date_debut'])[2])[0] < 12) {
+                                var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':00';
+                            } else {
+                                var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':30';
+                            }
+                        }
+
+                        //si date fin plus grande que samedi, date fin samedi
+
+                        var comp3 = new Date(Dates[1]);
+                        var comp4 = new Date(toDate(removeTime(reservations[index]['date_fin'])));
+
+                        if (comp3 < comp4) {
+
+                            var dateFin = '0' + (new Date(Dates[1].toLocaleDateString()).getDay() + 1) + ':00';
+
+                        }
+                        else {
+                            if (getTime(splitDate(reservations[index]['date_fin'])[2])[0] <= 12) {
+                                var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay()) + ':30';
+
+                            } else {
+                                var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay() + 1) + ':00';
+
+                            }
+                        }
+
+                        var nom_vehicule = reservations[index]['nom_marque'] + " " + reservations[index]['nom_modele'];
+                        var nom_user = reservations[index]['prenom'] + " " + reservations[index]['nom'].charAt(0);
+                        var dated = removeTime(splitDate(reservations[index]['date_debut'])[2]) + "-" + removeTime(splitDate(reservations[index]['date_fin'])[2]) + " " + getTime(splitDate(reservations[index]['date_fin'])[2])[0] + "h";
+                        var pk = reservations[index]['pk_reservation'] + "";
+
+                        var schedule = [];
+                        var scheduleData = {
+                            start: dateDebut + '',
+                            end: dateFin + '',
+                            text: dated,
+                            dated: nom_user,
+                            pk: pk,
+                            data: {}
+
+                        };
+
+                        schedule.push(scheduleData);
+                        var rowNum = index + 1;
+                        data["'" + rowNum + "'"] = {
+
+                            schedule: schedule,
+                            title: nom_vehicule
+                        };
+
+
+                    });
+                    return data;
+                }
+
+
+
+                var $sc = $("#schedule").timeSchedule({
+                    startTime: "00:00", // schedule start time(HH:ii)
+                    endTime: "07:00",   // schedule end time(HH:ii)
+                    widthTime: 60 * 30,  // cell timestamp example 10 minutes
+                    timeLineY: 40,       // height(px)
+                    verticalScrollbar: 20,   // scrollbar (px)
+                    timeLineBorder: 2,   // border(top and bottom)
+                    debug: "#debug",     // debug string output elements
+                    rows: getDataCalendar(),
+                    change: function (node, data) {
+                        alert("change event");
+                    },
+                    init_data: function (node, data) {
+                    },
+                    click: function (node, data) {
+                        //sweetalert moé ca
+                        var pk = node.find('.hidden').text();
+                        window.location.href = "http://localhost/app/app/views/updateReservationadmin.?id=" + pk;
+                    },
+
+
+                });
+
+            }
+        }
+
+
     	$(document).ready(function(){
 
 			// Javascript method's body can be found in assets/js/demos.js
@@ -214,6 +368,8 @@ $gReservation = new InfoReservation();
                     window.location.href = "http://localhost/app/app/views/addReservationadmin.php";
                 });
 
+
+
                  var activePage = window.location.href;
             	console.log(activePage);
                 var active = activePage.substring(activePage.lastIndexOf('/') + 1);
@@ -239,160 +395,51 @@ $gReservation = new InfoReservation();
 
                 //---------------HORAIRE ALEX----------------
 
-
-            Date.prototype.getWeek = function(start)
-            {
-                //Calcing the starting point
-                start = start || 0;
-                var today = new Date(this.setHours(0, 0, 0, 0));
-                var day = today.getDay() - start;
-                var date = today.getDate() - day;
-
-                // Grabbing Start/End Dates
-                var StartDate = new Date(today.setDate(date));
-                var EndDate = new Date(today.setDate(date + 6));
-
-                return [StartDate, EndDate];
-            }
+                CreateHoraire();
 
 
-
-            // test code
-
-
-           /* var start = new Date(Dates[0].toLocaleDateString()).getDay();
-            var end = new Date(Dates[1].toLocaleDateString()).getDay() + 1;
-            var startOfTheWeek = "0"+start+":00";
-            var endOfTheWeek = "0"+end+":00";
-*/
-
-            var reservations = <?php echo $gReservation->getWeekReservations(); ?>;
-
-
-
-
-        function getDataCalendar() {
-            var data = {};
-            $.each(reservations, function (index) {
-                //si date debut plus petite que dimanche, date debut dimanche
-                var Dates = new Date().getWeek();
-                var comp1 = new Date(Dates[0]);
-                var comp2 = new Date(toDate(removeTime(reservations[index]['date_debut'])));
-
-                if (comp1 > comp2) {
-
-                    var dateDebut = '0' + new Date(Dates[0].toLocaleDateString()).getDay() + ':00';
-                }
-                else {
-                    if (getTime(splitDate(reservations[index]['date_debut'])[2])[0] < 12) {
-                        var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':00';
-                    }else{
-                        var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':30';
-                    }
-                }
-
-                //si date fin plus grande que samedi, date fin samedi
-
-                var comp3 = new Date(Dates[1]);
-                var comp4 = new Date(toDate(removeTime(reservations[index]['date_fin'])));
-
-                if (comp3 < comp4) {
-
-                    var dateFin = '0' + new Date(Dates[1].toLocaleDateString()).getDay() + 1 + ':00';
-
-                }
-                else {
-                    if (getTime(splitDate(reservations[index]['date_fin'])[2])[0] <= 12) {
-                        var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay()) + ':30';
-
-                    }else{
-                        var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay() + 1) + ':00';
-
-                    }
-                }
-
-                var nom_vehicule = reservations[index]['nom_marque'] + " " + reservations[index]['nom_modele'];
-                var nom_user = reservations[index]['prenom'] + " " + reservations[index]['nom'];
-                var dated = removeTime(splitDate(reservations[index]['date_debut'])[2]) + "-" + removeTime(splitDate(reservations[index]['date_fin'])[2]) + " " + getTime(splitDate(reservations[index]['date_fin'])[2])[0]+"h" ;
-                var pk = reservations[index]['pk_reservation']+"";
-
-                var schedule = [];
-                var scheduleData = {
-                    start: dateDebut+'',
-                    end: dateFin + '',
-                    text: nom_user,
-                    dated : dated,
-                    pk: pk,
-                    data: {}
-
-                };
-
-                schedule.push(scheduleData);
-                var rowNum = index +1;
-                data["'" + rowNum + "'"] = {
-
-                    schedule: schedule,
-                    title: nom_vehicule
-                };
-
-
-
-            });
-            return data;
-        }
-
-            function toDate(dateStr) {
-                var parts = dateStr.split("-");
-                return new Date(parts[0], parts[1] - 1, parts[2]);
-            }
-
-            function splitDate(dateStr) {
-                var parts = dateStr.split("-");
-                return parts;
-            }
-            function removeTime(dateStr) {
-                var parts = dateStr.split(" ");
-                return parts[0];
-            }
-
-            function getTime(dateStr) {
-                var parts = dateStr.split(" ");
-                var timeparts = parts[1].split(":")
-                return timeparts;
-            }
-
-
-
-            console.log(getDataCalendar());
-
-
-
-
-
-            var $sc = $("#schedule").timeSchedule({
-                startTime: "00:00", // schedule start time(HH:ii)
-                endTime: "07:00",   // schedule end time(HH:ii)
-                widthTime:60 * 30,  // cell timestamp example 10 minutes
-                timeLineY:40,       // height(px)
-                verticalScrollbar:20,   // scrollbar (px)
-                timeLineBorder:2,   // border(top and bottom)
-                debug:"#debug",     // debug string output elements
-                rows : getDataCalendar(),
-                change: function(node,data){
-                    alert("change event");
-                },
-                init_data: function(node,data){
-                },
-                click: function(node,data){
-                    //sweetalert moé ca
-                    var pk = node.find('.hidden').text();
-                    window.location.href = "http://localhost/app/app/views/updateReservationadmin.?id="+pk;
-                },
-
-
-            });
     	});
+        //clic next
+        $('#nextWeek').click(function () {
 
+            $.ajax({
+                url : "../controllers/changeWeek.php",
+                type: "POST",
+                data : {modifWeek : 1},
+                success: function(data)
+                {
+
+
+                    $('#schedule').html('');
+                    CreateHoraire(data);
+                },
+                error: function (trace)
+                {
+                    alert(trace);
+                }
+            });
+
+            /*$.post( "../controllers/changeWeek.php", { modifWeek: 1})
+                .done(function( data ) {
+                    $('#schedule').html(' ');
+
+                    console.log(data);
+                    CreateHoraire(data[0], data[1]);
+                });*/
+
+        });
+
+        //clic prev
+        $('#previousWeek').click(function () {
+            $.post( "../controllers/changeWeek.php", { modifWeek: -1})
+                .done(function( data ) {
+                    $('#schedule').html(' ');
+
+
+                    CreateHoraire(data);
+                });
+
+        });
 
 function erreurNonCon(){
             swal({
