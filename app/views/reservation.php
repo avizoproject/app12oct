@@ -56,7 +56,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 	                                    	<th>Réservé par</th>
 						                    <th>Date de début</th>
                                             <th>Date de retour prévu</th>
-                                            <th>Statut (1=actif , 0=inactif)</th>
+                                            <th class="tableColWidth">Statut</th>
 	                                    </thead>
 	                                    <tbody>
                                                 <?php $gReservation->getListReservations(); ?>
@@ -352,7 +352,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                 $('#Consulter').click(function () {
                     if ($('#example tr.selected td:first').length > 0) {
                         var idcons = $('#example tr.selected td:first').html();
-                        window.location.href = "http://localhost/app/app/views/viewReservation.php?id=" + idcons + "";
+                        window.location.href = "http://localhost/app/app/views/viewReservationAdmin.php?id=" + idcons + "";
                     }else{
                         swal({
                                 title:"",

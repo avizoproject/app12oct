@@ -40,10 +40,8 @@ class controller_login
     }
     function login()
     {
-
         foreach ($this->allUsers as $row) {
             if ($row['courriel'] == $this->infosLogin[0] && $row['mot_de_passe'] == $this->infosLogin[1]) {
-                echo "success ";
                 $this->Handshake = true;
             }
         }
@@ -84,14 +82,7 @@ if ($loginControl->getHs() == true) {
     else
         header("Location: http://localhost/app/app/views/dashboard.php");
     exit();
-}
-else{
-   $message = "Le nom d\'utilisateur ou le mot de passe est erronné.";
-
-    echo ("<SCRIPT LANGUAGE='JavaScript'>
-    window.alert('Succesfully Updated')
-    window.location.href='http://localhost/app/app/views/signin.php';
-    </SCRIPT>");
-    exit();
+} else {
+  echo "<script>alert ('Le courriel ne correspond pas au mot de passe entré !'); window.location.href = 'http://localhost/app/app/views/signin.php';</script>";
 }
 ?>

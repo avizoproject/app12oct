@@ -63,16 +63,23 @@ if (session_status() == true) {
 
                 <form class="form-horizontal" action="http://localhost/app/app/controllers/controller_login.php" method="post">
                     <fieldset>
-                        <div class="">
-                                                   
-                            <input class="center-block" name="email" type="text" placeholder="Adresse courriel">
-                         
+                        <div class="row">
+                            <div class="center-block float-none col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Adresse courriel</label>
+                                    <input class="form-control" name="email" type="text">
+                                </div>
+                            </div>
                         </div>
                         <br>
-                        <div class="">                          
-                            <input class="center-block" name="password" type="password" placeholder="Mot de passe">
-                        
-                        </div>   
+                        <div class="row">
+                            <div class="center-block float-none col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Mot de passe</label>
+                                    <input class="form-control" name="password" type="password">
+                                </div>
+                            </div>
+                        </div>
                         <br>
                         <div class="">
                           <input type="submit" class="btn center-block" value="Se connecter">

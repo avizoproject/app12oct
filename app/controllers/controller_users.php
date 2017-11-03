@@ -63,6 +63,16 @@ class controller_users
       $this->infosUsers->updateObjectDynamically("fk_statut", 3, $id);
     }
 
+    function profilUser($id)
+    {
+      $this->infosUsers->updateObjectDynamically("telephone", $this->arrayUsers[2], $id);
+      if ($this->arrayUsers[4] != null) {
+        $this->infosUsers->updateObjectDynamically("mot_de_passe", $this->arrayUsers[4], $id);
+      }
+      header("Location: http://localhost/app/app/views/dashboard.php");
+      exit();
+    }
+
     function getInfosUsers() {
         return $this->infosUsers;
     }
@@ -79,6 +89,8 @@ if (isset($_GET['ajout'])) {
   $usersControl->modUser($_GET['id']);
 } elseif (isset($_GET['supp'])) {
   $usersControl->suppUser($_GET['id']);
+} elseif (isset($_GET['profil'])) {
+  $usersControl->profilUser($_GET['id']);
 }
 
 header("Location: http://localhost/app/app/views/user.php");

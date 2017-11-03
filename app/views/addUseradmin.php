@@ -24,12 +24,7 @@ $listUser = new InfoUser();
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
     session_start();
     error_reporting(1);
-    //            if($_SESSION['loggedIn']==false){
-    //                echo '<script type="text/javascript">';
-    //                echo 'alert("Vous n\'êtes pas connecté.");';
-    //                echo 'window.location.href = "../views/signin.php";';
-    //                echo '</script>';
-    //            }
+
     ?>
 </head>
 <body>
@@ -60,7 +55,7 @@ $listUser = new InfoUser();
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Nom</label>
-                                                <input type="text" class="form-control" id="nom" maxlength="100" required>
+                                                <input type="text" class="form-control" id="nom" maxlength="100">
                                             </div>
                                         </div>
                                     </div>
@@ -69,7 +64,7 @@ $listUser = new InfoUser();
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Prénom</label>
-                                                <input type="text" class="form-control" id="prenom" maxlength="100" required>
+                                                <input type="text" class="form-control" id="prenom" maxlength="100">
                                             </div>
                                         </div>
                                     </div>
@@ -78,7 +73,7 @@ $listUser = new InfoUser();
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Téléphone</label>
-                                                <input type="text" class="form-control" id="telephone" maxlength="12" required>
+                                                <input type="text" class="form-control" id="telephone" placeholder="000 000-0000" maxlength="12">
                                             </div>
                                         </div>
                                     </div>
@@ -87,7 +82,7 @@ $listUser = new InfoUser();
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Courriel</label>
-                                                <input type="text" class="form-control" id="courriel" maxlength="150" required>
+                                                <input type="text" class="form-control" id="courriel" maxlength="150">
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +91,7 @@ $listUser = new InfoUser();
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Mot de passe</label>
-                                                <input type="password" class="form-control" id="password" maxlength="50" required>
+                                                <input type="password" class="form-control" id="password" maxlength="50">
                                             </div>
                                         </div>
                                     </div>
@@ -105,7 +100,7 @@ $listUser = new InfoUser();
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Confirmation du mot de passe</label>
-                                                <input type="password" class="form-control" id="passwordConfirmed" maxlength="50" required>
+                                                <input type="password" class="form-control" id="passwordConfirmed" maxlength="50">
                                             </div>
                                         </div>
                                     </div>
@@ -114,7 +109,7 @@ $listUser = new InfoUser();
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Secteur</label>
-                                                <select class="form-control" id="secteur" name="select" required></select>
+                                                <select class="form-control" id="secteur" name="select"></select>
                                             </div>
                                         </div>
                                     </div>
@@ -188,10 +183,46 @@ $listUser = new InfoUser();
 
         $(document).on("click", "#confirmer", function(e) {
             e.preventDefault();
+            swal({
+                title: "Ajouté",
+                text: "L'utilisateur a bien été ajouté.",
+                type: "success"
+            }).then(function () {
+                var nom = $("#nom").val();
+                var prenom = $("#prenom").val();
+                var telephone = $("#telephone").val();
+                var courriel = $("#courriel").val();
+                var secteur = $("#secteur").val();
+
+                if ($("#password").val() === $("#passwordConfirmed").val()) {
+                    var password = $("#password").val();
+                } else {
+                    alert("Les mots de passe entrés ne sont pas identiques !!");
+                }
+
+                if ($('#active').is(':checked') == true) {
+                    var statut = 2;
+                } else {
+                    var statut = 3;
+                }
+
+                if ($('#admin').is(':checked') == true) {
+                    var statut = 1;
+                }
+
+                if (nom && prenom && telephone && courriel && password && secteur) {
+                    location.href = "../controllers/controller_users.php?ajout=1&nom=" + nom + "&prenom=" + prenom + "&telephone=" + telephone + "&courriel=" + courriel + "&password=" + password + "&secteur=" + secteur + "&statut=" + statut;
+                }
+            })
+
             var nom = $("#nom").val();
             var prenom = $("#prenom").val();
             var telephone = $("#telephone").val();
-            var courriel = $("#courriel").val();
+            if (/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test($("#courriel").val())) {
+              var courriel = $("#courriel").val();
+            } else {
+              alert("Le courriel entré est incorrect !!");
+            }
             var secteur = $("#secteur").val();
 
             if ($("#password").val() === $("#passwordConfirmed").val()) {
@@ -217,7 +248,17 @@ $listUser = new InfoUser();
 
         $(document).on("click", "#cancel", function(e) {
             e.preventDefault();
-            location.href = "../views/user.php";
+            swal({
+                title: "",
+                text: "L'ajout de l'utilisateur va être annulé.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ok",
+                cancelButtonColor: "#969696",
+                cancelButtonText: "Annuler"
+            }).then(function () {
+                location.href = "../views/user.php";
+            })
         });
 
         $('.navbar-header a').html("Ajout d'utilisateur");

@@ -28,9 +28,9 @@ $gReservation = new InfoReservation();
     <body>
 
 	<div class="wrapper">
-	    <?php
-            require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapper.php';
-            ?>
+        <?php
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapperUser.php';
+        ?>
 
 	    <div class="main-panel">
 			<?php
@@ -329,17 +329,7 @@ $gReservation = new InfoReservation();
 
                 //clic consulter, envoie en get le id selectionné
                 $('#Retourner').click(function () {
-                    if ($('#example tr.selected td:first').length > 0) {
-                        var idcons = $('#example tr.selected td:first').html();
-                        window.location.href = "http://localhost/app/app/views/returnReservation";
-                    }else{
-                        swal({
-                                title:"",
-                                text:"Vous devez sélectionner une réservation",
-                                type:"warning",
-                                allowOutsideClick : true
-                            });
-                    }
+                    window.location.href = "http://localhost/app/app/views/returnReservation";
                 });
 
             //clic historique shows you all the reservations made by that user

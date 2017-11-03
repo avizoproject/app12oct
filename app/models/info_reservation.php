@@ -114,8 +114,14 @@ function getListReservations(){
             echo $allreservation[$i]['date_debut'] . "</td>";
             echo "<td>";
             echo $allreservation[$i]['date_fin'] . "</td>";
-            echo "<td>";
-            echo $allreservation[$i]['statut'] . "</td>";
+            if($allreservation[$i]['statut'] == 1){
+                echo "<td>";
+                echo "Actif</td>";
+            }else{
+                echo "<td>";
+                echo "Inactif</td>";
+            }
+
             echo "</tr>";
         }
     }
@@ -158,8 +164,13 @@ function getListReservationsUser($id){
             echo $allreservation[$i]['date_debut'] . "</td>";
             echo "<td>";
             echo $allreservation[$i]['date_fin'] . "</td>";
-            echo "<td>";
-            echo $allreservation[$i]['statut'] . "</td>";
+            if($allreservation[$i]['statut'] == 1){
+                echo "<td>";
+                echo "Actif</td>";
+            }else{
+                echo "<td>";
+                echo "Inactif</td>";
+            }
             echo "</tr>";
         }
     }

@@ -53,7 +53,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                                <div class="form-group label-static col-md-4">
                                                    <label class="control-label">Marque</label>
                                                    <select class="form-control" id="marque" name="select" required></select>
-                                                   <label onclick="ajoutMarque()" style="margin-left: 260px;">Ajouter</label>
+                                                   <label onclick="modMarque()">Modifier</label><label onclick="ajoutMarque()" style="float: right;">Ajouter</label>
                                                </div>
                                            </div>
                                        </div>
@@ -63,7 +63,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                                <div class="form-group label-static col-md-4">
                                                    <label class="control-label">Modèle</label>
                                                    <select class="form-control" id="modele" name="select" required></select>
-                                                   <label onclick="ajoutModele()" style="margin-left: 260px;">Ajouter</label>
+                                                   <label onclick="modModele()">Modifier</label><label onclick="ajoutModele()" style="float: right;">Ajouter</label>
                                                </div>
                                            </div>
                                        </div>
@@ -72,7 +72,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            <div class="col-md-12">
                                                <div class="form-group label-static col-md-4">
                                                    <label class="control-label">Année</label>
-                                                   <input type='text' class='form-control' id='annee' maxlength='4' value='<?php echo $currentVehicule['annee']; ?>' required>
+                                                   <input type='number' class='form-control' id='annee' maxlength='4' value='<?php echo $currentVehicule['annee']; ?>' required>
                                                </div>
                                            </div>
                                        </div>
@@ -82,6 +82,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                                <div class="form-group label-static col-md-4">
                                                    <label class="control-label">Couleur</label>
                                                    <select class="form-control" id="couleur" name="select" required></select>
+                                                   <label onclick="modCouleur()">Modifier</label><label onclick="ajoutCouleur()" style="float: right;">Ajouter</label>
                                                </div>
                                            </div>
                                        </div>
@@ -99,7 +100,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            <div class="col-md-12">
                                                <div class="form-group label-static col-md-4">
                                                    <label class="control-label">Odomètre</label>
-                                                   <input type='text' class='form-control' id='odometre' maxlength='6' value='<?php echo $currentVehicule['odometre']; ?>' required>
+                                                   <input type='number' class='form-control' id='odometre' maxlength='6' value='<?php echo $currentVehicule['odometre']; ?>' required>
                                                </div>
                                            </div>
                                        </div>
@@ -219,34 +220,60 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
 
         $(document).on("click", "#confirmer", function(e) {
             e.preventDefault();
-            var marque = $("#marque").val();
-            var modele = $("#modele").val();
-            var annee = $("#annee").val();
-            var couleur = $("#couleur").val();
-            var secteur = $("#secteur").val();
-            var odometre = $("#odometre").val();
-            var plaque = $("#plaque").val();
-            var date = $("#acquisition").val();
+            swal({
+                title: "Modifié",
+                text: "Le véhicule a bien été modifié",
+                type: "success"
+            }).then(function () {
+                var marque = $("#marque").val();
+                var modele = $("#modele").val();
+                var annee = $("#annee").val();
+                var couleur = $("#couleur").val();
+                var secteur = $("#secteur").val();
+                var odometre = $("#odometre").val();
+                var plaque = $("#plaque").val();
+                var date = $("#acquisition").val();
 
-            if ($('#active').is(':checked') == true){
-                var statut = 1;
-            }else{
-                var statut = 2;
-            }
+                if ($('#active').is(':checked') == true) {
+                    var statut = 1;
+                } else {
+                    var statut = 2;
+                }
 
-            if (marque && modele && annee && couleur && secteur && odometre && plaque && date) {
-              location.href = "../controllers/controller_vehicules.php?mod=1&id=<?php echo $_GET['id']; ?>&marque="+ marque +"&modele="+ modele +"&annee="+ annee +"&couleur="+ couleur +"&secteur="+ secteur +"&odometre="+ odometre +"&plaque="+ plaque +"&date="+ date +"&statut="+ statut;
-            }
+                if (marque && modele && annee && couleur && secteur && odometre && plaque && date) {
+                    location.href = "../controllers/controller_vehicules.php?mod=1&id=<?php echo $_GET['id']; ?>&marque=" + marque + "&modele=" + modele + "&annee=" + annee + "&couleur=" + couleur + "&secteur=" + secteur + "&odometre=" + odometre + "&plaque=" + plaque + "&date=" + date + "&statut=" + statut;
+                }
+            })
         });
 
              $(document).on("click", "#supprimer", function(e) {
                  e.preventDefault();
-                 location.href = "../controllers/controller_vehicules.php?supp=1&id=<?php echo $_GET['id']; ?>";
+                 swal({
+                     title: "",
+                     text: "Le véhicule va être supprimé.",
+                     type: "warning",
+                     showCancelButton: true,
+                     confirmButtonText: "Ok",
+                     cancelButtonColor: "#969696",
+                     cancelButtonText: "Annuler"
+                 }).then(function () {
+                     location.href = "../controllers/controller_vehicules.php?supp=1&id=<?php echo $_GET['id']; ?>";
+                 })
              });
 
             $(document).on("click", "#cancel", function(e) {
                 e.preventDefault();
-                location.href = "../views/vehicule.php";
+                swal({
+                    title: "",
+                    text: "Les modifications vont être annulées.",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Ok",
+                    cancelButtonColor: "#969696",
+                    cancelButtonText: "Annuler"
+                }).then(function () {
+                    location.href = "../views/vehicule.php";
+                })
             });
 
                  $('.navbar-header a').html("Modification de véhicule");
@@ -269,14 +296,42 @@ function erreurNonCon(){
 function ajoutMarque() {
   var answer = prompt("Veuillez entrer la nouvelle marque :");
   if (answer != null && answer != "") {
-    location.href = "../controllers/ajouterMarqueModele.php?type=marque&nom=" + answer;
+    location.href = "../controllers/ajouterMarqueModeleCouleur.php?type=marque&nom=" + answer;
   }
 }
 
 function ajoutModele() {
   var answer = prompt("Veuillez entrer le nouveau modèle :");
   if (answer != null && answer != "") {
-    location.href = "../controllers/ajouterMarqueModele.php?type=modele&marque=" + $("#marque").val() + "&nom=" + answer;
+    location.href = "../controllers/ajouterMarqueModeleCouleur.php?type=modele&marque=" + $("#marque").val() + "&nom=" + answer;
+  }
+}
+
+function ajoutCouleur() {
+  var answer = prompt("Veuillez entrer la nouvelle couleur :");
+  if (answer != null && answer != "") {
+    location.href = "../controllers/ajouterMarqueModeleCouleur.php?type=couleur&nom=" + answer;
+  }
+}
+
+function modMarque() {
+  var answer = prompt("Veuillez modifier la marque :", $("#marque option:selected").text());
+  if (answer != null && answer != "") {
+    location.href = "../controllers/ajouterMarqueModeleCouleur.php?type=marque&mod=1&id="+$("#marque").val()+"&nom=" + answer;
+  }
+}
+
+function modModele() {
+  var answer = prompt("Veuillez modifier le modèle :", $("#modele option:selected").text());
+  if (answer != null && answer != "") {
+    location.href = "../controllers/ajouterMarqueModeleCouleur.php?type=modele&mod=1&id="+$("#modele").val()+"&nom=" + answer;
+  }
+}
+
+function modCouleur() {
+  var answer = prompt("Veuillez modifier la couleur :", $("#couleur option:selected").text());
+  if (answer != null && answer != "") {
+    location.href = "../controllers/ajouterMarqueModeleCouleur.php?type=couleur&mod=1&id="+$("#couleur").val()+"&nom=" + answer;
   }
 }
 </script>

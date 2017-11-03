@@ -186,34 +186,48 @@ $listVehicule = new InfoVehicule();
 
         $(document).on("click", "#confirmer", function(e) {
             e.preventDefault();
-            var date = $("#acquisition").val();
-            var deuxDates = date.split(' à ');
-            var dateFrom = deuxDates[0];
-            var dateTo = deuxDates[1];
+            swal({
+                title: "Ajouté",
+                text: "La réservation a bien été ajoutée.",
+                type: "success"
+            }).then(function () {
+                var date = $("#acquisition").val();
+                var deuxDates = date.split(' à ');
+                var dateFrom = deuxDates[0];
+                var dateTo = deuxDates[1];
 
-            var userstuff = $("#user").val();
-            var secteurETuser = userstuff.split(' ');
-            var user = secteurETuser[1];
+                var userstuff = $("#user").val();
+                var secteurETuser = userstuff.split(' ');
+                var user = secteurETuser[1];
 
-            var vehiculesfks = $("#vehicule").val();
-            var fksvehic = vehiculesfks.split(' ');
-            var pkVehicule = fksvehic[0];
+                var vehiculesfks = $("#vehicule").val();
+                var fksvehic = vehiculesfks.split(' ');
+                var pkVehicule = fksvehic[0];
 
-            if ($('#active').is(':checked') == true){
-                var statut = 1;
-            }else{
-                var statut = 0;
-            }
+                if ($('#active').is(':checked') == true) {
+                    var statut = 1;
+                } else {
+                    var statut = 0;
+                }
 
-            location.href = "../controllers/controller_reservation.php?ajout=1&admin=1&statut="+ statut +"&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule + "&user=" + user;
-
-
+                location.href = "../controllers/controller_reservation.php?ajout=1&admin=1&statut=" + statut + "&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule + "&user=" + user;
+            })
 
         });
 
         $(document).on("click", "#cancel", function(e) {
             e.preventDefault();
-            location.href = "../views/reservation.php";
+            swal({
+                title: "",
+                text: "La réservation va être annulée.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ok",
+                cancelButtonColor: "#969696",
+                cancelButtonText: "Annuler"
+            }).then(function () {
+                location.href = "../views/reservation.php";
+            })
         });
 
         $('.navbar-header a').html("Ajout de réservation");

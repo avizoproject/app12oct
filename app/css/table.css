@@ -377,6 +377,10 @@ table.dataTable,table.dataTable th,table.dataTable td
     box-sizing:content-box
 }
 
+th.tableColWidth{
+    width: 75px !important;
+}
+
 .dataTables_wrapper
 {
     position:relative;
