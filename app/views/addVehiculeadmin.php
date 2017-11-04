@@ -55,7 +55,7 @@ $listVehicule = new InfoVehicule();
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Marque</label>
                                                 <select class="form-control" id="marque" name="select" required></select>
-                                                <label onclick="modMarque()">Modifier</label><label onclick="ajoutMarque()" style="float: right;">Ajouter</label>
+                                                <label id="labelVehicule" onclick="modMarque()">Modifier</label><label id="labelVehicule" onclick="ajoutMarque()" style="float: right;">Ajouter</label>
                                             </div>
                                         </div>
                                     </div>
@@ -65,7 +65,7 @@ $listVehicule = new InfoVehicule();
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Modèle</label>
                                                 <select class="form-control" id="modele" name="select" required></select>
-                                                <label onclick="modModele()">Modifier</label><label onclick="ajoutModele()" style="float: right;">Ajouter</label>
+                                                <label id="labelVehicule" onclick="modModele()">Modifier</label><label id="labelVehicule" onclick="ajoutModele()" style="float: right;">Ajouter</label>
                                             </div>
                                         </div>
                                     </div>
@@ -84,7 +84,7 @@ $listVehicule = new InfoVehicule();
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Couleur</label>
                                                 <select class="form-control" id="couleur" name="select" required></select>
-                                                <label onclick="modCouleur()">Modifier</label><label onclick="ajoutCouleur()" style="float: right;">Ajouter</label>
+                                                <label id="labelVehicule" onclick="modCouleur()">Modifier</label><label id="labelVehicule" onclick="ajoutCouleur()" style="float: right;">Ajouter</label>
                                             </div>
                                         </div>
                                     </div>

@@ -454,7 +454,7 @@
         // resizeWindow
         this.resizeWindow = function(){
             var sc_width = $element.width();
-            var sc_main_width = sc_width - setting.dataWidth - (setting.verticalScrollbar);
+            var sc_main_width = sc_width - setting.dataWidth;
             var cell_num = Math.floor((tableEndTime - tableStartTime) / setting.widthTime);
             $element.find(".sc_header_cell").width(setting.dataWidth);
             $element.find(".sc_data,.sc_data_scroll").width(setting.dataWidth);

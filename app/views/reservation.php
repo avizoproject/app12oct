@@ -87,7 +87,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                         <div class="col-md-11 margin-left-lg center-block float-none" id="schedule"></div>
 
                     </div>
-	        </div>
+	            </div>
 
 	        <?php
 			require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/footer.php';

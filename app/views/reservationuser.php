@@ -15,6 +15,7 @@ session_start();
 error_reporting(0);
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_reservation.php';
 $gReservation = new InfoReservation();
+$_SESSION['plusmoinsWeek'] = 0;
 ?>
 <html>
     <head>
@@ -51,7 +52,7 @@ $gReservation = new InfoReservation();
 
 
                                             <div class="row col-md-4 center-block float-none">
-                                                <div class="buttons col-md-7 float-none" >
+                                                <div class="buttons text-center" >
                                                     <button class="btn btn-default" name="Ajouter" id="Ajouter">Ajouter</button>
 
                                                     <button class="btn btn-default" name="Modifier" id="Modifier">Modifier</button>
@@ -59,7 +60,7 @@ $gReservation = new InfoReservation();
                                             </div>
                                             <br>
                                             <div class="row col-md-4 center-block float-none">
-                                                <div class="buttons center-block float-none" >
+                                                <div class="buttons text-center" >
                                                     <button class="btn btn-default" name="Consulter" id="Retourner">Retourner</button>
 
                                                     <button class="btn btn-default" name="Historique" id="Historique">Historique</button>
@@ -72,13 +73,29 @@ $gReservation = new InfoReservation();
 
                                 </div>
                             </div>
+                            <div class="card">
+                                <div class="card-header" data-background-color="blue">
+                                    <h4 class="title">Horaire</h4>
+                                    <p class="category">Cliquez sur une réservation pour la modifier</p>
+                                </div>
+                                <div class="card-content table col-md-12">
+                                    <div class="row padding-md">
+                                        <button class="btn btn-default" name="" id="previousWeek"><i class='material-icons'>fast_rewind</i>
+                                                
+                                        </button><button class="pull-right btn btn-default" name="" id="nextWeek"><i class='material-icons'>fast_forward</i></button>
+                                    </div>
+
+                                    <div class="col-md-11 margin-left-lg center-block float-none" id="schedule"></div>
+
+                                </div>
+                            </div>
 	                    </div>
 
 	                </div>
 	            </div>
                 <br>
 
-                <div class="col-md-12" id="schedule"></div>
+
 	        </div>
 
 	    </div>
@@ -413,16 +430,16 @@ $gReservation = new InfoReservation();
 
         });
 
-function erreurNonCon(){
+        function erreurNonCon(){
             swal({
-                    title: "Erreur",
-                    type: "error",
-                    text: "Vous n'êtes pas connecté!",
-                    timer: 2000,
-                    showConfirmButton: false,
-                    animation : "pop"
-                    });
-                    setTimeout(function(){window.location.href='../views/signin.php';},1800);
+                title: "Erreur",
+                type: "error",
+                text: "Vous n'êtes pas connecté!",
+                timer: 2000,
+                showConfirmButton: false,
+                animation : "pop"
+            });
+            setTimeout(function(){window.location.href='../views/signin.php';},1800);
         }
 	</script>
         
