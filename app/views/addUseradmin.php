@@ -1,15 +1,14 @@
 <?php
 /****************************************************************
-File : modifyReservation.php
-Authour : Jérémy Besserer-Lemay
-Functionality : Page to modify a vehicule's reservation
-Date: 2017-10-03
-
-Last modification:
-2017-10-03     Jérémy Besserer-Lemay   1 Creation
-2017-10-06     Frédérick Morin         2 Ajout calendrier
-2017-10-03     Frédérick Morin         3 Modification calendrier
-
+ * File : modifyReservation.php
+ * Authour : Jérémy Besserer-Lemay
+ * Functionality : Page to modify a vehicule's reservation
+ * Date: 2017-10-03
+ *
+ * Last modification:
+ * 2017-10-03     Jérémy Besserer-Lemay   1 Creation
+ * 2017-10-06     Frédérick Morin         2 Ajout calendrier
+ * 2017-10-03     Frédérick Morin         3 Modification calendrier
  ******************************************************************/
 session_start();
 error_reporting(0);
@@ -49,7 +48,7 @@ $listUser = new InfoUser();
                                 <p class="category">Tous les champs sont obligatoires.</p>
                             </div>
                             <div class="card-content">
-                                <form id="formAjout" >
+                                <form id="formAjout">
 
                                     <div class="row">
                                         <div class="col-md-12">
@@ -73,7 +72,8 @@ $listUser = new InfoUser();
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Téléphone</label>
-                                                <input type="text" class="form-control" id="telephone" placeholder="000 000-0000" maxlength="12">
+                                                <input type="text" class="form-control" id="telephone"
+                                                       placeholder="000 000-0000" maxlength="12">
                                             </div>
                                         </div>
                                     </div>
@@ -91,7 +91,8 @@ $listUser = new InfoUser();
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Mot de passe</label>
-                                                <input type="password" class="form-control" id="password" maxlength="50">
+                                                <input type="password" class="form-control" id="password"
+                                                       maxlength="50">
                                             </div>
                                         </div>
                                     </div>
@@ -100,7 +101,8 @@ $listUser = new InfoUser();
                                         <div class="col-md-12">
                                             <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Confirmation du mot de passe</label>
-                                                <input type="password" class="form-control" id="passwordConfirmed" maxlength="50">
+                                                <input type="password" class="form-control" id="passwordConfirmed"
+                                                       maxlength="50">
                                             </div>
                                         </div>
                                     </div>
@@ -130,7 +132,8 @@ $listUser = new InfoUser();
                                     </div>
 
                                     <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
-                                    <input type="submit" id="cancel" class="btn pull-right" value="Annuler" style="margin-right: 10px;">
+                                    <input type="submit" id="cancel" class="btn pull-right" value="Annuler"
+                                           style="margin-right: 10px;">
                                     <div class="clearfix"></div>
                                 </form>
                             </div>
@@ -177,11 +180,11 @@ $listUser = new InfoUser();
 <script src="../js/demo.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         $("#secteur").load("../controllers/getSelectSecteurs.php");
 
-        $(document).on("click", "#confirmer", function(e) {
+        $(document).on("click", "#confirmer", function (e) {
             e.preventDefault();
             swal({
                 title: "Ajouté",
@@ -219,34 +222,34 @@ $listUser = new InfoUser();
             var prenom = $("#prenom").val();
             var telephone = $("#telephone").val();
             if (/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test($("#courriel").val())) {
-              var courriel = $("#courriel").val();
+                var courriel = $("#courriel").val();
             } else {
-              alert("Le courriel entré est incorrect !!");
+                alert("Le courriel entré est incorrect !!");
             }
             var secteur = $("#secteur").val();
 
             if ($("#password").val() === $("#passwordConfirmed").val()) {
-              var password = $("#password").val();
+                var password = $("#password").val();
             } else {
-              alert("Les mots de passe entrés ne sont pas identiques !!");
+                alert("Les mots de passe entrés ne sont pas identiques !!");
             }
 
             if ($('#active').is(':checked') == true) {
-              var statut = 2;
+                var statut = 2;
             } else {
-              var statut = 3;
+                var statut = 3;
             }
 
-          if ($('#admin').is(':checked') == true) {
-              var statut = 1;
-          }
+            if ($('#admin').is(':checked') == true) {
+                var statut = 1;
+            }
 
-          if (nom && prenom && telephone && courriel && password && secteur) {
-            location.href = "../controllers/controller_users.php?ajout=1&nom="+ nom +"&prenom="+ prenom +"&telephone="+ telephone +"&courriel="+ courriel +"&password="+ password +"&secteur="+ secteur +"&statut="+ statut;
-          }
+            if (nom && prenom && telephone && courriel && password && secteur) {
+                location.href = "../controllers/controller_users.php?ajout=1&nom=" + nom + "&prenom=" + prenom + "&telephone=" + telephone + "&courriel=" + courriel + "&password=" + password + "&secteur=" + secteur + "&statut=" + statut;
+            }
         });
 
-        $(document).on("click", "#cancel", function(e) {
+        $(document).on("click", "#cancel", function (e) {
             e.preventDefault();
             swal({
                 title: "",
@@ -266,30 +269,52 @@ $listUser = new InfoUser();
     });
 
 
+    function erreurNonCon() {
+        swal({
+            title: "Erreur",
+            type: "error",
+            text: "Vous n'êtes pas connecté!",
+            timer: 2000,
+            showConfirmButton: false,
+            animation: "pop"
+        });
+        setTimeout(function () {
+            window.location.href = '../views/signin.php';
+        }, 1800);
+    }
 
-function erreurNonCon(){
-            swal({
-                    title: "Erreur",
-                    type: "error",
-                    text: "Vous n'êtes pas connecté!",
-                    timer: 2000,
-                    showConfirmButton: false,
-                    animation : "pop"
-                    });
-                    setTimeout(function(){window.location.href='../views/signin.php';},1800);
-}
+    function noAuthorize() {
+        swal({
+            title: "Erreur",
+            type: "error",
+            text: "Vous n'êtes pas authorisé à accéder cette page!",
+            timer: 2000,
+            showConfirmButton: false,
+            animation: "pop",
+            allowOutsideClick: false
+        });
+        setTimeout(function () {
+            window.location.href = '../views/dashboard.php';
+        }, 1800);
+    }
 </script>
 
-        <?php
-        if($_SESSION['loggedIn']==false){
-                echo '<script type="text/javascript">',
-                      'erreurNonCon();',
-                    '</script>';
-            }
-            ?>
+<?php
+if ($_SESSION['loggedIn'] == false) {
+    echo '<script type="text/javascript">',
+    'erreurNonCon();',
+    '</script>';
+}
+
+if ($_SESSION['admin'] == 2) {
+    echo '<script type="text/javascript">',
+    'noAuthorize();',
+    '</script>';
+}
+?>
 <script src="../js/calendarModernizr.js"></script>
 <script>
-    if( !window.jQuery ) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');
+    if (!window.jQuery) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');
 </script>
 <script src="../js/calendarMain.js"></script> <!-- Resource jQuery -->
 </html>

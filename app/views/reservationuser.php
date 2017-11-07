@@ -1,15 +1,14 @@
 <?php
 /****************************************************************
-		File : modifyReservation.php
-		Authour : Jérémy Besserer-Lemay
-		Functionality : Page to modify a vehicule's reservation
-			Date: 2017-10-03
-
-			Last modification:
-			2017-10-03     Jérémy Besserer-Lemay   1 Creation
-      2017-10-06     Frédérick Morin         2 Ajout calendrier
-      2017-10-03     Frédérick Morin         3 Modification calendrier
-
+ * File : modifyReservation.php
+ * Authour : Jérémy Besserer-Lemay
+ * Functionality : Page to modify a vehicule's reservation
+ * Date: 2017-10-03
+ *
+ * Last modification:
+ * 2017-10-03     Jérémy Besserer-Lemay   1 Creation
+ * 2017-10-06     Frédérick Morin         2 Ajout calendrier
+ * 2017-10-03     Frédérick Morin         3 Modification calendrier
  ******************************************************************/
 session_start();
 error_reporting(0);
@@ -17,425 +16,441 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_reservation.php';
 $gReservation = new InfoReservation();
 ?>
 <html>
-    <head>
-          <title>Avizo - Gestionnaire de réservations</title>
-	<?php
-            require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
-            session_start();
-            error_reporting(1);
-            ?>
-    </head>
-    <body>
+<head>
+    <title>Avizo - Gestionnaire de réservations</title>
+    <?php
+    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
+    session_start();
+    error_reporting(1);
+    ?>
+</head>
+<body>
 
-	<div class="wrapper">
+<div class="wrapper">
+    <?php
+    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapperUser.php';
+    ?>
+
+    <div class="main-panel">
         <?php
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapperUser.php';
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/navigation.php';
+
         ?>
 
-	    <div class="main-panel">
-			<?php
-                        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/navigation.php';
-
-                        ?>
-
-	        <div class="content">
-	            <div class="container-fluid">
-	                <div class="row">
-	                    <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header" data-background-color="blue">
-                                    <h4 class="title">Réservations</h4>
-                                    <p class="category">Sélectionnez une réservation avant de choisir une action</p>
-                                </div>
-                                <div class="card-content table-responsive">
-
-
-                                            <div class="row col-md-4 center-block float-none">
-                                                <div class="buttons col-md-7 float-none" >
-                                                    <button class="btn btn-default" name="Ajouter" id="Ajouter">Ajouter</button>
-
-                                                    <button class="btn btn-default" name="Modifier" id="Modifier">Modifier</button>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row col-md-4 center-block float-none">
-                                                <div class="buttons center-block float-none" >
-                                                    <button class="btn btn-default" name="Consulter" id="Retourner">Retourner</button>
-
-                                                    <button class="btn btn-default" name="Historique" id="Historique">Historique</button>
-                                                </div>
-                                            </div>
-
-
-
-
-
-                                </div>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header" data-background-color="blue">
+                                <h4 class="title">Réservations</h4>
+                                <p class="category">Sélectionnez une réservation avant de choisir une action</p>
                             </div>
-	                    </div>
-
-	                </div>
-	            </div>
-                <br>
-
-                <div class="col-md-12" id="schedule"></div>
-	        </div>
-
-	    </div>
+                            <div class="card-content table-responsive">
 
 
-	</div>
-    <?php
-    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/modalUserReservations.php';
-    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/footer.php';
+                                <div class="row col-md-4 center-block float-none">
+                                    <div class="buttons col-md-7 float-none">
+                                        <button class="btn btn-default" name="Ajouter" id="Ajouter">Ajouter</button>
 
-    ?>
-    </body>
+                                        <button class="btn btn-default" name="Modifier" id="Modifier">Modifier</button>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row col-md-4 center-block float-none">
+                                    <div class="buttons center-block float-none">
+                                        <button class="btn btn-default" name="Consulter" id="Retourner">Retourner
+                                        </button>
 
-    <!--   Core JS Files   -->
-    <script src="../js/jquery-3.1.0.min.js" type="text/javascript"></script>
-    <script src="../js/jquery.dataTables.min.js"></script>
+                                        <button class="btn btn-default" name="Historique" id="Historique">Historique
+                                        </button>
+                                    </div>
+                                </div>
 
-	<script src="../js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="../js/material.min.js" type="text/javascript"></script>
 
-	<!--  Charts Plugin -->
-	<script src="../js/chartist.min.js"></script>
+                            </div>
+                        </div>
+                    </div>
 
-                <!--  Sweet alert -->
-        <script src="../js/sweetalert2.min.js"></script>
-        <script src="../js/sweetalert2.js"></script>
-        
-	<!--  Notifications Plugin    -->
-	<script src="../js/bootstrap-notify.js"></script>
+                </div>
+            </div>
+            <br>
 
-	<!--  Google Maps Plugin    -->
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+            <div class="col-md-12" id="schedule"></div>
+        </div>
 
-	<!-- Material Dashboard javascript methods -->
-	<script src="../js/material-dashboard.js"></script>
+    </div>
 
-	<!-- Material Dashboard DEMO methods, don't include it in your project! -->
-	<script src="../js/demo.js"></script>
-    <script src= 'https://code.jquery.com/ui/1.10.4/jquery-ui.min.js' type= 'text/javascript' language= 'javascript'></script>
-    <script type="text/javascript" src="../js/jq.schedule.js"></script>
 
-	<script type="text/javascript">
-        function CreateHoraire(numberofWeeks) {
+</div>
+<?php
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/modalUserReservations.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/footer.php';
 
-            Date.prototype.getWeek = function (start, weekNum) {
-                var weekmultiplicator = 7;
-                var numberofWeeks =  weekNum || 0;
+?>
+</body>
 
-                if (numberofWeeks >=2){
-                    $('#nextWeek').prop('disabled',true);
-                }else{
-                    $('#nextWeek').prop('disabled',false);
-                }
-                if (numberofWeeks <=-2){
-                    $('#previousWeek').prop('disabled',true);
-                }else{
-                    $('#previousWeek').prop('disabled',false);
-                }
+<!--   Core JS Files   -->
+<script src="../js/jquery-3.1.0.min.js" type="text/javascript"></script>
+<script src="../js/jquery.dataTables.min.js"></script>
 
-                //Calcing the starting point
-                start = start || 0;
-                var today = new Date(this.setHours(0, 0, 0, 0));
+<script src="../js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../js/material.min.js" type="text/javascript"></script>
 
-                var day = today.getDay() - start;
-                var date = today.getDate() - day;
+<!--  Charts Plugin -->
+<script src="../js/chartist.min.js"></script>
 
-                // Grabbing Start/End Dates
-                var StartDate = new Date(today.setDate(date + (numberofWeeks * weekmultiplicator)));
-                //var EndDate = new Date(today.setDate(date + 6 + (numberofWeeks * weekmultiplicator)));
-                if (numberofWeeks >=0) {
-                    var EndDate = new Date().addDays(date + 3 + (numberofWeeks * weekmultiplicator));
-                }else {
-                    var EndDate = new Date().addDays(date + 3 + (numberofWeeks * weekmultiplicator));
-                }
-                console.log(StartDate +" "+ EndDate);
-                return [StartDate, EndDate];
+<!--  Sweet alert -->
+<script src="../js/sweetalert2.min.js"></script>
+<script src="../js/sweetalert2.js"></script>
 
+<!--  Notifications Plugin    -->
+<script src="../js/bootstrap-notify.js"></script>
+
+<!--  Google Maps Plugin    -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+
+<!-- Material Dashboard javascript methods -->
+<script src="../js/material-dashboard.js"></script>
+
+<!-- Material Dashboard DEMO methods, don't include it in your project! -->
+<script src="../js/demo.js"></script>
+<script src='https://code.jquery.com/ui/1.10.4/jquery-ui.min.js' type='text/javascript' language='javascript'></script>
+<script type="text/javascript" src="../js/jq.schedule.js"></script>
+
+<script type="text/javascript">
+    function CreateHoraire(numberofWeeks) {
+
+        Date.prototype.getWeek = function (start, weekNum) {
+            var weekmultiplicator = 7;
+            var numberofWeeks = weekNum || 0;
+
+            if (numberofWeeks >= 2) {
+                $('#nextWeek').prop('disabled', true);
+            } else {
+                $('#nextWeek').prop('disabled', false);
+            }
+            if (numberofWeeks <= -2) {
+                $('#previousWeek').prop('disabled', true);
+            } else {
+                $('#previousWeek').prop('disabled', false);
             }
 
-            Date.prototype.addDays = function(days) {
-                var dat = new Date(this.valueOf());
-                dat.setDate(dat.getDate() + days);
-                return dat;
+            //Calcing the starting point
+            start = start || 0;
+            var today = new Date(this.setHours(0, 0, 0, 0));
+
+            var day = today.getDay() - start;
+            var date = today.getDate() - day;
+
+            // Grabbing Start/End Dates
+            var StartDate = new Date(today.setDate(date + (numberofWeeks * weekmultiplicator)));
+            //var EndDate = new Date(today.setDate(date + 6 + (numberofWeeks * weekmultiplicator)));
+            if (numberofWeeks >= 0) {
+                var EndDate = new Date().addDays(date + 3 + (numberofWeeks * weekmultiplicator));
+            } else {
+                var EndDate = new Date().addDays(date + 3 + (numberofWeeks * weekmultiplicator));
             }
+            console.log(StartDate + " " + EndDate);
+            return [StartDate, EndDate];
 
-            function toDate(dateStr) {
-                var parts = dateStr.split("-");
-                return new Date(parts[0], parts[1] - 1, parts[2]);
-            }
-
-            function splitDate(dateStr) {
-                var parts = dateStr.split("-");
-                return parts;
-            }
-
-            function removeTime(dateStr) {
-                var parts = dateStr.split(" ");
-                return parts[0];
-            }
-
-            function getTime(dateStr) {
-                var parts = dateStr.split(" ");
-                var timeparts = parts[1].split(":")
-                return timeparts;
-            }
-
-            var numofWeeks = numberofWeeks || 0;
-            var reservations = null;
-            $.ajax({
-                url: "../controllers/getReservationsCalendarUser.php",
-                type: "POST",
-                data: {Week: numofWeeks},
-                success: function (data) {
-
-
-                    reservations = JSON.parse(data);
-                    printHoraire();
-                },
-                error: function (trace) {
-                    alert(trace);
-                }
-            });
-
-
-
-
-            function printHoraire() {
-
-                function getDataCalendar() {
-                    var data = {};
-                    $.each(reservations, function (index) {
-                        //si date debut plus petite que dimanche, date debut dimanche
-                        var Dates = new Date().getWeek(0, numberofWeeks);
-
-                        var comp1 = new Date(Dates[0]);
-                        var comp2 = new Date(toDate(removeTime(reservations[index]['date_debut'])));
-
-                        if (comp1 > comp2) {
-
-                            var dateDebut = '0' + new Date(Dates[0].toLocaleDateString()).getDay() + ':00';
-                        }
-                        else {
-                            if (getTime(splitDate(reservations[index]['date_debut'])[2])[0] < 12) {
-                                var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':00';
-                            } else {
-                                var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':30';
-                            }
-                        }
-
-                        //si date fin plus grande que samedi, date fin samedi
-
-                        var comp3 = new Date(Dates[1]);
-                        var comp4 = new Date(toDate(removeTime(reservations[index]['date_fin'])));
-
-                        if (comp3 < comp4) {
-
-                            var dateFin = '0' + (new Date(Dates[1].toLocaleDateString()).getDay() + 1) + ':00';
-
-                        }
-                        else {
-                            if (getTime(splitDate(reservations[index]['date_fin'])[2])[0] <= 12) {
-                                var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay()) + ':30';
-
-                            } else {
-                                var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay() + 1) + ':00';
-
-                            }
-                        }
-
-                        var nom_vehicule = reservations[index]['nom_marque'] + " " + reservations[index]['nom_modele'];
-                        var nom_user = reservations[index]['prenom'] + " " + reservations[index]['nom'].charAt(0);
-                        var dated = removeTime(splitDate(reservations[index]['date_debut'])[2]) + "-" + removeTime(splitDate(reservations[index]['date_fin'])[2]) + " " + getTime(splitDate(reservations[index]['date_fin'])[2])[0] + "h";
-                        var pk = reservations[index]['pk_reservation'] + "";
-
-                        var schedule = [];
-                        var scheduleData = {
-                            start: dateDebut + '',
-                            end: dateFin + '',
-                            text: dated,
-                            dated: nom_user,
-                            pk: pk,
-                            data: {}
-
-                        };
-
-                        schedule.push(scheduleData);
-                        var rowNum = index + 1;
-                        data["'" + rowNum + "'"] = {
-
-                            schedule: schedule,
-                            title: nom_vehicule
-                        };
-
-
-                    });
-                    return data;
-                }
-
-
-
-                var $sc = $("#schedule").timeSchedule({
-                    startTime: "00:00", // schedule start time(HH:ii)
-                    endTime: "07:00",   // schedule end time(HH:ii)
-                    widthTime: 60 * 30,  // cell timestamp example 10 minutes
-                    timeLineY: 40,       // height(px)
-                    verticalScrollbar: 20,   // scrollbar (px)
-                    timeLineBorder: 2,   // border(top and bottom)
-                    debug: "#debug",     // debug string output elements
-                    rows: getDataCalendar(),
-                    change: function (node, data) {
-                        alert("change event");
-                    },
-                    init_data: function (node, data) {
-                    },
-                    click: function (node, data) {
-                        //sweetalert moé ca
-                        var pk = node.find('.hidden').text();
-                        window.location.href = "http://localhost/app/app/views/updateReservationadmin.?id=" + pk;
-                    },
-
-
-                });
-
-            }
         }
-    	$(document).ready(function(){
 
-			// Javascript method's body can be found in assets/js/demos.js
-        	demo.initDashboardPageCharts();
+        Date.prototype.addDays = function (days) {
+            var dat = new Date(this.valueOf());
+            dat.setDate(dat.getDate() + days);
+            return dat;
+        }
+
+        function toDate(dateStr) {
+            var parts = dateStr.split("-");
+            return new Date(parts[0], parts[1] - 1, parts[2]);
+        }
+
+        function splitDate(dateStr) {
+            var parts = dateStr.split("-");
+            return parts;
+        }
+
+        function removeTime(dateStr) {
+            var parts = dateStr.split(" ");
+            return parts[0];
+        }
+
+        function getTime(dateStr) {
+            var parts = dateStr.split(" ");
+            var timeparts = parts[1].split(":")
+            return timeparts;
+        }
+
+        var numofWeeks = numberofWeeks || 0;
+        var reservations = null;
+        $.ajax({
+            url: "../controllers/getReservationsCalendarUser.php",
+            type: "POST",
+            data: {Week: numofWeeks},
+            success: function (data) {
 
 
+                reservations = JSON.parse(data);
+                printHoraire();
+            },
+            error: function (trace) {
+                alert(trace);
+            }
+        });
 
-                //clic modifier, envoie en get le id selectionné
-                $('#Modifier').click(function () {
 
-                    if ($('#example tr.selected td:first').length > 0) {
-                        var idcont = $('#example tr.selected td:first').html();
-                        window.location.href = "http://localhost/app/app/views/updateReservation.php?id=" + idcont + "";
-                    }else{
-                        swal({
-                                title:"",
-                                text:"Vous devez sélectionner une réservation",
-                                type:"warning",
-                                allowOutsideClick : true
-                            });
+        function printHoraire() {
+
+            function getDataCalendar() {
+                var data = {};
+                $.each(reservations, function (index) {
+                    //si date debut plus petite que dimanche, date debut dimanche
+                    var Dates = new Date().getWeek(0, numberofWeeks);
+
+                    var comp1 = new Date(Dates[0]);
+                    var comp2 = new Date(toDate(removeTime(reservations[index]['date_debut'])));
+
+                    if (comp1 > comp2) {
+
+                        var dateDebut = '0' + new Date(Dates[0].toLocaleDateString()).getDay() + ':00';
                     }
-                });
-
-                //clic consulter, envoie en get le id selectionné
-                $('#Retourner').click(function () {
-                    window.location.href = "http://localhost/app/app/views/returnReservation";
-                });
-
-            //clic historique shows you all the reservations made by that user
-            $('#Historique').click(function () {
-                $("#modalService").modal();
-            });
-
-                //clic ajouter
-                $('#Ajouter').click(function () {
-                    window.location.href = "http://localhost/app/app/views/addReservation.php";
-                });
-
-                var activePage = window.location.href;
-            	console.log(activePage);
-                var active = activePage.substring(activePage.lastIndexOf('/') + 1);
-
-                $('.sidebar-wrapper a').each(function () {
-                    var linkPage = this.href;
-					console.log(linkPage);
-                    if (activePage == linkPage) {
-                        $(this).closest("li").addClass("active");
-                        $('li').each(function () {
-                    	//$(this).closest("a").removeClass("navigation1");
-
-                        $(this).closest("li").removeClass("active");
-                         });
-                         $(this).closest("li").addClass("active");
+                    else {
+                        if (getTime(splitDate(reservations[index]['date_debut'])[2])[0] < 12) {
+                            var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':00';
+                        } else {
+                            var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':30';
+                        }
                     }
 
+                    //si date fin plus grande que samedi, date fin samedi
+
+                    var comp3 = new Date(Dates[1]);
+                    var comp4 = new Date(toDate(removeTime(reservations[index]['date_fin'])));
+
+                    if (comp3 < comp4) {
+
+                        var dateFin = '0' + (new Date(Dates[1].toLocaleDateString()).getDay() + 1) + ':00';
+
+                    }
+                    else {
+                        if (getTime(splitDate(reservations[index]['date_fin'])[2])[0] <= 12) {
+                            var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay()) + ':30';
+
+                        } else {
+                            var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay() + 1) + ':00';
+
+                        }
+                    }
+
+                    var nom_vehicule = reservations[index]['nom_marque'] + " " + reservations[index]['nom_modele'];
+                    var nom_user = reservations[index]['prenom'] + " " + reservations[index]['nom'].charAt(0);
+                    var dated = removeTime(splitDate(reservations[index]['date_debut'])[2]) + "-" + removeTime(splitDate(reservations[index]['date_fin'])[2]) + " " + getTime(splitDate(reservations[index]['date_fin'])[2])[0] + "h";
+                    var pk = reservations[index]['pk_reservation'] + "";
+
+                    var schedule = [];
+                    var scheduleData = {
+                        start: dateDebut + '',
+                        end: dateFin + '',
+                        text: dated,
+                        dated: nom_user,
+                        pk: pk,
+                        data: {}
+
+                    };
+
+                    schedule.push(scheduleData);
+                    var rowNum = index + 1;
+                    data["'" + rowNum + "'"] = {
+
+                        schedule: schedule,
+                        title: nom_vehicule
+                    };
+
+
                 });
+                return data;
+            }
 
 
-
-                $('.navbar-header a').html("Réservations");
-
-            //---------------HORAIRE ALEX----------------
-
-
-            CreateHoraire();
-
-    	});
-        //clic next
-        $('#nextWeek').click(function () {
-
-            $.ajax({
-                url : "../controllers/changeWeek.php",
-                type: "POST",
-                data : {modifWeek : 1},
-                success: function(data)
-                {
-
-
-                    $('#schedule').html('');
-                    CreateHoraire(data);
+            var $sc = $("#schedule").timeSchedule({
+                startTime: "00:00", // schedule start time(HH:ii)
+                endTime: "07:00",   // schedule end time(HH:ii)
+                widthTime: 60 * 30,  // cell timestamp example 10 minutes
+                timeLineY: 40,       // height(px)
+                verticalScrollbar: 20,   // scrollbar (px)
+                timeLineBorder: 2,   // border(top and bottom)
+                debug: "#debug",     // debug string output elements
+                rows: getDataCalendar(),
+                change: function (node, data) {
+                    alert("change event");
                 },
-                error: function (trace)
-                {
-                    alert(trace);
-                }
+                init_data: function (node, data) {
+                },
+                click: function (node, data) {
+                    //sweetalert moé ca
+                    var pk = node.find('.hidden').text();
+                    window.location.href = "http://localhost/app/app/views/updateReservationadmin.?id=" + pk;
+                },
+
+
             });
 
-            /*$.post( "../controllers/changeWeek.php", { modifWeek: 1})
-                .done(function( data ) {
-                    $('#schedule').html(' ');
+        }
+    }
 
-                    console.log(data);
-                    CreateHoraire(data[0], data[1]);
-                });*/
+    $(document).ready(function () {
+
+        // Javascript method's body can be found in assets/js/demos.js
+        demo.initDashboardPageCharts();
+
+
+        //clic modifier, envoie en get le id selectionné
+        $('#Modifier').click(function () {
+
+            if ($('#example tr.selected td:first').length > 0) {
+                var idcont = $('#example tr.selected td:first').html();
+                window.location.href = "http://localhost/app/app/views/updateReservation.php?id=" + idcont + "";
+            } else {
+                swal({
+                    title: "",
+                    text: "Vous devez sélectionner une réservation",
+                    type: "warning",
+                    allowOutsideClick: true
+                });
+            }
+        });
+
+        //clic consulter, envoie en get le id selectionné
+        $('#Retourner').click(function () {
+            window.location.href = "http://localhost/app/app/views/returnReservation";
+        });
+
+        //clic historique shows you all the reservations made by that user
+        $('#Historique').click(function () {
+            $("#modalService").modal();
+        });
+
+        //clic ajouter
+        $('#Ajouter').click(function () {
+            window.location.href = "http://localhost/app/app/views/addReservation.php";
+        });
+
+        var activePage = window.location.href;
+        console.log(activePage);
+        var active = activePage.substring(activePage.lastIndexOf('/') + 1);
+
+        $('.sidebar-wrapper a').each(function () {
+            var linkPage = this.href;
+            console.log(linkPage);
+            if (activePage == linkPage) {
+                $(this).closest("li").addClass("active");
+                $('li').each(function () {
+                    //$(this).closest("a").removeClass("navigation1");
+
+                    $(this).closest("li").removeClass("active");
+                });
+                $(this).closest("li").addClass("active");
+            }
 
         });
 
-        //clic prev
-        $('#previousWeek').click(function () {
-            $.post( "../controllers/changeWeek.php", { modifWeek: -1})
-                .done(function( data ) {
-                    $('#schedule').html(' ');
+
+        $('.navbar-header a').html("Réservations");
+
+        //---------------HORAIRE ALEX----------------
 
 
-                    CreateHoraire(data);
-                });
+        CreateHoraire();
 
+    });
+    //clic next
+    $('#nextWeek').click(function () {
+
+        $.ajax({
+            url: "../controllers/changeWeek.php",
+            type: "POST",
+            data: {modifWeek: 1},
+            success: function (data) {
+
+
+                $('#schedule').html('');
+                CreateHoraire(data);
+            },
+            error: function (trace) {
+                alert(trace);
+            }
         });
 
-function erreurNonCon(){
-            swal({
-                    title: "Erreur",
-                    type: "error",
-                    text: "Vous n'êtes pas connecté!",
-                    timer: 2000,
-                    showConfirmButton: false,
-                    animation : "pop"
-                    });
-                    setTimeout(function(){window.location.href='../views/signin.php';},1800);
-        }
-	</script>
-        
-        <?php
-        if($_SESSION['loggedIn']==false){
-                echo '<script type="text/javascript">',
-                      'erreurNonCon();',
-                    '</script>';
-            }
-            ?>
-  <script src="../js/calendarModernizr.js"></script>
-  <script>
-  	if( !window.jQuery ) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');
-  </script>
-  <script src="../js/calendarMain.js"></script> <!-- Resource jQuery -->
+        /*$.post( "../controllers/changeWeek.php", { modifWeek: 1})
+            .done(function( data ) {
+                $('#schedule').html(' ');
+
+                console.log(data);
+                CreateHoraire(data[0], data[1]);
+            });*/
+
+    });
+
+    //clic prev
+    $('#previousWeek').click(function () {
+        $.post("../controllers/changeWeek.php", {modifWeek: -1})
+            .done(function (data) {
+                $('#schedule').html(' ');
+
+
+                CreateHoraire(data);
+            });
+
+    });
+
+    function erreurNonCon() {
+        swal({
+            title: "Erreur",
+            type: "error",
+            text: "Vous n'êtes pas connecté!",
+            timer: 2000,
+            showConfirmButton: false,
+            animation: "pop"
+        });
+        setTimeout(function () {
+            window.location.href = '../views/signin.php';
+        }, 1800);
+    }
+
+    function noAuthorize() {
+        swal({
+            title: "Erreur",
+            type: "error",
+            text: "Vous n'êtes pas authorisé à voir cette page!",
+            timer: 2000,
+            showConfirmButton: false,
+            animation: "pop",
+            allowOutsideClick: false
+        });
+        setTimeout(function () {
+            window.location.href = '../views/dashboard.php';
+        }, 1800);
+    }
+</script>
+
+<?php
+if ($_SESSION['loggedIn'] == false) {
+    echo '<script type="text/javascript">',
+    'erreurNonCon();',
+    '</script>';
+}
+
+if ($_SESSION['admin'] == 1) {
+    echo '<script type="text/javascript">',
+    'noAuthorize();',
+    '</script>';
+}
+?>
+<script src="../js/calendarModernizr.js"></script>
+<script>
+    if (!window.jQuery) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');
+</script>
+<script src="../js/calendarMain.js"></script> <!-- Resource jQuery -->
 </html>
