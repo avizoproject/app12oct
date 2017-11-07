@@ -2980,19 +2980,6 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   color: inherit;
 }
 @media (max-width: 767px) {
-
-  #schedule {
-    padding:0px !important;
-  }
-  .col-md-12 {
-    padding:0px;
-  }
-
-  .card .card-content {
-    padding: 0 !important;
-
-    width: 100%;
-  }
   .navbar .navbar-nav .navbar-text {
     color: inherit;
     margin-top: 15px;
@@ -3696,7 +3683,7 @@ footer .btn {
   display: none;
 }
 .card .table {
-  margin-bottom: 10px;
+  margin-bottom: 0;
 }
 .card .table tr:first-child td {
   border-top: none;
