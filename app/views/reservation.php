@@ -109,6 +109,9 @@ $_SESSION['plusmoinsWeek'] = 0;
 	<!--  Charts Plugin -->
 	<script src="../js/chartist.min.js"></script>
 
+    <!--  Moments Plugin    -->
+    <script type="text/javascript" src="../js/moment-with-locales.js"></script>
+
     <!--  Sweet alert -->
     <script src="../js/sweetalert2.min.js"></script>
     <script src="../js/sweetalert2.js"></script>
@@ -118,6 +121,9 @@ $_SESSION['plusmoinsWeek'] = 0;
 
 	<!--  Google Maps Plugin    -->
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+
+    <!--  Moments   -->
+    <script type="text/javascript" src="../js/moment-with-locales.js"></script>
 
 	<!-- Material Dashboard javascript methods -->
 	<script src="../js/material-dashboard.js"></script>
@@ -132,7 +138,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 
         function CreateHoraire(numberofWeeks) {
 
-            Date.prototype.getWeek = function (start, weekNum) {
+            getWeek = function (start, weekNum) {
                 var weekmultiplicator = 7;
                 var numberofWeeks =  weekNum || 0;
 
@@ -149,22 +155,22 @@ $_SESSION['plusmoinsWeek'] = 0;
 
                 //Calcing the starting point
                 start = start || 0;
-                var today = new Date(this.setHours(0, 0, 0, 0));
+                //var today = new Date(this.setHours(0, 0, 0, 0));
 
-                var day = today.getDay() - start;
-                var date = today.getDate() - day;
+                /* MOMENT */
+                var today = moment();
+                var today2 = moment();
 
-                // Grabbing Start/End Dates
-                var StartDate = new Date(today.setDate(date + (numberofWeeks * weekmultiplicator)));
-                //var EndDate = new Date(today.setDate(date + 6 + (numberofWeeks * weekmultiplicator)));
-                if (numberofWeeks >=0) {
-                    var EndDate = new Date().addDays(date + 3 + (numberofWeeks * weekmultiplicator));
-                }else {
-                    var EndDate = new Date().addDays(date + 3 + (numberofWeeks * weekmultiplicator));
-                }
+                var day = today.day() - start;
+                var day2= today2.day() -start;
+                today2 = today2.subtract(day2, 'days');
+                var startdate = today.add((numberofWeeks * weekmultiplicator)-day, 'days');
+                var enddate  =today2.add((6 +(numberofWeeks * weekmultiplicator)), 'days');
+
+                var StartDate = moment(startdate).format("YYYY-MM-DD HH:mm:ss");
+                var EndDate = moment(enddate).format("YYYY-MM-DD HH:mm:ss");
                 console.log(StartDate +" "+ EndDate);
                 return [StartDate, EndDate];
-
             }
 
             Date.prototype.addDays = function(days) {
@@ -195,6 +201,7 @@ $_SESSION['plusmoinsWeek'] = 0;
             }
 
             var numofWeeks = numberofWeeks || 0;
+
             var reservations = null;
             $.ajax({
                 url: "../controllers/getReservationsCalendar.php",
@@ -204,7 +211,20 @@ $_SESSION['plusmoinsWeek'] = 0;
 
 
                     reservations = JSON.parse(data);
-                    printHoraire();
+                    if (reservations != null){
+                        if (numberofWeeks >=2){
+                            $('#nextWeek').prop('disabled',true);
+                        }else{
+                            $('#nextWeek').prop('disabled',false);
+                        }
+                        if (numberofWeeks <=-2){
+                            $('#previousWeek').prop('disabled',true);
+                        }else{
+                            $('#previousWeek').prop('disabled',false);
+                        }
+                        printHoraire();
+                    }
+
                 },
                 error: function (trace) {
                     alert(trace);
@@ -220,39 +240,39 @@ $_SESSION['plusmoinsWeek'] = 0;
                     var data = {};
                     $.each(reservations, function (index) {
                         //si date debut plus petite que dimanche, date debut dimanche
-                        var Dates = new Date().getWeek(0, numberofWeeks);
+                        var Dates = getWeek(0, numberofWeeks);
 
-                        var comp1 = new Date(Dates[0]);
-                        var comp2 = new Date(toDate(removeTime(reservations[index]['date_debut'])));
+                        var comp1 = moment(Dates[0]);
+
+                        var comp2 = moment(reservations[index]['date_debut']);
 
                         if (comp1 > comp2) {
-
-                            var dateDebut = '0' + new Date(Dates[0].toLocaleDateString()).getDay() + ':00';
+                            var dateDebut = '0' + comp1.day() + ':00';
                         }
                         else {
-                            if (getTime(splitDate(reservations[index]['date_debut'])[2])[0] < 12) {
-                                var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':00';
+                            if (comp2.hour() < 12) {
+                                var dateDebut = '0' + comp2.day() + ':00';
                             } else {
-                                var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':30';
+                                var dateDebut = '0' + comp2.day() + ':30';
                             }
                         }
 
                         //si date fin plus grande que samedi, date fin samedi
 
-                        var comp3 = new Date(Dates[1]);
-                        var comp4 = new Date(toDate(removeTime(reservations[index]['date_fin'])));
+                        var comp3 = moment(Dates[1]);
+                        var comp4 = moment(reservations[index]['date_fin']);
 
                         if (comp3 < comp4) {
 
-                            var dateFin = '0' + (new Date(Dates[1].toLocaleDateString()).getDay() + 1) + ':00';
+                            var dateFin = '0' + (comp3.day()) + ':00';
 
                         }
                         else {
-                            if (getTime(splitDate(reservations[index]['date_fin'])[2])[0] <= 12) {
-                                var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay()) + ':30';
+                            if (comp4.hour() <= 12) {
+                                var dateFin = '0' + comp4.day() + ':30';
 
                             } else {
-                                var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay() + 1) + ':00';
+                                var dateFin = '0' + (comp4.day() + 1) + ':00';
 
                             }
                         }
@@ -371,7 +391,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 
 
                  var activePage = window.location.href;
-            	console.log(activePage);
+            	//console.log(activePage);
                 var active = activePage.substring(activePage.lastIndexOf('/') + 1);
 
                 $('.sidebar-wrapper a').each(function () {
@@ -401,38 +421,20 @@ $_SESSION['plusmoinsWeek'] = 0;
     	});
         //clic next
         $('#nextWeek').click(function () {
-
-            $.ajax({
-                url : "../controllers/changeWeek.php",
-                type: "POST",
-                data : {modifWeek : 1},
-                success: function(data)
-                {
-
-
-                    $('#schedule').html('');
-                    CreateHoraire(data);
-                },
-                error: function (trace)
-                {
-                    alert(trace);
-                }
-            });
-
-            /*$.post( "../controllers/changeWeek.php", { modifWeek: 1})
-                .done(function( data ) {
+            $.post( "../controllers/changeWeek.php", { modifWeek: 1})
+                .done(function(data) {
                     $('#schedule').html(' ');
 
-                    console.log(data);
-                    CreateHoraire(data[0], data[1]);
-                });*/
+
+                    CreateHoraire(data);
+                });
 
         });
 
         //clic prev
         $('#previousWeek').click(function () {
             $.post( "../controllers/changeWeek.php", { modifWeek: -1})
-                .done(function( data ) {
+                .done(function(data) {
                     $('#schedule').html(' ');
 
 
