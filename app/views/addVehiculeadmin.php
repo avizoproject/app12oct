@@ -72,7 +72,7 @@ $listVehicule = new InfoVehicule();
 
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group label-floating col-md-4">
+                                            <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Année</label>
                                                 <input type="number" class="form-control" id="annee" maxlength="4" required></select>
                                             </div>
@@ -100,7 +100,7 @@ $listVehicule = new InfoVehicule();
 
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group label-floating col-md-4">
+                                            <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Odomètre</label>
                                                 <input type="number" class="form-control" id="odometre" maxlength="6" required></select>
                                             </div>
@@ -109,7 +109,7 @@ $listVehicule = new InfoVehicule();
 
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group label-floating col-md-4">
+                                            <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Plaque</label>
                                                 <input type="text" class="form-control" id="plaque" maxlength="7" required></select>
                                             </div>
@@ -118,7 +118,7 @@ $listVehicule = new InfoVehicule();
 
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group label-floating col-md-4">
+                                            <div class="form-group label-static col-md-4">
                                                 <label class="control-label">Date d'achat</label>
                                                 <input type='text' size="40" class="flatpickr form-control" data-enabletime=true data-enable-seconds=true name="date_acquisition" id='acquisition' required>
                                                 <script src="../js/flatpickr.js" type="text/javascript"></script>
@@ -263,21 +263,6 @@ function erreurNonCon(){
                     setTimeout(function(){window.location.href='../views/signin.php';},1800);
 }
 
-    function noAuthorize() {
-        swal({
-            title: "Erreur",
-            type: "error",
-            text: "Vous n'êtes pas authorisé à accéder cette page!",
-            timer: 2000,
-            showConfirmButton: false,
-            animation: "pop",
-            allowOutsideClick: false
-        });
-        setTimeout(function () {
-            window.location.href = '../views/dashboard.php';
-        }, 1800);
-    }
-
 function ajoutMarque() {
   var answer = prompt("Veuillez entrer la nouvelle marque :");
   if (answer != null && answer != "") {
@@ -327,11 +312,6 @@ function modCouleur() {
                       'erreurNonCon();',
                     '</script>';
             }
-        if ($_SESSION['admin'] == 2) {
-            echo '<script type="text/javascript">',
-            'noAuthorize();',
-            '</script>';
-        }
             ?>
 <script src="../js/calendarModernizr.js"></script>
 <script>

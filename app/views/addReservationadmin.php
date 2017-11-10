@@ -247,35 +247,14 @@ function erreurNonCon(){
                     });
                     setTimeout(function(){window.location.href='../views/signin.php';},1800);
         }
-    function noAuthorize() {
-        swal({
-            title: "Erreur",
-            type: "error",
-            text: "Vous n'êtes pas authorisé à accéder cette page!",
-            timer: 2000,
-            showConfirmButton: false,
-            animation: "pop",
-            allowOutsideClick: false
-        });
-        setTimeout(function () {
-            window.location.href = '../views/dashboard.php';
-        }, 1800);
-    }
 	</script>
 
         <?php
-        var_dump($_SESSION);
         if($_SESSION['loggedIn']==false){
                 echo '<script type="text/javascript">',
                       'erreurNonCon();',
                     '</script>';
             }
-
-        if ($_SESSION['admin'] == 2) {
-            echo '<script type="text/javascript">',
-            'noAuthorize();',
-            '</script>';
-        }
             ?>
 <script src="../js/calendarModernizr.js"></script>
 <script>

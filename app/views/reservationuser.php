@@ -15,7 +15,6 @@ session_start();
 error_reporting(0);
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_reservation.php';
 $gReservation = new InfoReservation();
-$_SESSION['plusmoinsWeek'] = 0;
 ?>
 <html>
     <head>
@@ -56,44 +55,6 @@ $_SESSION['plusmoinsWeek'] = 0;
                                             <div class="buttons center-block float-none" >
                                                 <button class="btn btn-default" name="Consulter" id="Retourner">Retourner</button>
                                                 <button class="btn btn-default" name="Historique" id="Historique">Historique</button>
-
-	<div class="wrapper">
-        <?php
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapperUser.php';
-        ?>
-
-	    <div class="main-panel">
-			<?php
-                        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/navigation.php';
-
-                        ?>
-
-	        <div class="content">
-	            <div class="container-fluid">
-	                <div class="row">
-	                    <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header" data-background-color="blue">
-                                    <h4 class="title">Réservations</h4>
-                                    <p class="category">Sélectionnez une réservation avant de choisir une action</p>
-                                </div>
-                                <div class="card-content table-responsive">
-
-
-                                            <div class="row col-md-4 center-block float-none">
-                                                <div class="buttons text-center" >
-                                                    <button class="btn btn-default" name="Ajouter" id="Ajouter">Ajouter</button>
-
-                                                    <button class="btn btn-default" name="Modifier" id="Modifier">Modifier</button>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row col-md-4 center-block float-none">
-                                                <div class="buttons text-center" >
-                                                    <button class="btn btn-default" name="Consulter" id="Retourner">Retourner</button>
-
-                                                    <button class="btn btn-default" name="Historique" id="Historique">Historique</button>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -119,40 +80,6 @@ $_SESSION['plusmoinsWeek'] = 0;
                 </div>
             </div>
         </div>
-                            <div class="card">
-                                <div class="card-header" data-background-color="blue">
-                                    <h4 class="title">Horaire</h4>
-                                    <p class="category">Cliquez sur une réservation pour la modifier</p>
-                                </div>
-                                <div class="card-content table col-md-12">
-                                    <div class="row padding-md">
-                                        <button class="btn btn-default" name="" id="previousWeek"><i class='material-icons'>fast_rewind</i>
-
-                                        </button><button class="pull-right btn btn-default" name="" id="nextWeek"><i class='material-icons'>fast_forward</i></button>
-                                    </div>
-
-                                    <div class="col-md-11 margin-left-lg center-block float-none" id="schedule"></div>
-
-                                </div>
-                            </div>
-	                    </div>
-
-	                </div>
-	            </div>
-                <br>
-
-
-	        </div>
-
-	    </div>
-
-
-	</div>
-    <?php
-    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/modalUserReservations.php';
-    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/footer.php';
-
-    ?>
     </body>
 
     <!--   Core JS Files   -->
@@ -168,12 +95,6 @@ $_SESSION['plusmoinsWeek'] = 0;
     <!--  Sweet alert -->
     <script src="../js/sweetalert2.min.js"></script>
     <script src="../js/sweetalert2.js"></script>
-    <!--  Moments Plugin    -->
-    <script type="text/javascript" src="../js/moment-with-locales.js"></script>
-
-                <!--  Sweet alert -->
-        <script src="../js/sweetalert2.min.js"></script>
-        <script src="../js/sweetalert2.js"></script>
         
 	<!--  Notifications Plugin    -->
 	<script src="../js/bootstrap-notify.js"></script>
@@ -192,7 +113,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 	<script type="text/javascript">
         function CreateHoraire(numberofWeeks) {
 
-            getWeek = function (start, weekNum) {
+            Date.prototype.getWeek = function (start, weekNum) {
                 var weekmultiplicator = 7;
                 var numberofWeeks =  weekNum || 0;
 
@@ -209,22 +130,22 @@ $_SESSION['plusmoinsWeek'] = 0;
 
                 //Calcing the starting point
                 start = start || 0;
-                //var today = new Date(this.setHours(0, 0, 0, 0));
+                var today = new Date(this.setHours(0, 0, 0, 0));
 
-                /* MOMENT */
-                var today = moment();
-                var today2 = moment();
+                var day = today.getDay() - start;
+                var date = today.getDate() - day;
 
-                var day = today.day() - start;
-                var day2= today2.day() -start;
-                today2 = today2.subtract(day2, 'days');
-                var startdate = today.add((numberofWeeks * weekmultiplicator)-day, 'days');
-                var enddate  =today2.add((6 +(numberofWeeks * weekmultiplicator)), 'days');
-
-                var StartDate = moment(startdate).format("YYYY-MM-DD HH:mm:ss");
-                var EndDate = moment(enddate).format("YYYY-MM-DD HH:mm:ss");
+                // Grabbing Start/End Dates
+                var StartDate = new Date(today.setDate(date + (numberofWeeks * weekmultiplicator)));
+                //var EndDate = new Date(today.setDate(date + 6 + (numberofWeeks * weekmultiplicator)));
+                if (numberofWeeks >=0) {
+                    var EndDate = new Date().addDays(date + 3 + (numberofWeeks * weekmultiplicator));
+                }else {
+                    var EndDate = new Date().addDays(date + 3 + (numberofWeeks * weekmultiplicator));
+                }
                 console.log(StartDate +" "+ EndDate);
                 return [StartDate, EndDate];
+
             }
 
             Date.prototype.addDays = function(days) {
@@ -264,19 +185,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 
 
                     reservations = JSON.parse(data);
-                    if (reservations != null){
-                        if (numberofWeeks >=2){
-                            $('#nextWeek').prop('disabled',true);
-                        }else{
-                            $('#nextWeek').prop('disabled',false);
-                        }
-                        if (numberofWeeks <=-2){
-                            $('#previousWeek').prop('disabled',true);
-                        }else{
-                            $('#previousWeek').prop('disabled',false);
-                        }
-                        printHoraire();
-                    }
+                    printHoraire();
                 },
                 error: function (trace) {
                     alert(trace);
@@ -292,39 +201,39 @@ $_SESSION['plusmoinsWeek'] = 0;
                     var data = {};
                     $.each(reservations, function (index) {
                         //si date debut plus petite que dimanche, date debut dimanche
-                        var Dates = getWeek(0, numberofWeeks);
+                        var Dates = new Date().getWeek(0, numberofWeeks);
 
-                        var comp1 = moment(Dates[0]);
-
-                        var comp2 = moment(reservations[index]['date_debut']);
+                        var comp1 = new Date(Dates[0]);
+                        var comp2 = new Date(toDate(removeTime(reservations[index]['date_debut'])));
 
                         if (comp1 > comp2) {
-                            var dateDebut = '0' + comp1.day() + ':00';
+
+                            var dateDebut = '0' + new Date(Dates[0].toLocaleDateString()).getDay() + ':00';
                         }
                         else {
-                            if (comp2.hour() < 12) {
-                                var dateDebut = '0' + comp2.day() + ':00';
+                            if (getTime(splitDate(reservations[index]['date_debut'])[2])[0] < 12) {
+                                var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':00';
                             } else {
-                                var dateDebut = '0' + comp2.day() + ':30';
+                                var dateDebut = '0' + new Date(toDate(removeTime(reservations[index]['date_debut']))).getDay() + ':30';
                             }
                         }
 
                         //si date fin plus grande que samedi, date fin samedi
 
-                        var comp3 = moment(Dates[1]);
-                        var comp4 = moment(reservations[index]['date_fin']);
+                        var comp3 = new Date(Dates[1]);
+                        var comp4 = new Date(toDate(removeTime(reservations[index]['date_fin'])));
 
                         if (comp3 < comp4) {
 
-                            var dateFin = '0' + (comp3.day()) + ':00';
+                            var dateFin = '0' + (new Date(Dates[1].toLocaleDateString()).getDay() + 1) + ':00';
 
                         }
                         else {
-                            if (comp4.hour() <= 12) {
-                                var dateFin = '0' + comp4.day() + ':30';
+                            if (getTime(splitDate(reservations[index]['date_fin'])[2])[0] <= 12) {
+                                var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay()) + ':30';
 
                             } else {
-                                var dateFin = '0' + (comp4.day() + 1) + ':00';
+                                var dateFin = '0' + (new Date(toDate(removeTime(reservations[index]['date_fin']))).getDay() + 1) + ':00';
 
                             }
                         }
@@ -504,34 +413,6 @@ $_SESSION['plusmoinsWeek'] = 0;
     }
 
     </script>
-        function erreurNonCon(){
-            swal({
-                title: "Erreur",
-                type: "error",
-                text: "Vous n'êtes pas connecté!",
-                timer: 2000,
-                showConfirmButton: false,
-                animation : "pop"
-            });
-            setTimeout(function(){window.location.href='../views/signin.php';},1800);
-        }
-		
-		function noAuthorize() {
-        swal({
-            title: "Erreur",
-            type: "error",
-            text: "Vous n'êtes pas authorisé à voir cette page!",
-            timer: 2000,
-            showConfirmButton: false,
-            animation: "pop",
-            allowOutsideClick: false
-        });
-        setTimeout(function () {
-            window.location.href = '../views/dashboard.php';
-        }, 1800);
-    }
-	</script>
-        
         <?php
         if($_SESSION['loggedIn']==false){
                 echo '<script type="text/javascript">',
@@ -542,13 +423,6 @@ $_SESSION['plusmoinsWeek'] = 0;
         require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/modalUserReservations.php';
 
         }
-            }
-			
-			if ($_SESSION['admin'] == 1) {
-				echo '<script type="text/javascript">',
-				'noAuthorize();',
-				'</script>';
-			}
             ?>
   <script src="../js/calendarModernizr.js"></script>
     <script>

@@ -1,12 +1,13 @@
 <?php
 /****************************************************************
- * File : vehicule.php
- * Authour : Jérémy Besserer-Lemay
- * Functionality : Page to consult vehicules and change their informations
- * Date: 2017-10-26
- *
- * Last modification:
- * 2017-10-26    Jérémy Besserer-Lemay   1 Creation
+File : vehicule.php
+Authour : Jérémy Besserer-Lemay
+Functionality : Page to consult vehicules and change their informations
+Date: 2017-10-26
+
+Last modification:
+2017-10-26    Jérémy Besserer-Lemay   1 Creation
+
  ******************************************************************/
 session_start();
 error_reporting(0);
@@ -81,6 +82,10 @@ $gVehicule = new InfoVehicule();
 <!--   Core JS Files   -->
 
 
+
+
+
+
 <script src="../js/jquery-3.1.0.min.js" type="text/javascript"></script>
 <script src="../js/jquery.dataTables.min.js"></script>
 
@@ -105,10 +110,10 @@ $gVehicule = new InfoVehicule();
 
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="../js/demo.js"></script>
-<script src='https://code.jquery.com/ui/1.10.4/jquery-ui.min.js' type='text/javascript' language='javascript'></script>
+<script src= 'https://code.jquery.com/ui/1.10.4/jquery-ui.min.js' type= 'text/javascript' language= 'javascript'></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function(){
 
         // Javascript method's body can be found in assets/js/demos.js
         demo.initDashboardPageCharts();
@@ -131,12 +136,12 @@ $gVehicule = new InfoVehicule();
             if ($('#example tr.selected td:first').length > 0) {
                 var idcont = $('#example tr.selected td:first').html();
                 window.location.href = "updateVehiculeadmin.php?id=" + idcont;
-            } else {
+            }else{
                 swal({
-                    title: "",
-                    text: "Vous devez sélectionner un véhicule",
-                    type: "warning",
-                    allowOutsideClick: true
+                    title:"",
+                    text:"Vous devez sélectionner un véhicule",
+                    type:"warning",
+                    allowOutsideClick : true
                 });
             }
         });
@@ -146,12 +151,12 @@ $gVehicule = new InfoVehicule();
             if ($('#example tr.selected td:first').length > 0) {
                 var idcons = $('#example tr.selected td:first').html();
                 window.location.href = "viewVehicule.php?id=" + idcons;
-            } else {
+            }else{
                 swal({
-                    title: "",
-                    text: "Vous devez sélectionner un véhicule",
-                    type: "warning",
-                    allowOutsideClick: true
+                    title:"",
+                    text:"Vous devez sélectionner un véhicule",
+                    type:"warning",
+                    allowOutsideClick : true
                 });
             }
         });
@@ -184,50 +189,27 @@ $gVehicule = new InfoVehicule();
     });
 
 
-    function erreurNonCon() {
+    function erreurNonCon(){
         swal({
             title: "Erreur",
             type: "error",
             text: "Vous n'êtes pas connecté!",
             timer: 2000,
             showConfirmButton: false,
-            animation: "pop"
+            animation : "pop"
         });
-        setTimeout(function () {
-            window.location.href = '../views/signin.php';
-        }, 1800);
-    }
-
-    function noAuthorize() {
-
-        swal({
-            title: "Erreur",
-            type: "error",
-            text: "Vous n'êtes pas authorisé à accéder cette page!",
-            timer: 2000,
-            showConfirmButton: false,
-            animation: "pop",
-            allowOutsideClick: false
-        });
-        setTimeout(function () {
-            window.location.href = '../views/dashboard.php';
-        }, 1800);
+        setTimeout(function(){window.location.href='../views/signin.php';},1800);
     }
 </script>
 
 <?php
-if ($_SESSION['loggedIn'] == false) {
+if($_SESSION['loggedIn']==false){
     echo '<script type="text/javascript">',
     'erreurNonCon();',
     '</script>';
 }
-if ($_SESSION['admin'] == 2) {
-    echo '<script type="text/javascript">',
-    'noAuthorize();',
-    '</script>';
-}
 ?>
 <script>
-    if (!window.jQuery) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');
+    if( !window.jQuery ) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');
 </script>
 </html>

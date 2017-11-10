@@ -23,7 +23,6 @@
              require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
              session_start();
              error_reporting(1);
-
              ?>
      </head>
 <body>
@@ -118,9 +117,9 @@
  	<!--  Charts Plugin -->
  	<script src="../js/chartist.min.js"></script>
 
-    <!--  Sweet alert -->
-    <script src="../js/sweetalert2.min.js"></script>
-    <script src="../js/sweetalert2.js"></script>
+                <!--  Sweet alert -->
+        <script src="../js/sweetalert2.min.js"></script>
+        <script src="../js/sweetalert2.js"></script>
         
  	<!--  Notifications Plugin    -->
  	<script src="../js/bootstrap-notify.js"></script>
@@ -228,22 +227,6 @@ function erreurNonCon(){
                     });
                     setTimeout(function(){window.location.href='../views/signin.php';},1800);
         }
-
-
-        function noAuthorize() {
-            swal({
-                title: "Erreur",
-                type: "error",
-                text: "Vous n'êtes pas authorisé à voir cette page!",
-                timer: 2000,
-                showConfirmButton: false,
-                animation: "pop",
-                allowOutsideClick: false
-            });
-            setTimeout(function () {
-                window.location.href = '../views/dashboard.php';
-            }, 1800);
-        }
 	</script>
         
         <?php
@@ -252,11 +235,6 @@ function erreurNonCon(){
                       'erreurNonCon();',
                     '</script>';
             }
-        if ($_SESSION['admin'] == true) {
-            echo '<script type="text/javascript">',
-            'noAuthorize();',
-            '</script>';
-        }
             ?>
    <script src="../js/calendarModernizr.js"></script>
    <script>
