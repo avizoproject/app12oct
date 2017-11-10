@@ -17,7 +17,9 @@ $currentUser = $listUser->getObjectFromDB($_SESSION['user']['pk_utilisateur']);
 <body>
 <div class="wrapper">
     <?php
-    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapper.php';
+    if (intval($_SESSION['admin']) === 1)
+        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapper.php';
+    else require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapperUser.php';
     ?>
 
     <div class="main-panel">
@@ -38,25 +40,16 @@ $currentUser = $listUser->getObjectFromDB($_SESSION['user']['pk_utilisateur']);
 
                                   <div class="row">
                                       <div class="col-md-12">
-                                          <div class="form-group label-static col-md-4">
+                                          <div class="form-group label-floating col-md-4">
                                               <label class="control-label">Courriel</label>
                                               <input type="text" class="form-control" id="courriel" maxlength="12" value='<?php echo $currentUser['courriel']; ?>' disabled>
                                           </div>
                                       </div>
                                   </div>
 
-                                  <div class="row">
-                                      <div class="col-md-12">
-                                          <div class="form-group label-static col-md-4">
-                                              <label class="control-label">Mot de passe actuel</label>
-                                              <input type="password" class="form-control" id="passwordOld" maxlength="50" required>
-                                          </div>
-                                      </div>
-                                  </div>
-
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                            <div class="form-group label-floating col-md-4">
                                                 <label class="control-label">Téléphone</label>
                                                 <input type="text" class="form-control" id="telephone" maxlength="12" value='<?php echo $currentUser['telephone']; ?>'>
                                             </div>
@@ -65,8 +58,17 @@ $currentUser = $listUser->getObjectFromDB($_SESSION['user']['pk_utilisateur']);
 
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
-                                                <label class="control-label">Noueau mot de passe</label>
+                                            <div class="form-group label-floating col-md-4">
+                                                <label class="control-label">Mot de passe actuel</label>
+                                                <input type="password" class="form-control" id="passwordOld" maxlength="50" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group label-floating col-md-4">
+                                                <label class="control-label">Nouveau mot de passe</label>
                                                 <input type="password" class="form-control" id="password" maxlength="50">
                                             </div>
                                         </div>
@@ -74,7 +76,7 @@ $currentUser = $listUser->getObjectFromDB($_SESSION['user']['pk_utilisateur']);
 
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                            <div class="form-group label-floating col-md-4">
                                                 <label class="control-label">Confirmation du mot de passe</label>
                                                 <input type="password" class="form-control" id="passwordConfirmed" maxlength="50">
                                             </div>
