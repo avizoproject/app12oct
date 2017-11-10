@@ -85,7 +85,7 @@ function setStatut($statut) {
 function getListReservations(){
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-    $results = $conn->query('SELECT couleur.nom_couleur, reservation.statut, reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN couleur ON vehicule.fk_couleur = couleur.pk_couleur');
+    $results = $conn->query('SELECT vehicule.pk_vehicule, couleur.nom_couleur, reservation.statut, reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN couleur ON vehicule.fk_couleur = couleur.pk_couleur');
 
     $allreservation = array();
     while ($row = $results->fetch_assoc()) {
@@ -93,6 +93,7 @@ function getListReservations(){
             'pk_reservation' => $row['pk_reservation'],
             'nom_marque' => $row['nom_marque'],
             'nom_modele' => $row['nom_modele'],
+            'pk_vehicule' => $row['pk_vehicule'],
             'nom' => $row['nom'],
             'prenom' => $row['prenom'],
             'nom_couleur' => $row['nom_couleur'],
@@ -108,7 +109,7 @@ function getListReservations(){
             echo "<td class='hidden'>";
             echo $allreservation[$i]['pk_reservation'] . "</td>";
             echo "<td>";
-            echo $allreservation[$i]['nom_modele'] . " ".$allreservation[$i]['nom_couleur']."</td>";
+            echo $allreservation[$i]['nom_modele'] . " ".$allreservation[$i]['nom_couleur']." #".$allreservation[$i]['pk_vehicule']." </td>";
             echo "<td>";
             echo $allreservation[$i]['prenom'] . " ".$allreservation[$i]['nom']."</td>";
             echo "<td>";

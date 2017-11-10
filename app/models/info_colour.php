@@ -34,14 +34,14 @@ function setNom_couleur($nom_couleur) {
 function getListColours($id) {
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-    $results = $conn->query("SELECT * FROM couleur ORDER BY nom");
+    $results = $conn->query("SELECT * FROM couleur ORDER BY nom_couleur");
 
     echo "<option value=''>Sélectionnez une couleur...</option>";
     while ($row = $results->fetch_assoc()) {
       if ($id == $row['pk_couleur']) {
-        echo "<option value='" . $row['pk_couleur'] . "' selected>" . $row['nom'] . "</option>";
+        echo "<option value='" . $row['pk_couleur'] . "' selected>" . $row['nom_couleur'] . "</option>";
       } else {
-        echo "<option value='" . $row['pk_couleur'] . "'>" . $row['nom'] . "</option>";
+        echo "<option value='" . $row['pk_couleur'] . "'>" . $row['nom_couleur'] . "</option>";
       }
     }
 

@@ -11,8 +11,6 @@ class InfoGarage extends InfoModel
     protected $pk_garage= 0;
 
     protected $nom = '';
-
-    protected $fk_adresse = 0;
     
     protected $telephone = '';
 
@@ -29,10 +27,6 @@ class InfoGarage extends InfoModel
         return $this->nom;
     }
 
-    function getFk_adresse() {
-        return $this->fk_adresse;
-    }
-
     function getTelephone() {
         return $this->telephone;
     }
@@ -47,10 +41,6 @@ class InfoGarage extends InfoModel
 
     function setNom($nom) {
         $this->nom = $nom;
-    }
-
-    function setFk_adresse($fk_adresse) {
-        $this->fk_adresse = $fk_adresse;
     }
 
     function setTelephone($telephone) {
