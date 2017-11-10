@@ -67,7 +67,6 @@ class InfoModel
         $conn->close();
     }
 
-
     function updateDBObject()
     {
         $internalAttributes = get_object_vars($this);

@@ -202,7 +202,7 @@ $listVehicule = new InfoVehicule();
           $("#modele").load("../controllers/getSelectModeles.php?idMarque=" + $('#marque').val() + "&idModele=0");
         });
 
-        $(document).on("submit", "#confirmer", function(e) {
+        $(document).on("click", "#confirmer", function(e) {
             e.preventDefault();
             swal({
                 title: "Ajouté",

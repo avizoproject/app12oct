@@ -95,9 +95,9 @@ function getListReservations(){
             'nom_modele' => $row['nom_modele'],
             'nom' => $row['nom'],
             'prenom' => $row['prenom'],
+            'nom_couleur' => $row['nom_couleur'],
             'date_debut' => $row['date_debut'],
             'date_fin' => $row['date_fin'],
-            'nom_couleur' => $row['nom_couleur'],
             'statut' => $row['statut']
         );
     }

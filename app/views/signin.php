@@ -17,7 +17,7 @@ if (session_status() == true) {
     session_destroy();
 }
 ?>
-<html>
+
 <head>
     <?php
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
@@ -25,6 +25,7 @@ if (session_status() == true) {
 </head>
 <body>
 <div class="page-signin">
+
     <div class="center-block">
         <div class="center-block">
             <section class="logo">
@@ -34,10 +35,13 @@ if (session_status() == true) {
             </section>
         </div>
     </div>
+
     <div class="main-body">
         <div class="container">
-            <div class="form-container">
+            <div class="form-container">              
+
                 <br/>
+
                 <form class="form-horizontal" action="http://localhost/app/app/controllers/controller_login.php" method="post">
                     <fieldset>
                         <div class="row">
@@ -64,13 +68,17 @@ if (session_status() == true) {
                         <br>
                     </fieldset>
                 </form>
+
                 <section>
                     <p class="text-center"><a href="signin.html#/pages/forgot">Mot de passe oublié?</a></p>
                 </section>
+                
             </div>
         </div>
     </div>
+
 </div>
+ 
 </body>
 	<!--   Core JS Files   -->
 	<script src="../js/jquery-3.1.0.min.js" type="text/javascript"></script>
@@ -104,20 +112,20 @@ if (session_status() == true) {
 
     	});
 
-    function badConnection(){
-        swal({
-            title: "Erreur",
-            type: "error",
-            text: "Les informations entrées sont invalides.",
-            showCancelButton: false,
-            confirmButtonText: "Ok",
-            animation : "pop",
-            allowOutsideClick : false
-        }).then(function () {
-            location.href = "../views/signin.php";
-        })
-    }
-    </script>
+        function badConnection(){
+            swal({
+                title: "Erreur",
+                type: "error",
+                text: "Les informations entrées sont invalides.",
+                showCancelButton: false,
+                confirmButtonText: "Ok",
+                animation : "pop",
+                allowOutsideClick : false
+            }).then(function () {
+                location.href = "../views/signin.php";
+            })
+        }
+	</script>
 
 <?php
 if(isset($_GET['error'])){
@@ -127,4 +135,3 @@ if(isset($_GET['error'])){
     $_GET['error']= null;
 }
 ?>
-</html>

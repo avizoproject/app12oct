@@ -21,53 +21,20 @@ $_SESSION['plusmoinsWeek'] = 0;
     <head>
           <title>Avizo - Gestionnaire de réservations</title>
 	<?php
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
-        session_start();
-        error_reporting(1);
-    ?>
+            require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
+            session_start();
+            error_reporting(1);
+            ?>
     </head>
     <body>
-        <div class="wrapper">
-            <?php
-                require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapperUser.php';
-            ?>
-            <div class="main-panel">
-                <?php
-                    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/navigation.php';
-                ?>
-                <div class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-header" data-background-color="blue">
-                                        <h4 class="title">Réservations</h4>
-                                        <p class="category">Sélectionnez une réservation avant de choisir une action</p>
-                                    </div>
-                                    <div class="card-content table-responsive">
-                                        <div class="row col-md-4 center-block float-none">
-                                            <div class="buttons col-md-7 float-none" >
-                                                <button class="btn btn-default" name="Ajouter" id="Ajouter">Ajouter</button>
-                                                <button class="btn btn-default" name="Modifier" id="Modifier">Modifier</button>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class="row col-md-4 center-block float-none">
-                                            <div class="buttons center-block float-none" >
-                                                <button class="btn btn-default" name="Consulter" id="Retourner">Retourner</button>
-                                                <button class="btn btn-default" name="Historique" id="Historique">Historique</button>
-
 	<div class="wrapper">
         <?php
         require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapperUser.php';
         ?>
-
 	    <div class="main-panel">
 			<?php
-                        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/navigation.php';
-
-                        ?>
-
+                require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/navigation.php';
+            ?>
 	        <div class="content">
 	            <div class="container-fluid">
 	                <div class="row">
@@ -78,47 +45,23 @@ $_SESSION['plusmoinsWeek'] = 0;
                                     <p class="category">Sélectionnez une réservation avant de choisir une action</p>
                                 </div>
                                 <div class="card-content table-responsive">
+                                    <div class="row col-md-4 center-block float-none">
+                                        <div class="buttons text-center" >
+                                            <button class="btn btn-default" name="Ajouter" id="Ajouter">Ajouter</button>
 
+                                            <button class="btn btn-default" name="Modifier" id="Modifier">Modifier</button>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row col-md-4 center-block float-none">
+                                        <div class="buttons text-center" >
+                                            <button class="btn btn-default" name="Consulter" id="Retourner">Retourner</button>
 
-                                            <div class="row col-md-4 center-block float-none">
-                                                <div class="buttons text-center" >
-                                                    <button class="btn btn-default" name="Ajouter" id="Ajouter">Ajouter</button>
-
-                                                    <button class="btn btn-default" name="Modifier" id="Modifier">Modifier</button>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row col-md-4 center-block float-none">
-                                                <div class="buttons text-center" >
-                                                    <button class="btn btn-default" name="Consulter" id="Retourner">Retourner</button>
-
-                                                    <button class="btn btn-default" name="Historique" id="Historique">Historique</button>
-                                                </div>
-                                            </div>
+                                            <button class="btn btn-default" name="Historique" id="Historique">Historique</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="card">
-                        <div class="card-header" data-background-color="blue">
-                            <h4 class="title">Horaire</h4>
-                            <p class="category">Cliquez sur une réservation pour la modifier</p>
-                        </div>
-                        <div class="card-content table-responsive col-md-12">
-                            <div class="row padding-md"><button class="btn btn-default" name="" id="previousWeek"><i class='material-icons'>fast_rewind</i></button><button class="pull-right btn btn-default" name="" id="nextWeek"><i class='material-icons'>fast_forward</i></button></div>
-
-                            <div class="col-md-11 margin-left-lg center-block float-none" id="schedule"></div>
-                        </div>
-                    </div>
-                    <?php
-                    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/footer.php';
-                    ?>
-                </div>
-            </div>
-        </div>
                             <div class="card">
                                 <div class="card-header" data-background-color="blue">
                                     <h4 class="title">Horaire</h4>
@@ -132,26 +75,17 @@ $_SESSION['plusmoinsWeek'] = 0;
                                     </div>
 
                                     <div class="col-md-11 margin-left-lg center-block float-none" id="schedule"></div>
-
                                 </div>
                             </div>
 	                    </div>
-
 	                </div>
 	            </div>
                 <br>
-
-
 	        </div>
-
 	    </div>
-
-
 	</div>
     <?php
-    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/modalUserReservations.php';
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/footer.php';
-
     ?>
     </body>
 
@@ -165,15 +99,12 @@ $_SESSION['plusmoinsWeek'] = 0;
 	<!--  Charts Plugin -->
 	<script src="../js/chartist.min.js"></script>
 
-    <!--  Sweet alert -->
-    <script src="../js/sweetalert2.min.js"></script>
-    <script src="../js/sweetalert2.js"></script>
     <!--  Moments Plugin    -->
     <script type="text/javascript" src="../js/moment-with-locales.js"></script>
 
-                <!--  Sweet alert -->
-        <script src="../js/sweetalert2.min.js"></script>
-        <script src="../js/sweetalert2.js"></script>
+    <!--  Sweet alert -->
+    <script src="../js/sweetalert2.min.js"></script>
+    <script src="../js/sweetalert2.js"></script>
         
 	<!--  Notifications Plugin    -->
 	<script src="../js/bootstrap-notify.js"></script>
@@ -447,6 +378,8 @@ $_SESSION['plusmoinsWeek'] = 0;
                 $('.navbar-header a').html("Réservations");
 
             //---------------HORAIRE ALEX----------------
+
+
             CreateHoraire();
 
     	});
@@ -491,19 +424,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                 });
 
         });
-    function erreurNonCon(){
-        swal({
-            title: "Erreur",
-            type: "error",
-            text: "Vous n'êtes pas connecté!",
-            timer: 2000,
-            showConfirmButton: false,
-            animation : "pop"
-        });
-        setTimeout(function(){window.location.href='../views/signin.php';},1800);
-    }
 
-    </script>
         function erreurNonCon(){
             swal({
                 title: "Erreur",
@@ -538,11 +459,8 @@ $_SESSION['plusmoinsWeek'] = 0;
                       'erreurNonCon();',
                     '</script>';
             }else{
-
-        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/modalUserReservations.php';
-
+            require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/modalUserReservations.php';
         }
-            }
 			
 			if ($_SESSION['admin'] == 1) {
 				echo '<script type="text/javascript">',
@@ -551,8 +469,8 @@ $_SESSION['plusmoinsWeek'] = 0;
 			}
             ?>
   <script src="../js/calendarModernizr.js"></script>
-    <script>
-        if( !window.jQuery ) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');
-    </script>
+  <script>
+  	if( !window.jQuery ) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');
+  </script>
   <script src="../js/calendarMain.js"></script> <!-- Resource jQuery -->
 </html>

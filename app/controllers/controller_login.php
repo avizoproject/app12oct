@@ -63,7 +63,6 @@ class controller_login
         return $this->Handshake;
     }
 }
-$_SESSION["loggedIn"] = false;
 $loginControl = new controller_login();
 $loginControl->login();
 if ($loginControl->getHs() == true) {
