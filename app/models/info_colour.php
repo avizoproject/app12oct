@@ -28,7 +28,7 @@ function setPk_couleur($pk_couleur) {
 }
 
 function setNom_couleur($nom_couleur) {
-    $this->nom = $nom_couleur;
+    $this->nom_couleur = $nom_couleur;
 }
 
 function getListColours($id) {
