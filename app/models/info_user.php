@@ -130,9 +130,9 @@ function getUser($email_client)
 
         while ($row = $results->fetch_assoc()) {
             if ($row['pk_utilisateur']==$iduser) {
-                echo "<option selected value='" . $row['fk_secteur'] . " " . $row['pk_utilisateur'] . "'>" . $row['nom'] . " " . $row['prenom'] . "</option>";
+                echo "<option selected value='" . $row['fk_secteur'] . " " . $row['pk_utilisateur'] . "'>" . $row['prenom'] . " " . $row['nom'] . "</option>";
             }else {
-                echo "<option value='" . $row['fk_secteur'] . " " . $row['pk_utilisateur'] . "'>" . $row['nom'] . " " . $row['prenom'] . "</option>";
+                echo "<option value='" . $row['fk_secteur'] . " " . $row['pk_utilisateur'] . "'>" . $row['prenom'] . " " . $row['nom'] . "</option>";
             }
         }
 

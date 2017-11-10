@@ -63,6 +63,7 @@ class controller_login
         return $this->Handshake;
     }
 }
+$_SESSION["loggedIn"] = false;
 $loginControl = new controller_login();
 $loginControl->login();
 if ($loginControl->getHs() == true) {
@@ -83,6 +84,6 @@ if ($loginControl->getHs() == true) {
         header("Location: http://localhost/app/app/views/dashboard.php");
     exit();
 } else {
-  echo "<script>alert ('Le courriel ne correspond pas au mot de passe entré !'); window.location.href = 'http://localhost/app/app/views/signin.php';</script>";
+    header("Location: http://localhost/app/app/views/signin.php?error=1");
 }
 ?>

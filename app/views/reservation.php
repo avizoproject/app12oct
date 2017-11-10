@@ -28,43 +28,40 @@ $_SESSION['plusmoinsWeek'] = 0;
     ?>
     </head>
     <body>
-
-	<div class="wrapper">
-	    <?php
-            require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapper.php';
+        <div class="wrapper">
+            <?php
+                require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapper.php';
             ?>
-
-	    <div class="main-panel">
-			<?php
-                        require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/navigation.php';
-                        ?>
-
-	        <div class="content">
-	            <div class="container-fluid">
-	                <div class="row">
-	                    <div class="col-md-12">
-	                        <div class="card">
-	                            <div class="card-header" data-background-color="blue">
-	                                <h4 class="title">Réservations</h4>
-	                                <p class="category">Sélectionnez une réservation avant de choisir une action</p>
-	                            </div>
-	                            <div class="card-content table-responsive">
-	                                <table class="table" id="example">
-	                                    <thead class="text-primary">
-	                                    	<th class="hidden">ID Réservation</th>
-	                                    	<th>Vehicule</th>
-	                                    	<th>Réservé par</th>
-						                    <th>Date de début</th>
-                                            <th>Date de retour prévu</th>
-                                            <th class="tableColWidth">Statut</th>
-	                                    </thead>
-	                                    <tbody>
-                                                <?php $gReservation->getListReservations(); ?>
-	                                    </tbody>
-	                                </table>
-	                            </div>
-	                        </div>
-	                    </div>
+            <div class="main-panel">
+                <?php
+                    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/navigation.php';
+                ?>
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header" data-background-color="blue">
+                                        <h4 class="title">Réservations</h4>
+                                        <p class="category">Sélectionnez une réservation avant de choisir une action</p>
+                                    </div>
+                                    <div class="card-content table-responsive">
+                                        <table class="table" id="example">
+                                            <thead class="text-primary">
+                                                <th class="hidden">ID Réservation</th>
+                                                <th>Vehicule</th>
+                                                <th>Réservé par</th>
+                                                <th>Date de début</th>
+                                                <th>Date de retour prévu</th>
+                                                <th class="tableColWidth">Statut</th>
+                                            </thead>
+                                            <tbody>
+                                                    <?php $gReservation->getListReservations(); ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="">
                                 <div class="margin-button2">
                                     <button class="btn btn-default" name="Ajouter" id="Ajouter">Ajouter</button>
@@ -72,34 +69,29 @@ $_SESSION['plusmoinsWeek'] = 0;
                                     <button class="btn btn-default" name="Consulter" id="Consulter">Consulter</button>
                                 </div>
                             </div>
-	                </div>
-	            </div>
-
-                <br>
-                <div class="card">
-                    <div class="card-header" data-background-color="blue">
-                        <h4 class="title">Horaire</h4>
-                        <p class="category">Cliquez sur une réservation pour la modifier</p>
+                        </div>
                     </div>
-                    <div class="card-content table-responsive col-md-12">
+                    <br>
+                    <div class="card">
+                        <div class="card-header" data-background-color="blue">
+                            <h4 class="title">Horaire</h4>
+                            <p class="category">Cliquez sur une réservation pour la modifier</p>
+                        </div>
+                        <div class="card-content table-responsive col-md-12">
                         <div class="row padding-md"><button class="btn btn-default" name="" id="previousWeek"><i class='material-icons'>fast_rewind</i></button><button class="pull-right btn btn-default" name="" id="nextWeek"><i class='material-icons'>fast_forward</i></button></div>
 
                         <div class="col-md-11 margin-left-lg center-block float-none" id="schedule"></div>
-
+                        </div>
                     </div>
-	        </div>
-
-	        <?php
-			require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/footer.php';
+                <?php
+                    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/footer.php';
                 ?>
-	    </div>
-	</div>
+                </div>
+            </div>
+        </div>
     </body>
 
     <!--   Core JS Files   -->
-
-
-
     <script src="../js/jquery-3.1.0.min.js" type="text/javascript"></script>
     <script src="../js/jquery.dataTables.min.js"></script>
 
