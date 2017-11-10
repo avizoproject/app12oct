@@ -287,7 +287,7 @@ function getCouleurSelect($id) {
   $results = $conn->query("SELECT * FROM vehicule LEFT OUTER JOIN couleur ON vehicule.fk_couleur = couleur.pk_couleur WHERE vehicule.pk_vehicule ='" . $id . "'");
 
   while ($row = $results->fetch_assoc()) {
-    echo "<option selected>" . $row['nom'] . "</option>";
+    echo "<option selected>" . $row['nom_couleur'] . "</option>";
   }
 
   // Frees the memory associated with a result
