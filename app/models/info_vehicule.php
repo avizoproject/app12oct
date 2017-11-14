@@ -208,7 +208,7 @@ function getVehiculeReservation ($id_reservation){
 function getListVehicules(){
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-    $results = $conn->query('SELECT vehicule.odometre, vehicule.pk_vehicule, marque.nom_marque, modele.nom_modele, vehicule.annee, couleur.nom, statut_vehicule.nom_statut FROM `vehicule` LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN statut_vehicule ON vehicule.fk_statut = statut_vehicule.pk_statut_vehicule LEFT JOIN couleur ON vehicule.fk_couleur = couleur.pk_couleur');
+    $results = $conn->query('SELECT vehicule.odometre, vehicule.pk_vehicule, marque.nom_marque, modele.nom_modele, vehicule.annee, couleur.nom_couleur, statut_vehicule.nom_statut FROM `vehicule` LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN statut_vehicule ON vehicule.fk_statut = statut_vehicule.pk_statut_vehicule LEFT JOIN couleur ON vehicule.fk_couleur = couleur.pk_couleur');
 
     $allvehicules= array();
     while ($row = $results->fetch_assoc()) {
@@ -218,7 +218,7 @@ function getListVehicules(){
             'nom_modele' => $row['nom_modele'],
             'odometre' => $row['odometre'],
             'annee' => $row['annee'],
-            'nom' => $row['nom'],
+            'nom_couleur' => $row['nom_couleur'],
             'nom_statut' => $row['nom_statut']
         );
     }
@@ -233,7 +233,7 @@ function getListVehicules(){
             echo "<td>";
             echo $allvehicules[$i]['annee'] . "</td>";
             echo "<td>";
-            echo $allvehicules[$i]['nom'] . "</td>";
+            echo $allvehicules[$i]['nom_couleur'] . "</td>";
             echo "<td>";
             echo $allvehicules[$i]['odometre'] . "</td>";
             echo "<td>";
@@ -287,7 +287,7 @@ function getCouleurSelect($id) {
   $results = $conn->query("SELECT * FROM vehicule LEFT OUTER JOIN couleur ON vehicule.fk_couleur = couleur.pk_couleur WHERE vehicule.pk_vehicule ='" . $id . "'");
 
   while ($row = $results->fetch_assoc()) {
-    echo "<option selected>" . $row['nom'] . "</option>";
+    echo "<option selected>" . $row['nom_couleur'] . "</option>";
   }
 
   // Frees the memory associated with a result

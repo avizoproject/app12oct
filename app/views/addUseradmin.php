@@ -186,52 +186,36 @@ $listUser = new InfoUser();
 
         $(document).on("click", "#confirmer", function (e) {
             e.preventDefault();
-            swal({
-                title: "Ajouté",
-                text: "L'utilisateur a bien été ajouté.",
-                type: "success"
-            }).then(function () {
-                var nom = $("#nom").val();
-                var prenom = $("#prenom").val();
-                var telephone = $("#telephone").val();
-                var courriel = $("#courriel").val();
-                var secteur = $("#secteur").val();
-
-                if ($("#password").val() === $("#passwordConfirmed").val()) {
-                    var password = $("#password").val();
-                } else {
-                    alert("Les mots de passe entrés ne sont pas identiques !!");
-                }
-
-                if ($('#active').is(':checked') == true) {
-                    var statut = 2;
-                } else {
-                    var statut = 3;
-                }
-
-                if ($('#admin').is(':checked') == true) {
-                    var statut = 1;
-                }
-
-                if (nom && prenom && telephone && courriel && password && secteur) {
-                    location.href = "../controllers/controller_users.php?ajout=1&nom=" + nom + "&prenom=" + prenom + "&telephone=" + telephone + "&courriel=" + courriel + "&password=" + password + "&secteur=" + secteur + "&statut=" + statut;
-                }
-            })
-
             var nom = $("#nom").val();
             var prenom = $("#prenom").val();
             var telephone = $("#telephone").val();
             if (/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test($("#courriel").val())) {
                 var courriel = $("#courriel").val();
             } else {
-                alert("Le courriel entré est incorrect !!");
+              swal({
+                  title: "",
+                  text: "Le courriel entré est invalide",
+                  type: "error",
+                  showCancelButton: false,
+                  confirmButtonText: "Ok",
+                  cancelButtonColor: "#969696",
+                  cancelButtonText: "Annuler"
+              })
             }
             var secteur = $("#secteur").val();
 
             if ($("#password").val() === $("#passwordConfirmed").val()) {
                 var password = $("#password").val();
             } else {
-                alert("Les mots de passe entrés ne sont pas identiques !!");
+              swal({
+                  title: "",
+                  text: "Les mots de passe entrés ne sont pas identiques",
+                  type: "error",
+                  showCancelButton: false,
+                  confirmButtonText: "Ok",
+                  cancelButtonColor: "#969696",
+                  cancelButtonText: "Annuler"
+              })
             }
 
             if ($('#active').is(':checked') == true) {
@@ -245,7 +229,13 @@ $listUser = new InfoUser();
             }
 
             if (nom && prenom && telephone && courriel && password && secteur) {
+              swal({
+                  title: "Ajouté",
+                  text: "L'utilisateur a bien été ajouté.",
+                  type: "success"
+              }).then(function () {
                 location.href = "../controllers/controller_users.php?ajout=1&nom=" + nom + "&prenom=" + prenom + "&telephone=" + telephone + "&courriel=" + courriel + "&password=" + password + "&secteur=" + secteur + "&statut=" + statut;
+              })
             }
         });
 

@@ -45,6 +45,9 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                              </div>
                                              <div class="card-content">
                                                  <form id="formAjout" >
+                                                   <?php if (file_exists("../img/car" . $currentVehicule['pk_vehicule']. ".jpg")) {
+                                                     echo '<img src="../img/car' . $currentVehicule["pk_vehicule"] . '.jpg" style="width:300px;position:absolute;left:45%;" />';
+                                                   } ?>
 
                                                      <div class="row">
                                                          <div class="col-md-12">

@@ -72,7 +72,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            <div class="col-md-12">
                                                <div class="form-group label-static col-md-4">
                                                    <label class="control-label">Année</label>
-                                                   <input type='number' class='form-control' id='annee' maxlength='4' value='<?php echo $currentVehicule['annee']; ?>' required>
+                                                   <input type='number' class='form-control' id='annee' maxlength='4' min='1950' value='<?php echo $currentVehicule['annee']; ?>' required>
                                                </div>
                                            </div>
                                        </div>
@@ -100,7 +100,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            <div class="col-md-12">
                                                <div class="form-group label-static col-md-4">
                                                    <label class="control-label">Odomètre</label>
-                                                   <input type='number' class='form-control' id='odometre' maxlength='6' value='<?php echo $currentVehicule['odometre']; ?>' required>
+                                                   <input type='number' class='form-control' id='odometre' maxlength='6' min='1' value='<?php echo $currentVehicule['odometre']; ?>' required>
                                                </div>
                                            </div>
                                        </div>
@@ -220,46 +220,46 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
 
         $(document).on("click", "#confirmer", function(e) {
             e.preventDefault();
-            swal({
-                title: "Modifié",
-                text: "Le véhicule a bien été modifié",
-                type: "success"
-            }).then(function () {
-                var marque = $("#marque").val();
-                var modele = $("#modele").val();
-                var annee = $("#annee").val();
-                var couleur = $("#couleur").val();
-                var secteur = $("#secteur").val();
-                var odometre = $("#odometre").val();
-                var plaque = $("#plaque").val();
-                var date = $("#acquisition").val();
+            var marque = $("#marque").val();
+            var modele = $("#modele").val();
+            var annee = $("#annee").val();
+            var couleur = $("#couleur").val();
+            var secteur = $("#secteur").val();
+            var odometre = $("#odometre").val();
+            var plaque = $("#plaque").val();
+            var date = $("#acquisition").val();
 
-                if ($('#active').is(':checked') == true) {
-                    var statut = 1;
-                } else {
-                    var statut = 2;
-                }
+            if ($('#active').is(':checked') == true) {
+                var statut = 1;
+            } else {
+                var statut = 2;
+            }
 
-                if (marque && modele && annee && couleur && secteur && odometre && plaque && date) {
-                    location.href = "../controllers/controller_vehicules.php?mod=1&id=<?php echo $_GET['id']; ?>&marque=" + marque + "&modele=" + modele + "&annee=" + annee + "&couleur=" + couleur + "&secteur=" + secteur + "&odometre=" + odometre + "&plaque=" + plaque + "&date=" + date + "&statut=" + statut;
-                }
-            })
+            if (marque && modele && annee && couleur && secteur && odometre && plaque && date) {
+              swal({
+                  title: "Modifié",
+                  text: "Le véhicule a bien été modifié",
+                  type: "success"
+              }).then(function () {
+                location.href = "../controllers/controller_vehicules.php?mod=1&id=<?php echo $_GET['id']; ?>&marque=" + marque + "&modele=" + modele + "&annee=" + annee + "&couleur=" + couleur + "&secteur=" + secteur + "&odometre=" + odometre + "&plaque=" + plaque + "&date=" + date + "&statut=" + statut;
+              })
+            }
         });
 
-             $(document).on("click", "#supprimer", function(e) {
-                 e.preventDefault();
-                 swal({
-                     title: "",
-                     text: "Le véhicule va être supprimé.",
-                     type: "warning",
-                     showCancelButton: true,
-                     confirmButtonText: "Ok",
-                     cancelButtonColor: "#969696",
-                     cancelButtonText: "Annuler"
-                 }).then(function () {
-                     location.href = "../controllers/controller_vehicules.php?supp=1&id=<?php echo $_GET['id']; ?>";
-                 })
-             });
+         $(document).on("click", "#supprimer", function(e) {
+             e.preventDefault();
+             swal({
+                 title: "",
+                 text: "Le véhicule va être supprimé.",
+                 type: "warning",
+                 showCancelButton: true,
+                 confirmButtonText: "Ok",
+                 cancelButtonColor: "#969696",
+                 cancelButtonText: "Annuler"
+             }).then(function () {
+                 location.href = "../controllers/controller_vehicules.php?supp=1&id=<?php echo $_GET['id']; ?>";
+             })
+         });
 
             $(document).on("click", "#cancel", function(e) {
                 e.preventDefault();
@@ -315,21 +315,27 @@ function ajoutCouleur() {
 }
 
 function modMarque() {
-  var answer = prompt("Veuillez modifier la marque :", $("#marque option:selected").text());
+  if ($("#marque").val()) {
+    var answer = prompt("Veuillez modifier la marque :", $("#marque option:selected").text());
+  }
   if (answer != null && answer != "") {
     location.href = "../controllers/ajouterMarqueModeleCouleur.php?type=marque&mod=1&id="+$("#marque").val()+"&nom=" + answer;
   }
 }
 
 function modModele() {
-  var answer = prompt("Veuillez modifier le modèle :", $("#modele option:selected").text());
+  if ($("#modele").val()) {
+    var answer = prompt("Veuillez modifier le modèle :", $("#modele option:selected").text());
+  }
   if (answer != null && answer != "") {
     location.href = "../controllers/ajouterMarqueModeleCouleur.php?type=modele&mod=1&id="+$("#modele").val()+"&nom=" + answer;
   }
 }
 
 function modCouleur() {
-  var answer = prompt("Veuillez modifier la couleur :", $("#couleur option:selected").text());
+  if ($("#couleur").val()) {
+    var answer = prompt("Veuillez modifier la couleur :", $("#couleur option:selected").text());
+  }
   if (answer != null && answer != "") {
     location.href = "../controllers/ajouterMarqueModeleCouleur.php?type=couleur&mod=1&id="+$("#couleur").val()+"&nom=" + answer;
   }

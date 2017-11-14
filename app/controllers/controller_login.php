@@ -83,6 +83,6 @@ if ($loginControl->getHs() == true) {
         header("Location: http://localhost/app/app/views/dashboard.php");
     exit();
 } else {
-  echo "<script>alert ('Le courriel ne correspond pas au mot de passe entré !'); window.location.href = 'http://localhost/app/app/views/signin.php';</script>";
+    header("Location: http://localhost/app/app/views/signin.php?error=1");
 }
 ?>
