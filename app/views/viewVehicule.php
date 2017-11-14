@@ -45,76 +45,78 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                              </div>
                                              <div class="card-content">
                                                  <form id="formAjout" >
-                                                   <?php if (file_exists("../img/car" . $currentVehicule['pk_vehicule']. ".jpg")) {
-                                                     echo '<img src="../img/car' . $currentVehicule["pk_vehicule"] . '.jpg" style="width:300px;position:absolute;left:45%;" />';
-                                                   } ?>
+                                                   <?php
+                                                    if (file_exists("../img/car" . $currentVehicule['pk_vehicule'] . ".jpg")) {
+                                                     echo '<div class="col-md-5 pull-right"><img src="../img/car' . $currentVehicule["pk_vehicule"] . '.jpg" /></div>';
+                                                    }
+                                                   ?>
 
-                                                     <div class="row">
-                                                         <div class="col-md-12">
-                                                             <div class="form-group label-static col-md-4">
+                                                     <div>
+                                                         <div class="col-md-7">
+                                                             <div class="form-group label-static">
                                                                  <label class="control-label">Marque</label>
                                                                  <select class="form-control" id="marque" name="select" disabled><?php $listVehicule->getMarqueSelect($_GET["id"]); ?></select>
                                                              </div>
                                                          </div>
                                                      </div>
 
-                                                     <div class="row">
-                                                         <div class="col-md-12">
-                                                             <div class="form-group label-static col-md-4">
+                                                     <div>
+                                                         <div class="col-md-7">
+                                                             <div class="form-group label-static">
                                                                  <label class="control-label">Modèle</label>
                                                                  <select class="form-control" id="modele" name="select" disabled><?php $listVehicule->getModeleSelect($_GET["id"]); ?></select>
                                                              </div>
                                                          </div>
                                                      </div>
 
-                                                     <div class="row">
-                                                         <div class="col-md-12">
-                                                             <div class="form-group label-static col-md-4">
+                                                     <div>
+                                                         <div class="col-md-7">
+                                                             <div class="form-group label-static">
                                                                  <label class="control-label">Année</label>
                                                                  <input type='text' class='form-control' id='annee' maxlength='4' value='<?php echo $currentVehicule['annee']; ?>' disabled>
                                                              </div>
                                                          </div>
                                                      </div>
 
-                                                     <div class="row">
-                                                         <div class="col-md-12">
-                                                             <div class="form-group label-static col-md-4">
+                                                     <div>
+                                                         <div class="col-md-7">
+                                                             <div class="form-group label-static">
                                                                  <label class="control-label">Couleur</label>
                                                                  <select class="form-control" id="couleur" name="select" disabled><?php $listVehicule->getCouleurSelect($_GET["id"]); ?></select>
                                                              </div>
                                                          </div>
                                                      </div>
 
-                                                     <div class="row">
-                                                         <div class="col-md-12">
-                                                             <div class="form-group label-static col-md-4">
+                                                     <div>
+                                                         <div class="col-md-7">
+                                                             <div class="form-group label-static">
                                                                  <label class="control-label">Secteur</label>
                                                                  <select class="form-control" id="secteur" name="select" disabled><?php $listVehicule->getSecteurSelect($_GET["id"]); ?></select>
                                                              </div>
                                                          </div>
                                                      </div>
 
-                                                     <div class="row">
-                                                         <div class="col-md-12">
-                                                             <div class="form-group label-static col-md-4">
+                                                     <div>
+                                                         <div class="col-md-7">
+                                                             <div class="form-group label-static">
                                                                  <label class="control-label">Odomètre</label>
                                                                  <input type='text' class='form-control' id='odometre' maxlength='6' value='<?php echo $currentVehicule['odometre']; ?>' disabled>
                                                              </div>
                                                          </div>
                                                      </div>
 
-                                                     <div class="row">
-                                                         <div class="col-md-12">
-                                                             <div class="form-group label-static col-md-4">
+                                                     <div>
+                                                         <div class="col-md-7">
+                                                             <div class="form-group label-static">
                                                                  <label class="control-label">Plaque</label>
                                                                  <input type='text' class='form-control' id='plaque' maxlength='7' value='<?php echo $currentVehicule['plaque']; ?>' disabled>
                                                              </div>
                                                          </div>
                                                      </div>
 
-                                                     <div class="row">
-                                                         <div class="col-md-12">
-                                                             <div class="form-group label-static col-md-4">
+                                                     <div>
+                                                         <div class="col-md-7">
+                                                             <div class="form-group label-static">
                                                                <label class="control-label">Date d'achat</label>
                                                                <input type='text' class='form-control' id='date' value='<?php echo $currentVehicule['date_achat']; ?>' disabled>
                                                              </div>
@@ -125,7 +127,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                                      if ($currentVehicule['fk_statut'] ==="1")
                                                      {
                                                          echo "<div class='row'>
-                                                                 <div class='form-group col-md-12'>
+                                                                 <div class='form-group col-md-8'>
                                                                      <div class='checkbox'>
                                                                          <label>
                                                                              <input checked type='checkbox' id='active' name='optionsCheckboxes' disabled>
@@ -136,7 +138,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                                              </div>";
                                                      } else {
                                                          echo "<div class='row'>
-                                                                 <div class='form-group col-md-12'>
+                                                                 <div class='form-group col-md-8'>
                                                                      <div class='checkbox'>
                                                                          <label>
                                                                              <input type='checkbox' id='active' name='optionsCheckboxes' disabled>

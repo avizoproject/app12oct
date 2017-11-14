@@ -48,11 +48,24 @@ $listVehicule = new InfoVehicule();
                                 <p class="category">Tous les champs sont obligatoires.</p>
                             </div>
                             <div class="card-content">
-                                <form id="formAjout" >
+                              <?php
+                              include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+                              $results = $conn->query("SELECT MAX(pk_vehicule) + 1 AS Top FROM vehicule");
+                              $row = $results->fetch_assoc();
+                              if (file_exists("../img/car" . $row['Top']. ".jpg") && $_GET['upload']) {
+                                echo '<div class="col-md-5 pull-right"><img src="../img/car' . $row["Top"] . '.jpg" /></div>';
+                              } else {
+                                echo '<div class="col-md-5 pull-right"><form action="../controllers/uploadImg.php" method="post" enctype="multipart/form-data">';
+                                  echo '<label class="control-label">Image du véhicule</label><br><br>';
+                                  echo '<input type="file" name="fileToUpload" id="fileToUpload" required><br>';
+                                  echo '<input type="submit" class="btn" value="Enregistrer l\'image" name="submit">';
+                                echo '</form></div>';
+                              } ?>
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                <form id="formAjout" >
+                                    <div>
+                                        <div class="col-md-7">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Marque</label>
                                                 <select class="form-control" id="marque" name="select" required></select>
                                                 <label onclick="modMarque()">Modifier</label><label onclick="ajoutMarque()" style="float: right;">Ajouter</label>
@@ -60,9 +73,9 @@ $listVehicule = new InfoVehicule();
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                    <div>
+                                        <div class="col-md-7">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Modèle</label>
                                                 <select class="form-control" id="modele" name="select" required></select>
                                                 <label onclick="modModele()">Modifier</label><label onclick="ajoutModele()" style="float: right;">Ajouter</label>
@@ -70,18 +83,18 @@ $listVehicule = new InfoVehicule();
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-floating col-md-4">
+                                    <div>
+                                        <div class="col-md-7">
+                                            <div class="form-group label-floating">
                                                 <label class="control-label">Année</label>
                                                 <input type="number" class="form-control" id="annee" maxlength="4" min="1950" required></select>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                    <div>
+                                        <div class="col-md-7">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Couleur</label>
                                                 <select class="form-control" id="couleur" name="select" required></select>
                                                 <label onclick="modCouleur()">Modifier</label><label onclick="ajoutCouleur()" style="float: right;">Ajouter</label>
@@ -89,36 +102,36 @@ $listVehicule = new InfoVehicule();
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                    <div>
+                                        <div class="col-md-7">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Secteur</label>
                                                 <select class="form-control" id="secteur" name="select" required></select>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-floating col-md-4">
+                                    <div>
+                                        <div class="col-md-7">
+                                            <div class="form-group label-floating">
                                                 <label class="control-label">Odomètre</label>
                                                 <input type="number" class="form-control" id="odometre" maxlength="6" min="0" required></select>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-floating col-md-4">
+                                    <div>
+                                        <div class="col-md-7">
+                                            <div class="form-group label-floating">
                                                 <label class="control-label">Plaque</label>
                                                 <input type="text" class="form-control" id="plaque" maxlength="7" required></select>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-floating col-md-4">
+                                    <div>
+                                        <div class="col-md-7">
+                                            <div class="form-group label-floating">
                                                 <label class="control-label">Date d'achat</label>
                                                 <input type='text' size="40" class="flatpickr form-control" data-enabletime=true data-enable-seconds=true name="date_acquisition" id='acquisition' required>
                                                 <script src="../js/flatpickr.js" type="text/javascript"></script>
@@ -133,7 +146,7 @@ $listVehicule = new InfoVehicule();
                                     </div>
 
                                     <div class='row'>
-                                        <div class='form-group col-md-12'>
+                                        <div class='form-group col-md-8'>
                                             <div class='checkbox'>
                                                 <label>
                                                     <input type='checkbox' id='active' name='optionsCheckboxes'>

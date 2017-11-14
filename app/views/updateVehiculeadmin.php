@@ -46,11 +46,27 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                      <p class="category">Tous les champs sont obligatoires.</p>
                                  </div>
                                  <div class="card-content">
+                                   <?php
+                                   if (file_exists("../img/car" . $currentVehicule['pk_vehicule'] . ".jpg")) {
+                                     echo '<div class="col-md-5 pull-right"><img src="../img/car' . $currentVehicule['pk_vehicule'] . '.jpg" />';
+                                     echo '<form action="../controllers/uploadImg.php?update='.$currentVehicule['pk_vehicule'].'" method="post" enctype="multipart/form-data">';
+                                       echo '<label class="control-label">Image du véhicule</label><br><br>';
+                                       echo '<input type="file" name="fileToUpload" id="fileToUpload" required><br>';
+                                       echo '<input type="submit" class="btn" value="Enregistrer l\'image" name="submit">';
+                                     echo '</form></div>';
+                                   } else {
+                                     echo '<div class="col-md-5 pull-right"><form action="../controllers/uploadImg.php?update='.$currentVehicule['pk_vehicule'].'" method="post" enctype="multipart/form-data">';
+                                       echo '<label class="control-label">Image du véhicule</label><br><br>';
+                                       echo '<input type="file" name="fileToUpload" id="fileToUpload" required><br>';
+                                       echo '<input type="submit" class="btn" value="Enregistrer l\'image" name="submit">';
+                                     echo '</form></div>';
+                                   } ?>
+
                                    <form id="formAjout" >
 
-                                       <div class="row">
-                                           <div class="col-md-12">
-                                               <div class="form-group label-static col-md-4">
+                                       <div>
+                                           <div class="col-md-7">
+                                               <div class="form-group label-static">
                                                    <label class="control-label">Marque</label>
                                                    <select class="form-control" id="marque" name="select" required></select>
                                                    <label onclick="modMarque()">Modifier</label><label onclick="ajoutMarque()" style="float: right;">Ajouter</label>
@@ -58,9 +74,9 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            </div>
                                        </div>
 
-                                       <div class="row">
-                                           <div class="col-md-12">
-                                               <div class="form-group label-static col-md-4">
+                                       <div>
+                                           <div class="col-md-7">
+                                               <div class="form-group label-static">
                                                    <label class="control-label">Modèle</label>
                                                    <select class="form-control" id="modele" name="select" required></select>
                                                    <label onclick="modModele()">Modifier</label><label onclick="ajoutModele()" style="float: right;">Ajouter</label>
@@ -68,18 +84,18 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            </div>
                                        </div>
 
-                                       <div class="row">
-                                           <div class="col-md-12">
-                                               <div class="form-group label-static col-md-4">
+                                       <div>
+                                           <div class="col-md-7">
+                                               <div class="form-group label-static">
                                                    <label class="control-label">Année</label>
                                                    <input type='number' class='form-control' id='annee' maxlength='4' min='1950' value='<?php echo $currentVehicule['annee']; ?>' required>
                                                </div>
                                            </div>
                                        </div>
 
-                                       <div class="row">
-                                           <div class="col-md-12">
-                                               <div class="form-group label-static col-md-4">
+                                       <div>
+                                           <div class="col-md-7">
+                                               <div class="form-group label-static">
                                                    <label class="control-label">Couleur</label>
                                                    <select class="form-control" id="couleur" name="select" required></select>
                                                    <label onclick="modCouleur()">Modifier</label><label onclick="ajoutCouleur()" style="float: right;">Ajouter</label>
@@ -87,36 +103,36 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            </div>
                                        </div>
 
-                                       <div class="row">
-                                           <div class="col-md-12">
-                                               <div class="form-group label-static col-md-4">
+                                       <div>
+                                           <div class="col-md-7">
+                                               <div class="form-group label-static">
                                                    <label class="control-label">Secteur</label>
                                                    <select class="form-control" id="secteur" name="select" required></select>
                                                </div>
                                            </div>
                                        </div>
 
-                                       <div class="row">
-                                           <div class="col-md-12">
-                                               <div class="form-group label-static col-md-4">
+                                       <div>
+                                           <div class="col-md-7">
+                                               <div class="form-group label-static">
                                                    <label class="control-label">Odomètre</label>
                                                    <input type='number' class='form-control' id='odometre' maxlength='6' min='1' value='<?php echo $currentVehicule['odometre']; ?>' required>
                                                </div>
                                            </div>
                                        </div>
 
-                                       <div class="row">
-                                           <div class="col-md-12">
-                                               <div class="form-group label-static col-md-4">
+                                       <div>
+                                           <div class="col-md-7">
+                                               <div class="form-group label-static">
                                                    <label class="control-label">Plaque</label>
                                                    <input type='text' class='form-control' id='plaque' maxlength='7' value='<?php echo $currentVehicule['plaque']; ?>' required>
                                                </div>
                                            </div>
                                        </div>
 
-                                       <div class="row">
-                                           <div class="col-md-12">
-                                               <div class="form-group label-static col-md-4">
+                                       <div>
+                                           <div class="col-md-7">
+                                               <div class="form-group label-static">
                                                    <label class="control-label">Date d'achat</label>
                                                    <input type='text' size="40" class="flatpickr form-control" data-enabletime=true data-enable-seconds=true name="date_acquisition" id='acquisition' required>
                                                    <script src="../js/flatpickr.js" type="text/javascript"></script>
@@ -135,7 +151,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                        if ($currentVehicule['fk_statut'] ==="1")
                                        {
                                            echo "<div class='row'>
-                                                   <div class='form-group col-md-12'>
+                                                   <div class='form-group col-md-8'>
                                                        <div class='checkbox'>
                                                            <label>
                                                                <input checked type='checkbox' id='active' name='optionsCheckboxes'>
@@ -146,7 +162,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                                </div>";
                                        } else {
                                            echo "<div class='row'>
-                                                   <div class='form-group col-md-12'>
+                                                   <div class='form-group col-md-8'>
                                                        <div class='checkbox'>
                                                            <label>
                                                                <input type='checkbox' id='active' name='optionsCheckboxes'>
