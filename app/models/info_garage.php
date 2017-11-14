@@ -61,6 +61,27 @@ class InfoGarage extends InfoModel
         $this->fk_statut = $fk_statut;
     }
 
+    function getListColours($id) {
+        include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+        $results = $conn->query("SELECT * FROM couleur ORDER BY nom");
+
+        echo "<option value=''>Sélectionnez une couleur...</option>";
+        while ($row = $results->fetch_assoc()) {
+            if ($id == $row['pk_couleur']) {
+                echo "<option value='" . $row['pk_couleur'] . "' selected>" . $row['nom'] . "</option>";
+            } else {
+                echo "<option value='" . $row['pk_couleur'] . "'>" . $row['nom'] . "</option>";
+            }
+        }
+
+        // Frees the memory associated with a result
+        $results->free();
+
+        // close connection
+        $conn->close();
+    }
+
 }
 
 ?>

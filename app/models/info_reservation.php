@@ -274,29 +274,64 @@ function getWeekReservations($plusmoinsWeek)
     return json_encode($allreservation);
 }
 
-    function getWeekReservationsForUser($iduser, $week)
+function getWeekReservationsForUser($iduser, $week)
+{
+    include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+    $results = $conn->query("SELECT reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE())+ " . $week . " AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE())+ " . $week . "  AND utilisateur.pk_utilisateur='". $iduser ."' AND reservation.statut !=0");
+
+
+
+    $allreservation = array();
+    while ($row = $results->fetch_assoc()) {
+        $allreservation[] = array(
+            'pk_reservation' => $row['pk_reservation'],
+            'nom_marque' => $row['nom_marque'],
+            'nom_modele' => $row['nom_modele'],
+            'nom' => $row['nom'],
+            'prenom' => $row['prenom'],
+            'date_debut' => $row['date_debut'],
+            'date_fin' => $row['date_fin']
+        );
+    }
+
+    return json_encode($allreservation);
+}
+
+    function getWeekReservationsForEntretiens($iduser)
     {
         include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-        $results = $conn->query("SELECT reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE())+ " . $week . " AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE())+ " . $week . "  AND utilisateur.pk_utilisateur='". $iduser ."' AND reservation.statut !=0");
+        $results = $conn->query("SELECT reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE()) AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE()) AND utilisateur.pk_utilisateur='". $iduser ."' AND reservation.statut !=0");
 
-
-
-        $allreservation = array();
+        echo "<option value=''>Sélectionnez un véhicule...</option>";
         while ($row = $results->fetch_assoc()) {
-            $allreservation[] = array(
-                'pk_reservation' => $row['pk_reservation'],
-                'nom_marque' => $row['nom_marque'],
-                'nom_modele' => $row['nom_modele'],
-                'nom' => $row['nom'],
-                'prenom' => $row['prenom'],
-                'date_debut' => $row['date_debut'],
-                'date_fin' => $row['date_fin']
-            );
-        }
+            echo "<option value='" . $row['pk_vehicule'] . "'>" . $row['nom_marque'] . " ". $row['nom_modele'] . "</option>";
 
-        return json_encode($allreservation);
+        }
     }
+
+function getWeekEntretiensForUser($iduser, $type)
+{
+    include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+    $results = $conn->query("SELECT reservation.pk_reservation, marque.nom_marque, modele.nom_modele, vehicule.odometre, entretien.odometre_entretien, entretien.fk_type_entretien, vehicule.odometre-entretien.odometre_entretien as difference FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN entretien ON reservation.fk_vehicule = entretien.fk_vehicule WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE()) AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE())  AND utilisateur.pk_utilisateur='". $iduser . "' AND reservation.statut !=0 AND entretien.fk_type_entretien = '". $type ."'  ORDER BY ( DATEDIFF( NOW(),entretien.date_entretien ) ) LIMIT 1");
+
+
+    $allreservation = array();
+    while ($row = $results->fetch_assoc()) {
+        $allreservation[] = array(
+            'pk_reservation' => $row['pk_reservation'],
+            'nom_marque' => $row['nom_marque'],
+            'nom_modele' => $row['nom_modele'],
+            'odometre' => $row['odometre'],
+            'odometre_entretien' => $row['odometre_entretien'],
+            'difference' => $row['difference']
+        );
+    }
+
+    return json_encode($allreservation);
+}
 
 
 

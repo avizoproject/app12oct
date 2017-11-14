@@ -228,6 +228,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                         }
                         printHoraire();
                     }
+
                 },
                 error: function (trace) {
                     alert(trace);
@@ -267,7 +268,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 
                         if (comp3 < comp4) {
 
-                            var dateFin = '0' + (comp3.day()) + ':00';
+                            var dateFin = '0' + (comp3.day()+1) + ':00';
 
                         }
                         else {
@@ -310,7 +311,6 @@ $_SESSION['plusmoinsWeek'] = 0;
                 }
 
 
-
                 var $sc = $("#schedule").timeSchedule({
                     startTime: "00:00", // schedule start time(HH:ii)
                     endTime: "07:00",   // schedule end time(HH:ii)
@@ -335,6 +335,88 @@ $_SESSION['plusmoinsWeek'] = 0;
                 });
 
             }
+        }
+        function checkEntretiens(){
+
+            var entretiens = null;
+            var data = null;
+
+            //HUILE
+            var type = 1;
+            var kilo = 7000;
+            $.ajax({
+                url: "../controllers/getWeekEntretiensUser.php",
+                type: "POST",
+                data: {type: type},
+                success: function (data) {
+                    console.log(data);
+                      entretiens = JSON.parse(data);
+                    $.each(entretiens, function (index){
+
+                        if (entretiens[index]['difference'] > kilo){
+                            var message = "Vous avez un changement d'huile à faire sur le " + entretiens[index]['nom_marque'] + " " + entretiens[index]['nom_modele'];
+                            demo.showNotification('top','right', message);
+                        }
+
+                    });
+                    },
+
+
+                error: function (trace) {
+                    alert(trace);
+                }
+            });
+
+            /*//FREINS
+            type = 2;
+            kilo = 50000;
+            $.ajax({
+                url: "../controllers/getWeekEntretiensUser.php",
+                type: "POST",
+                data: {type: type},
+                success: function (data) {
+                    entretiens = JSON.parse(data);
+                    $.each(entretiens, function (index){
+
+                        if (entretiens[index]['difference'] > kilo-100){
+                            var message = "Vous avez un changement de freins à faire sur le " + entretiens[index]['nom_marque'] + " " + entretiens[index]['nom_modele'];
+                            demo.showNotification('top','right', message);
+                        }
+
+                    });
+                },
+
+
+                error: function (trace) {
+                    alert(trace);
+                }
+            });
+
+            //ENTRETIEN RÉGULIER
+            type = 5;
+            kilo = 75000;
+            $.ajax({
+                url: "../controllers/getWeekEntretiensUser.php",
+                type: "POST",
+                data: {type: type},
+                success: function (data) {
+                    entretiens = JSON.parse(data);
+                    $.each(entretiens, function (index){
+
+                        if (entretiens[index]['difference'] > kilo-100){
+                            var message = "Vous avez un entretien général à faire sur le " + entretiens[index]['nom_marque'] + " " + entretiens[index]['nom_modele'];
+                            demo.showNotification('top','right', message);
+                        }
+
+                    });
+                },
+
+
+                error: function (trace) {
+                    alert(trace);
+                }
+            });*/
+
         }
     	$(document).ready(function(){
 
@@ -401,6 +483,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 
 
             CreateHoraire();
+            checkEntretiens();
 
     	});
         //clic next
