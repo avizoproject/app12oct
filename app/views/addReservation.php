@@ -50,45 +50,41 @@ $listVehicule = new InfoVehicule();
                             </div>
                             <div class="card-content">
                                 <form id="formAjout">
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <div class="form-group label-static">
-                                                <label class="control-label">Dates</label>
+                                  <div class="col-md-5 pull-right">
+                                    <img id="imgVehicule" src="" hidden />
+                                  </div>
+                                  <div>
+                                    <div class="col-md-7">
+                                      <div class="form-group label-static">
+                                        <label class="control-label">Dates</label>
+                                        <input type='text' size="40" class="flatpickr form-control" name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation" required>
 
-                                                <input type='text' size="40" class="flatpickr form-control"
-                                                       name="date_acquisition" id='acquisition'
-                                                       placeholder="Choisissez la période de réservation" required>
-
-                                                <script src="../js/flatpickr.js" type="text/javascript"></script>
-                                                <script>
-                                                    flatpickr(".selector", {});
-                                                    document.getElementById("acquisition").flatpickr({
-                                                        minDate: "today",
-                                                        enableTime: true,
-                                                        mode: "range"
-                                                    });
-                                                </script>
-
-                                            </div>
-                                        </div>
+                                        <script src="../js/flatpickr.js" type="text/javascript"></script>
+                                        <script>
+                                            flatpickr(".selector", {});
+                                            document.getElementById("acquisition").flatpickr({
+                                                minDate: "today",
+                                                enableTime: true,
+                                                mode: "range"
+                                            });
+                                        </script>
+                                      </div>
                                     </div>
+                                  </div>
 
-
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <div class="form-group label-static">
-
-                                                <label class="control-label">Choisissez un véhicule</label>
-                                                <select class="form-control" id="vehicule" name="select"
-                                                        required></select>
-                                            </div>
-                                        </div>
-
+                                  <div>
+                                    <div class="col-md-7">
+                                      <div class="form-group label-static">
+                                        <label class="control-label">Véhicule</label>
+                                        <select class="form-control" id="vehicule" name="select" required></select>
+                                      </div>
                                     </div>
-                                    <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
-                                    <input type="submit" id="cancel" class="btn pull-right" value="Annuler"
-                                           style="margin-right: 10px;">
-                                    <div class="clearfix"></div>
+                                  </div>
+                                  <div class="row"></div>
+                                  <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
+                                  <input type="submit" id="cancel" class="btn pull-right" value="Annuler"
+                                         style="margin-right: 10px;">
+                                  <div class="clearfix"></div>
                                 </form>
                             </div>
                         </div>
@@ -146,24 +142,35 @@ $listVehicule = new InfoVehicule();
             $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&datedebut=" + dateFrom);
         });
 
+        $("#vehicule").change(function () {
+          $.get('../img/car' + $( "#vehicule" ).val().substr(0,$( "#vehicule" ).val().indexOf(' ')) + '.jpg').done(function() {
+            $("#imgVehicule").show();
+            $("#imgVehicule").attr('src', '../img/car' + $( "#vehicule" ).val().substr(0,$( "#vehicule" ).val().indexOf(' ')) + '.jpg');
+          }).fail(function() {
+            $("#imgVehicule").hide();
+          })
+        });
+
         $(document).on("click", "#confirmer", function (e) {
             e.preventDefault();
-            swal({
-                title: "Ajouté",
-                text: "La réservation a bien été ajoutée.",
-                type: "success"
-            }).then(function () {
-                var date = $("#acquisition").val();
-                var deuxDates = date.split(' à ');
-                var dateFrom = deuxDates[0];
-                var dateTo = deuxDates[1];
+            var date = $("#acquisition").val();
+            var deuxDates = date.split(' à ');
+            var dateFrom = deuxDates[0];
+            var dateTo = deuxDates[1];
 
-                var vehiculesfks = $("#vehicule").val();
-                var fksvehic = vehiculesfks.split(' ');
-                var pkVehicule = fksvehic[0];
+            var vehiculesfks = $("#vehicule").val();
+            var fksvehic = vehiculesfks.split(' ');
+            var pkVehicule = fksvehic[0];
 
+            if ($("#acquisition").val() && $("#vehicule").val()) {
+              swal({
+                  title: "Ajoutée",
+                  text: "La réservation a bien été ajoutée.",
+                  type: "success"
+              }).then(function () {
                 location.href = "../controllers/controller_reservation.php?ajout=1&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule;
-            })
+              })
+            }
         });
 
         $(document).on("click", "#cancel", function (e) {
@@ -195,7 +202,7 @@ $listVehicule = new InfoVehicule();
         swal({
             title: "Erreur",
             type: "error",
-            text: "Vous n'êtes pas authorisé à accéder cette page!",
+            text: "Vous n'êtes pas autorisé à accéder à cette page!",
             timer: 2000,
             showConfirmButton: false,
             animation: "pop",

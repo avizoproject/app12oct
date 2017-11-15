@@ -51,8 +51,8 @@ $listUser = new InfoUser();
                                 <form id="formAjout">
 
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Nom</label>
                                                 <input type="text" class="form-control" id="nom" maxlength="100">
                                             </div>
@@ -60,8 +60,8 @@ $listUser = new InfoUser();
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Prénom</label>
                                                 <input type="text" class="form-control" id="prenom" maxlength="100">
                                             </div>
@@ -69,8 +69,8 @@ $listUser = new InfoUser();
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Téléphone</label>
                                                 <input type="text" class="form-control" id="telephone"
                                                        placeholder="000 000-0000" maxlength="12">
@@ -79,8 +79,8 @@ $listUser = new InfoUser();
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Courriel</label>
                                                 <input type="text" class="form-control" id="courriel" maxlength="150">
                                             </div>
@@ -88,8 +88,8 @@ $listUser = new InfoUser();
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Mot de passe</label>
                                                 <input type="password" class="form-control" id="password"
                                                        maxlength="50">
@@ -98,8 +98,8 @@ $listUser = new InfoUser();
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Confirmation du mot de passe</label>
                                                 <input type="password" class="form-control" id="passwordConfirmed"
                                                        maxlength="50">
@@ -108,8 +108,8 @@ $listUser = new InfoUser();
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Secteur</label>
                                                 <select class="form-control" id="secteur" name="select"></select>
                                             </div>
@@ -117,7 +117,7 @@ $listUser = new InfoUser();
                                     </div>
 
                                     <div class='row'>
-                                        <div class='form-group col-md-12'>
+                                        <div class='form-group col-md-8'>
                                             <div class='checkbox'>
                                                 <label>
                                                     <input type='checkbox' id='active' name='optionsCheckboxes'>
@@ -277,7 +277,7 @@ $listUser = new InfoUser();
         swal({
             title: "Erreur",
             type: "error",
-            text: "Vous n'êtes pas authorisé à accéder cette page!",
+            text: "Vous n'êtes pas autorisé à accéder à cette page!",
             timer: 2000,
             showConfirmButton: false,
             animation: "pop",

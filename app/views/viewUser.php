@@ -57,8 +57,8 @@ $currentUser = $listUser->getObjectFromDB($_GET["id"]);
                                 <form id="formAjout" >
 
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Nom</label>
                                                 <input type="text" class="form-control" id="nom" maxlength="100" value='<?php echo $currentUser['nom']; ?>' disabled>
                                             </div>
@@ -66,8 +66,8 @@ $currentUser = $listUser->getObjectFromDB($_GET["id"]);
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Prénom</label>
                                                 <input type="text" class="form-control" id="prenom" maxlength="100" value='<?php echo $currentUser['prenom']; ?>' disabled>
                                             </div>
@@ -75,8 +75,8 @@ $currentUser = $listUser->getObjectFromDB($_GET["id"]);
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Téléphone</label>
                                                 <input type="text" class="form-control" id="telephone" maxlength="12" value='<?php echo $currentUser['telephone']; ?>' disabled>
                                             </div>
@@ -84,8 +84,8 @@ $currentUser = $listUser->getObjectFromDB($_GET["id"]);
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Courriel</label>
                                                 <input type="text" class="form-control" id="courriel" maxlength="150" value='<?php echo $currentUser['courriel']; ?>' disabled>
                                             </div>
@@ -93,8 +93,8 @@ $currentUser = $listUser->getObjectFromDB($_GET["id"]);
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group label-static">
                                                 <label class="control-label">Secteur</label>
                                                 <select class="form-control" id="secteur" name="select" disabled><?php $listUser->getSecteurSelect($_GET["id"]); ?></select>
                                             </div>
@@ -104,7 +104,7 @@ $currentUser = $listUser->getObjectFromDB($_GET["id"]);
                                     <?php
                                     if ($currentUser['fk_statut'] === "1") {
                                         echo "<div class='row'>
-                                                <div class='form-group col-md-12'>
+                                                <div class='form-group col-md-8'>
                                                     <div class='checkbox'>
                                                       <label>
                                                           <input checked type='checkbox' id='active' name='optionsCheckboxes' disabled>
@@ -119,7 +119,7 @@ $currentUser = $listUser->getObjectFromDB($_GET["id"]);
                                             </div>";
                                     } else if ($currentUser['fk_statut'] === "2") {
                                       echo "<div class='row'>
-                                              <div class='form-group col-md-12'>
+                                              <div class='form-group col-md-8'>
                                                   <div class='checkbox'>
                                                     <label>
                                                         <input checked type='checkbox' id='active' name='optionsCheckboxes' disabled>
@@ -134,7 +134,7 @@ $currentUser = $listUser->getObjectFromDB($_GET["id"]);
                                           </div>";
                                     } else {
                                       echo "<div class='row'>
-                                              <div class='form-group col-md-12'>
+                                              <div class='form-group col-md-8'>
                                                   <div class='checkbox'>
                                                     <label>
                                                         <input type='checkbox' id='active' name='optionsCheckboxes' disabled>

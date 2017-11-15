@@ -454,13 +454,13 @@ function erreurNonCon(){
                     });
                     setTimeout(function(){window.location.href='../views/signin.php';},1800);
         }
-		
+
 		function noAuthorize() {
 
         swal({
             title: "Erreur",
             type: "error",
-            text: "Vous n'êtes pas authorisé à accéder cette page!",
+            text: "Vous n'êtes pas autorisé à accéder à cette page!",
             timer: 2000,
             showConfirmButton: false,
             animation: "pop",

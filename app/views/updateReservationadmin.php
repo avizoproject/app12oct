@@ -51,62 +51,58 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
                                      <p class="category">Tous les champs sont obligatoires.</p>
                                  </div>
                                  <div class="card-content">
-                                     <form id="formAjout" >
-
-                                         <div class="row">
-                                             <div class="col-md-12">
-
-                                                 <div class="form-group label-static col-md-4">
-                                                     <label class="control-label">Choisissez un employé</label>
-                                                     <select class="form-control" id="user" name="select"></select>
-                                                 </div>
-                                             </div>
-
+                                     <form id="formAjout">
+                                       <?php
+                                        if (file_exists("../img/car" . $currentReservation['fk_vehicule'] . ".jpg")) {
+                                         echo '<div class="col-md-5 pull-right"><img id="imgVehicule" src="../img/car' . $currentReservation["fk_vehicule"] . '.jpg" /></div>';
+                                        }
+                                       ?>
+                                       <div>
+                                         <div class="col-md-7">
+                                           <div class="form-group label-static">
+                                             <label class="control-label">Employé</label>
+                                             <select class="form-control" id="user" name="select"></select>
+                                           </div>
                                          </div>
+                                       </div>
+
+                                       <div>
+                                         <div class="col-md-7">
+                                           <div class="form-group label-static">
+                                             <label class="control-label">Dates</label>
+                                             <input type='text' size="40" class="flatpickr form-control" name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation">
+                                             <script src="../js/flatpickr.js" type="text/javascript"></script>
+                                             <script>
+                                                 flatpickr(".selector", {});
+                                                 document.getElementById("acquisition").flatpickr({
 
 
-                                         <div class="row">
-                                             <div class="col-md-12">
-                                                 <div class="form-group label-static col-md-4">
-                                                     <label class="control-label">Dates</label>
-
-                                                     <input type='text' size="40" class="flatpickr form-control" name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation">
-
-                                                     <script src="../js/flatpickr.js" type="text/javascript"></script>
-                                                     <script>
-                                                         flatpickr(".selector", {});
-                                                         document.getElementById("acquisition").flatpickr({
+                                                     defaultDate: <?php $gReservation->getDatesReservation($_GET["id"]); ?>
+                                                     enableTime: true,
+                                                     mode: "range"
 
 
-                                                             defaultDate: <?php $gReservation->getDatesReservation($_GET["id"]); ?>
-                                                             enableTime: true,
-                                                             mode: "range"
-
-
-                                                         });
-
-                                                     </script>
-                                                 </div>
-                                             </div>
+                                                 });
+                                             </script>
+                                           </div>
                                          </div>
+                                       </div>
 
-
-                                         <div class="row">
-                                             <div class="col-md-12">
-
-                                                 <div class="form-group label-static col-md-4">
-                                                     <label class="control-label">Choisissez un véhicule</label>
-                                                     <select class="form-control" id="vehicule" name="select"></select>
-                                                 </div>
-                                             </div>
+                                       <div>
+                                         <div class="col-md-7">
+                                           <div class="form-group label-static">
+                                             <label class="control-label">Véhicule</label>
+                                             <select class="form-control" id="vehicule" name="select"></select>
+                                           </div>
                                          </div>
+                                       </div>
 
 
                                          <?php
                                          if ($currentReservation['statut'] ==="1")
                                          {
                                              echo "<div class='row'>
-                                                     <div class='form-group col-md-12'>
+                                                     <div class='form-group col-md-8'>
                                                          <div class='checkbox'>
                                                              <label>
                                                                  <input checked type='checkbox' id='active' name='optionsCheckboxes'>
@@ -117,7 +113,7 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
                                                  </div>";
                                          }else {
                                              echo "<div class='row'>
-                                                     <div class='form-group col-md-12'>
+                                                     <div class='form-group col-md-8'>
                                                          <div class='checkbox'>
                                                              <label>
                                                                  <input type='checkbox' id='active' name='optionsCheckboxes'>
@@ -129,7 +125,7 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
                                          }
 
                                          ?>
-                                         
+
                                          <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
                                          <input type="submit" id="supprimer" class="btn pull-right" value="Supprimer" style="margin-right: 10px;">
                                          <input type="submit" id="cancel" class="btn pull-right" value="Annuler" style="margin-right: 10px;">
@@ -165,7 +161,7 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
                 <!--  Sweet alert -->
         <script src="../js/sweetalert2.min.js"></script>
         <script src="../js/sweetalert2.js"></script>
-        
+
  	<!--  Notifications Plugin    -->
  	<script src="../js/bootstrap-notify.js"></script>
 
@@ -216,6 +212,14 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
                 $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom + "&secteur=" + fk_secteur);
             });
 
+            $("#vehicule").change(function () {
+              $.get('../img/car' + $( "#vehicule" ).val().substr(0,$( "#vehicule" ).val().indexOf(' ')) + '.jpg').done(function() {
+                $("#imgVehicule").show();
+                $("#imgVehicule").attr('src', '../img/car' + $( "#vehicule" ).val().substr(0,$( "#vehicule" ).val().indexOf(' ')) + '.jpg');
+              }).fail(function() {
+                $("#imgVehicule").hide();
+              })
+            });
 
             $("#acquisition").change(function () {
                 var date = $("#acquisition").val();
@@ -246,34 +250,35 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
 
              $(document).on("click", "#confirmer", function(e) {
                  e.preventDefault();
-                 swal({
-                     title: "Ajouté",
-                     text: "La réservation a bien été ajoutée.",
-                     type: "success"
-                 }).then(function () {
-                     var date = $("#acquisition").val();
-                     var deuxDates = date.split(' à ');
-                     var dateFrom = deuxDates[0];
-                     var dateTo = deuxDates[1];
+                 var date = $("#acquisition").val();
+                 var deuxDates = date.split(' à ');
+                 var dateFrom = deuxDates[0];
+                 var dateTo = deuxDates[1];
 
-                     var utilisateurfks = $("#user").val();
-                     var deuxfks = utilisateurfks.split(' ');
-                     var fk_user = deuxfks[0];
+                 var utilisateurfks = $("#user").val();
+                 var deuxfks = utilisateurfks.split(' ');
+                 var fk_user = deuxfks[0];
 
-                     var vehiculesfks = $("#vehicule").val();
-                     var fksvehic = vehiculesfks.split(' ');
-                     var pkVehicule = fksvehic[0];
+                 var vehiculesfks = $("#vehicule").val();
+                 var fksvehic = vehiculesfks.split(' ');
+                 var pkVehicule = fksvehic[0];
 
 
-                     if ($('#active').is(':checked') == true) {
-                         var statut = 1;
-                     } else {
-                         var statut = 0;
-                     }
+                 if ($('#active').is(':checked') == true) {
+                     var statut = 1;
+                 } else {
+                     var statut = 0;
+                 }
 
-
+                 if ($("#user").val() && $("#acquisition").val() && $("#vehicule").val()) {
+                   swal({
+                       title: "Modifiée",
+                       text: "La réservation a bien été modifiée.",
+                       type: "success"
+                   }).then(function () {
                      location.href = "../controllers/controller_reservation.php?mod=1&id=<?php echo $_GET['id']; ?>&statut=" + statut + "&user=" + fk_user + "&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule;
                  })
+               }
              });
 
              $(document).on("click", "#supprimer", function(e) {
@@ -327,7 +332,7 @@ function erreurNonCon(){
                     setTimeout(function(){window.location.href='../views/signin.php';},1800);
         }
 	</script>
-        
+
         <?php
         if($_SESSION['loggedIn']==false){
                 echo '<script type="text/javascript">',

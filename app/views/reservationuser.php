@@ -42,7 +42,6 @@ $_SESSION['plusmoinsWeek'] = 0;
                             <div class="card">
                                 <div class="card-header" data-background-color="blue">
                                     <h4 class="title">Réservations</h4>
-                                    <p class="category">Sélectionnez une réservation avant de choisir une action</p>
                                 </div>
                                 <div class="card-content table-responsive">
                                     <div class="row col-md-4 center-block float-none">
@@ -105,7 +104,7 @@ $_SESSION['plusmoinsWeek'] = 0;
     <!--  Sweet alert -->
     <script src="../js/sweetalert2.min.js"></script>
     <script src="../js/sweetalert2.js"></script>
-        
+
 	<!--  Notifications Plugin    -->
 	<script src="../js/bootstrap-notify.js"></script>
 
@@ -308,7 +307,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                     click: function (node, data) {
                         //sweetalert moé ca
                         var pk = node.find('.hidden').text();
-                        window.location.href = "http://localhost/app/app/views/updateReservationadmin.?id=" + pk;
+                        window.location.href = "http://localhost/app/app/views/updateReservation.php?id=" + pk;
                     },
 
 
@@ -423,7 +422,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 
                 //clic consulter, envoie en get le id selectionné
                 $('#Retourner').click(function () {
-                    window.location.href = "http://localhost/app/app/views/returnReservation";
+                    window.location.href = "http://localhost/app/app/views/returnReservation.php";
                 });
 
             //clic historique shows you all the reservations made by that user
@@ -519,12 +518,12 @@ $_SESSION['plusmoinsWeek'] = 0;
             });
             setTimeout(function(){window.location.href='../views/signin.php';},1800);
         }
-		
+
 		function noAuthorize() {
         swal({
             title: "Erreur",
             type: "error",
-            text: "Vous n'êtes pas authorisé à voir cette page!",
+            text: "Vous n'êtes pas autorisé à voir cette page!",
             timer: 2000,
             showConfirmButton: false,
             animation: "pop",
@@ -535,7 +534,7 @@ $_SESSION['plusmoinsWeek'] = 0;
         }, 1800);
     }
 	</script>
-        
+
         <?php
         if($_SESSION['loggedIn']==false){
                 echo '<script type="text/javascript">',
@@ -544,7 +543,7 @@ $_SESSION['plusmoinsWeek'] = 0;
             }else{
             require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/modalUserReservations.php';
         }
-			
+
 			if ($_SESSION['admin'] == 1) {
 				echo '<script type="text/javascript">',
 				'noAuthorize();',
