@@ -50,6 +50,18 @@ $listVehicule = new InfoVehicule();
                             </div>
                             <div class="card-content">
                                 <form id="formAjout">
+
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group label-static">
+
+                                                <label class="control-label">Choisissez un garage</label>
+                                                <select class="form-control" id="garage" name="select"
+                                                        required></select><label onclick="ajoutGarage()" style="float: right;">Ajouter</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
@@ -71,7 +83,6 @@ $listVehicule = new InfoVehicule();
                                         </div>
                                     </div>
 
-
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
@@ -81,8 +92,46 @@ $listVehicule = new InfoVehicule();
                                                         required></select>
                                             </div>
                                         </div>
-
                                     </div>
+
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group label-static">
+
+                                                <label class="control-label">Choisissez le type d'entretien</label>
+                                                <select class="form-control" id="type" name="select"
+                                                        required></select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group label-static">
+                                                <label class="control-label">Coût</label>
+                                                <input type="number" class="form-control" id="cout" maxlength="7" required></select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group label-static">
+                                                <label class="control-label">Odomètre</label>
+                                                <input type="number" class="form-control" id="odometre" required></select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group label-static">
+                                                <label class="control-label">Description</label>
+                                                <textarea class="form-control" id="description"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
                                     <input type="submit" id="cancel" class="btn pull-right" value="Annuler"
                                            style="margin-right: 10px;">
@@ -132,9 +181,19 @@ $listVehicule = new InfoVehicule();
 <script src="../js/demo.js"></script>
 
 <script type="text/javascript">
+    function ajoutGarage() {
+        var name = prompt("Veuillez entrer le nom du garage :");
+        var tel = prompt("Veuillez entrer le téléphone du garage (SANS '-' NI '()') :");
+        var desc = prompt("Veuillez entrer l'adresse du garage :");
+        if (name != null && name != "" && tel != null && tel != "" && desc != null && desc != "") {
+            location.href = "../controllers/ajouterGarage.php?nom=" + name + "&tel=" + tel + "&desc=" + desc;
+        }
+    }
+
     $(document).ready(function () {
         $("#vehicule").load("../controllers/getSelectReservationsWeek.php");
-
+        $("#garage").load("../controllers/getSelectGarage.php");
+        $("#type").load("../controllers/getSelectTypeEntretien.php");
 
         $(document).on("click", "#confirmer", function (e) {
             e.preventDefault();
@@ -144,15 +203,13 @@ $listVehicule = new InfoVehicule();
                 type: "success"
             }).then(function () {
                 var date = $("#acquisition").val();
-                var deuxDates = date.split(' à ');
-                var dateFrom = deuxDates[0];
-                var dateTo = deuxDates[1];
-
-                var vehiculesfks = $("#vehicule").val();
-                var fksvehic = vehiculesfks.split(' ');
-                var pkVehicule = fksvehic[0];
-
-                location.href = "../controllers/controller_reservation.php?ajout=1&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule;
+                var type = $("#type").val();
+                var garagefk = $("#garage").val();
+                var vehiculefk = $("#vehicule").val();
+                var cout = $("#cout").val();
+                var description = $("#description").val();
+                var odometre = $("#odometre").val();
+                location.href = "../controllers/controller_entretien.php?date=" + date + "&type=" + type + "&garage=" + garagefk + "&vehiculefk=" + vehiculefk + "&cout=" + cout + "&description=" + description + "&odometre=" + odometre;
             })
         });
 

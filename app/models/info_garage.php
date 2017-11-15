@@ -11,10 +11,12 @@ class InfoGarage extends InfoModel
     protected $pk_garage= 0;
 
     protected $nom = '';
+
+    protected $Description= '';
     
     protected $telephone = '';
 
-    protected $fk_statut = 0;
+    protected $fk_statut_garage = 0;
     
     function __construct()
     {}
@@ -31,8 +33,12 @@ class InfoGarage extends InfoModel
         return $this->telephone;
     }
 
-    function getFk_statut() {
-        return $this->fk_statut;
+    function getFk_statut_garage() {
+        return $this->fk_statut_garage;
+    }
+
+    function getDescription() {
+        return $this->Description;
     }
 
     function setPk_garage($pk_garage) {
@@ -40,29 +46,29 @@ class InfoGarage extends InfoModel
     }
 
     function setNom($nom) {
-        $this->nom = $nom;
-    }
+    $this->nom = $nom;
+}
 
     function setTelephone($telephone) {
         $this->telephone = $telephone;
     }
 
-    function setFk_statut($fk_statut) {
-        $this->fk_statut = $fk_statut;
+    function setDescription($Description) {
+        $this->Description = $Description;
     }
 
-    function getListColours($id) {
+    function setFk_statut_garage($fk_statut_garage) {
+        $this->fk_statut_garage = $fk_statut_garage;
+    }
+
+    function getSelectGarage() {
         include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-        $results = $conn->query("SELECT * FROM couleur ORDER BY nom");
+        $results = $conn->query("SELECT * FROM garage");
 
-        echo "<option value=''>Sélectionnez une couleur...</option>";
+        echo "<option value=''>Sélectionnez un garage...</option>";
         while ($row = $results->fetch_assoc()) {
-            if ($id == $row['pk_couleur']) {
-                echo "<option value='" . $row['pk_couleur'] . "' selected>" . $row['nom'] . "</option>";
-            } else {
-                echo "<option value='" . $row['pk_couleur'] . "'>" . $row['nom'] . "</option>";
-            }
+                echo "<option value='" . $row['pk_garage'] . "'>" . $row['nom'] . "</option>";
         }
 
         // Frees the memory associated with a result

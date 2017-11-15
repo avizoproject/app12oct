@@ -304,7 +304,7 @@ function getWeekReservationsForUser($iduser, $week)
     {
         include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-        $results = $conn->query("SELECT reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE()) AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE()) AND utilisateur.pk_utilisateur='". $iduser ."' AND reservation.statut !=0");
+        $results = $conn->query("SELECT vehicule.pk_vehicule, reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE()) AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE()) AND utilisateur.pk_utilisateur='". $iduser ."' AND reservation.statut !=0");
 
         echo "<option value=''>Sélectionnez un véhicule...</option>";
         while ($row = $results->fetch_assoc()) {
@@ -316,8 +316,8 @@ function getWeekReservationsForUser($iduser, $week)
 function getWeekEntretiensForUser($iduser, $type)
 {
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
-
-    $results = $conn->query("SELECT reservation.pk_reservation, marque.nom_marque, modele.nom_modele, vehicule.odometre, entretien.odometre_entretien, entretien.fk_type_entretien, vehicule.odometre-entretien.odometre_entretien as difference FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN entretien ON reservation.fk_vehicule = entretien.fk_vehicule WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE()) AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE())  AND utilisateur.pk_utilisateur='". $iduser . "' AND reservation.statut !=0 AND entretien.fk_type_entretien = '". $type ."'  ORDER BY ( DATEDIFF( NOW(),entretien.date_entretien ) ) LIMIT 1");
+    //SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','')); pour config (section SQL) GROUP BY dans phpMyAdmin
+    $results = $conn->query("SELECT reservation.pk_reservation, marque.nom_marque, modele.nom_modele, vehicule.odometre, entretien.odometre_entretien, entretien.fk_type_entretien, vehicule.odometre-entretien.odometre_entretien as difference FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN entretien ON reservation.fk_vehicule = entretien.fk_vehicule WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE()) AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE())  AND utilisateur.pk_utilisateur='". $iduser . "' AND reservation.statut !=0 AND entretien.fk_type_entretien = '". $type ."' GROUP BY vehicule.pk_vehicule  ORDER BY ( DATEDIFF( NOW(),entretien.date_entretien ) ) LIMIT 5");
 
 
     $allreservation = array();
