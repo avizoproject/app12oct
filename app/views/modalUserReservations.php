@@ -12,7 +12,7 @@
                 <th>Véhicule</th>
                 <th>Date de début</th>
                 <th>Date de retour</th>
-                <th>Statut (1=actif , 0=inactif)</th>
+                <th>Statut</th>
                 </thead>
                 <tbody>
                     <?php

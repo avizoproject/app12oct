@@ -150,7 +150,8 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                                      }
                                                      ?>
 
-                                                     <input type="submit" id="modifier" class="btn pull-right" value="Modifier">
+                                                     <input type="submit" id="modifier" class="btn pull-right margin-button2" value="Modifier">
+                                                     <button id="retour" class="btn pull-right">Retour</button>
                                                      <div class="clearfix"></div>
                                                  </form>
                                              </div>
@@ -197,12 +198,18 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
 
  	<script type="text/javascript">
      	$(document).ready(function(){
-             $(document).on("click", "#modifier", function(e) {
-                 e.preventDefault();
-                 location.href = "updateVehiculeadmin.php?id=<?php echo $_GET["id"]; ?>";
 
-             });
-                 $('.navbar-header a').html("Consultation de véhicule");
+        $(document).on("click", "#retour", function (e) {
+            e.preventDefault();
+            location.href = "http://localhost/app/app/views/vehicule.php";
+        });
+
+       $(document).on("click", "#modifier", function(e) {
+           e.preventDefault();
+           location.href = "updateVehiculeadmin.php?id=<?php echo $_GET["id"]; ?>";
+
+       });
+           $('.navbar-header a').html("Consultation de véhicule");
      	});
 
 function erreurNonCon(){

@@ -188,7 +188,7 @@ $gReservation = new InfoReservation();
         swal({
             title: "Erreur",
             type: "error",
-            text: "Vous n'êtes pas authorisé à voir cette page!",
+            text: "Vous n'êtes pas autorisé à voir cette page!",
             timer: 2000,
             showConfirmButton: false,
             animation: "pop",

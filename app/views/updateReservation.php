@@ -15,6 +15,8 @@
  require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_vehicule.php';
  $listVehicule = new InfoVehicule();
  $gReservation = new InfoReservation();
+ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
+
  ?>
  <html>
      <head>
@@ -50,42 +52,38 @@
                                  <div class="card-content">
                                      <form id="formAjout" >
                                          <label id="trigger" class="hidden"></label>
-                                         <div class="row">
-                                             <div class="col-md-12">
-                                                 <div class="form-group label-static col-md-4">
-                                                     <label class="control-label">Dates</label>
-
-                                                     <input type='text' size="40" class="flatpickr form-control" name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation">
-
-                                                     <script src="../js/flatpickr.js" type="text/javascript"></script>
-                                                     <script>
-                                                         flatpickr(".selector", {});
-                                                         document.getElementById("acquisition").flatpickr({
-
-
-                                                             defaultDate: <?php $gReservation->getDatesReservation($_GET["id"]); ?>
-                                                             enableTime: true,
-                                                             mode: "range"
-
-
-                                                         });
-                                                     </script>
-                                                 </div>
+                                         <?php
+                                          if (file_exists("../img/car" . $currentReservation['fk_vehicule'] . ".jpg")) {
+                                           echo '<div class="col-md-5 pull-right"><img id="imgVehicule" src="../img/car' . $currentReservation["fk_vehicule"] . '.jpg" /></div>';
+                                          }
+                                         ?>
+                                         <div>
+                                           <div class="col-md-7">
+                                             <div class="form-group label-static">
+                                               <label class="control-label">Dates</label>
+                                               <input type='text' size="40" class="flatpickr form-control" name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation">
+                                               <script src="../js/flatpickr.js" type="text/javascript"></script>
+                                               <script>
+                                                   flatpickr(".selector", {});
+                                                   document.getElementById("acquisition").flatpickr({
+                                                       defaultDate: <?php $gReservation->getDatesReservation($_GET["id"]); ?>
+                                                       enableTime: true,
+                                                       mode: "range"
+                                                   });
+                                               </script>
                                              </div>
+                                           </div>
                                          </div>
 
-
-                                         <div class="row">
-                                             <div class="col-md-12">
-
-                                                 <div class="form-group label-static col-md-4">
-                                                     <label class="control-label">Choisissez un véhicule</label>
-                                                     <select class="form-control" id="vehicule" name="select"></select>
-                                                 </div>
+                                         <div>
+                                           <div class="col-md-7">
+                                             <div class="form-group label-static">
+                                               <label class="control-label">Véhicule</label>
+                                               <select class="form-control" id="vehicule" name="select"></select>
                                              </div>
-
+                                           </div>
                                          </div>
-
+                                         <div class="row"></div>
                                          <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
                                          <input type="submit" id="supprimer" class="btn pull-right" value="Supprimer" style="margin-right: 10px;">
                                          <input type="submit" id="cancel" class="btn pull-right" value="Annuler" style="margin-right: 10px;">
@@ -121,7 +119,7 @@
     <!--  Sweet alert -->
     <script src="../js/sweetalert2.min.js"></script>
     <script src="../js/sweetalert2.js"></script>
-        
+
  	<!--  Notifications Plugin    -->
  	<script src="../js/bootstrap-notify.js"></script>
 
@@ -162,22 +160,33 @@
                  $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom);
              });
 
+             $("#vehicule").change(function () {
+               $.get('../img/car' + $( "#vehicule" ).val().substr(0,$( "#vehicule" ).val().indexOf(' ')) + '.jpg').done(function() {
+                 $("#imgVehicule").show();
+                 $("#imgVehicule").attr('src', '../img/car' + $( "#vehicule" ).val().substr(0,$( "#vehicule" ).val().indexOf(' ')) + '.jpg');
+               }).fail(function() {
+                 $("#imgVehicule").hide();
+               })
+             });
+
              $(document).on("click", "#confirmer", function(e) {
                  e.preventDefault();
-                 swal({
-                     title: "Ajouté",
-                     text: "La réservation a bien été modifiée.",
-                     type: "success"
-                 }).then(function () {
-                     var date = $("#acquisition").val();
-                     var deuxDates = date.split(' à ');
-                     var dateFrom = deuxDates[0];
-                     var dateTo = deuxDates[1];
+                 var date = $("#acquisition").val();
+                 var deuxDates = date.split(' à ');
+                 var dateFrom = deuxDates[0];
+                 var dateTo = deuxDates[1];
 
-                     var pkVehicule = $("#vehicule").val();
+                 var pkVehicule = $("#vehicule").val();
 
+                 if ($("#acquisition").val() && $("#vehicule").val()) {
+                   swal({
+                       title: "Modifiée",
+                       text: "La réservation a bien été modifiée.",
+                       type: "success"
+                   }).then(function () {
                      location.href = "../controllers/controller_reservation.php?mod=1&id=<?php echo $_GET['id']; ?>&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule;
-                 })
+                   })
+                 }
              });
 
              $(document).on("click", "#supprimer", function(e) {
@@ -206,7 +215,7 @@
                     cancelButtonColor: "#969696",
                     cancelButtonText: "Annuler"
                 }).then(function () {
-                location.href = "../views/reservation.php";
+                location.href = "../views/reservationuser.php";
                 })
             });
 
@@ -234,7 +243,7 @@ function erreurNonCon(){
             swal({
                 title: "Erreur",
                 type: "error",
-                text: "Vous n'êtes pas authorisé à voir cette page!",
+                text: "Vous n'êtes pas autorisé à voir cette page!",
                 timer: 2000,
                 showConfirmButton: false,
                 animation: "pop",
@@ -245,14 +254,14 @@ function erreurNonCon(){
             }, 1800);
         }
 	</script>
-        
+
         <?php
         if($_SESSION['loggedIn']==false){
                 echo '<script type="text/javascript">',
                       'erreurNonCon();',
                     '</script>';
             }
-        if ($_SESSION['admin'] == true) {
+        if ($_SESSION['admin'] == 1) {
             echo '<script type="text/javascript">',
             'noAuthorize();',
             '</script>';

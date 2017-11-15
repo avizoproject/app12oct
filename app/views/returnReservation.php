@@ -60,7 +60,7 @@ $gReservation = new InfoReservation();
                                     </div>
                                     <div class=" col-md-12 buttons">
                                         <div class="centerbuttons">
-                                            <button class="btn btn-default" type="button" id="Retour" name="Retour">
+                                            <button class="btn btn-default" type="button" id="retour" name="Retour">
                                                 Annuler
                                             </button>
                                             <button class="btn btn-default" type="submit">Confirmer</button>
@@ -118,9 +118,7 @@ $gReservation = new InfoReservation();
 
         //clic consulter, envoie en get le id selectionné
         $('#retour').click(function () {
-
-            window.location.href = "http://localhost/app/app/views/reservationuser";
-
+            window.location.href = "http://localhost/app/app/views/reservationuser.php";
         });
 
         //clic envoyer
@@ -137,7 +135,7 @@ $gReservation = new InfoReservation();
         swal({
             title: "Erreur",
             type: "error",
-            text: "Vous n'êtes pas authorisé à voir cette page!",
+            text: "Vous n'êtes pas autorisé à voir cette page!",
             timer: 2000,
             showConfirmButton: false,
             animation: "pop",
@@ -149,7 +147,7 @@ $gReservation = new InfoReservation();
     }
 </script>
 <?php
-if ($_SESSION['admin'] == true) {
+if ($_SESSION['admin'] == 1) {
     echo '<script type="text/javascript">',
     'noAuthorize();',
     '</script>';

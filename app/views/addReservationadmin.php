@@ -57,54 +57,48 @@ $listVehicule = new InfoVehicule();
                                 <p class="category">Tous les champs sont obligatoires.</p>
                             </div>
                             <div class="card-content">
-                                <form id="formAjout" >
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
-
-                                                <label class="control-label">Choisissez un employé</label>
-                                                <select class="form-control" id="user" name="select"></select>
-                                            </div>
+                                <form id="formAjout">
+                                  <div class="col-md-5 pull-right">
+                                    <img id="imgVehicule" src="" hidden />
+                                  </div>
+                                  <div>
+                                    <div class="col-md-7">
+                                        <div class="form-group label-static">
+                                          <label class="control-label">Employé</label>
+                                          <select class="form-control" id="user" name="select"></select>
                                         </div>
-
+                                      </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
-                                                <label class="control-label">Dates</label>
-
-                                                <input type='text' size="40" class="flatpickr form-control" name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation" required>
-
-                                                <script src="../js/flatpickr.js" type="text/javascript"></script>
-                                                <script>
-                                                    flatpickr(".selector", {});
-                                                    document.getElementById("acquisition").flatpickr({
-                                                        minDate: "today",
-                                                        enableTime: true,
-                                                        mode: "range"
-                                                    });
-                                                </script>
-
-                                            </div>
+                                    <div>
+                                      <div class="col-md-7">
+                                        <div class="form-group label-static">
+                                          <label class="control-label">Dates</label>
+                                          <input type='text' size="40" class="flatpickr form-control" name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation">
+                                          <script src="../js/flatpickr.js" type="text/javascript"></script>
+                                          <script>
+                                              flatpickr(".selector", {});
+                                              document.getElementById("acquisition").flatpickr({
+                                                  minDate: "today",
+                                                  enableTime: true,
+                                                  mode: "range"
+                                              });
+                                          </script>
                                         </div>
+                                      </div>
                                     </div>
 
-
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group label-static col-md-4">
-
-                                                <label class="control-label">Choisissez un véhicule</label>
-                                                <select class="form-control" id="vehicule" name="select" required></select>
-                                            </div>
+                                    <div>
+                                      <div class="col-md-7">
+                                        <div class="form-group label-static">
+                                          <label class="control-label">Véhicule</label>
+                                          <select class="form-control" id="vehicule" name="select"></select>
                                         </div>
-
+                                      </div>
                                     </div>
 
                                     <div class='row'>
-                                        <div class='form-group col-md-12'>
+                                        <div class='form-group col-md-8'>
                                             <div class='checkbox'>
                                                 <label>
                                                     <input type='checkbox' id='active' name='optionsCheckboxes'>
@@ -166,6 +160,22 @@ $listVehicule = new InfoVehicule();
 
         $("#user").load("../controllers/getSelectUsers.php");
 
+        //Si on changeait le user après avoir choisi les dates les véhicules ne loadaient pas
+        $("#user").change(function () {
+          if ($("#acquisition").val()) {
+            $("#acquisition").trigger("change");
+          }
+        });
+
+        $("#vehicule").change(function () {
+          $.get('../img/car' + $( "#vehicule" ).val().substr(0,$( "#vehicule" ).val().indexOf(' ')) + '.jpg').done(function() {
+            $("#imgVehicule").show();
+            $("#imgVehicule").attr('src', '../img/car' + $( "#vehicule" ).val().substr(0,$( "#vehicule" ).val().indexOf(' ')) + '.jpg');
+          }).fail(function() {
+            $("#imgVehicule").hide();
+          })
+        });
+
         //si les dates sont changées, reload vehicules dispos
         $("#acquisition").change(function () {
             var date = $("#acquisition").val();
@@ -186,34 +196,35 @@ $listVehicule = new InfoVehicule();
 
         $(document).on("click", "#confirmer", function(e) {
             e.preventDefault();
-            swal({
-                title: "Ajouté",
-                text: "La réservation a bien été ajoutée.",
-                type: "success"
-            }).then(function () {
-                var date = $("#acquisition").val();
-                var deuxDates = date.split(' à ');
-                var dateFrom = deuxDates[0];
-                var dateTo = deuxDates[1];
+            var date = $("#acquisition").val();
+            var deuxDates = date.split(' à ');
+            var dateFrom = deuxDates[0];
+            var dateTo = deuxDates[1];
 
-                var userstuff = $("#user").val();
-                var secteurETuser = userstuff.split(' ');
-                var user = secteurETuser[1];
+            var userstuff = $("#user").val();
+            var secteurETuser = userstuff.split(' ');
+            var user = secteurETuser[1];
 
-                var vehiculesfks = $("#vehicule").val();
-                var fksvehic = vehiculesfks.split(' ');
-                var pkVehicule = fksvehic[0];
+            var vehiculesfks = $("#vehicule").val();
+            var fksvehic = vehiculesfks.split(' ');
+            var pkVehicule = fksvehic[0];
 
-                if ($('#active').is(':checked') == true) {
-                    var statut = 1;
-                } else {
-                    var statut = 0;
-                }
+            if ($('#active').is(':checked') == true) {
+                var statut = 1;
+            } else {
+                var statut = 0;
+            }
 
+            if ($("#user").val() && $("#acquisition").val() && $("#vehicule").val()) {
+              swal({
+                  title: "Ajoutée",
+                  text: "La réservation a bien été ajoutée.",
+                  type: "success"
+              }).then(function () {
                 location.href = "../controllers/controller_reservation.php?ajout=1&admin=1&statut=" + statut + "&datefin=" + dateTo + "&datedebut=" + dateFrom + "&pkvehicule=" + pkVehicule + "&user=" + user;
-            })
-
-        });
+              })
+            }
+          });
 
         $(document).on("click", "#cancel", function(e) {
             e.preventDefault();
@@ -251,7 +262,7 @@ function erreurNonCon(){
         swal({
             title: "Erreur",
             type: "error",
-            text: "Vous n'êtes pas authorisé à accéder cette page!",
+            text: "Vous n'êtes pas autorisé à accéder à cette page!",
             timer: 2000,
             showConfirmButton: false,
             animation: "pop",

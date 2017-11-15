@@ -277,7 +277,7 @@ $listUser = new InfoUser();
         swal({
             title: "Erreur",
             type: "error",
-            text: "Vous n'êtes pas authorisé à accéder cette page!",
+            text: "Vous n'êtes pas autorisé à accéder à cette page!",
             timer: 2000,
             showConfirmButton: false,
             animation: "pop",
