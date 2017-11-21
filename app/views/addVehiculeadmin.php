@@ -87,7 +87,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-7">
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Année</label>
-                                                <input type="number" class="form-control" id="annee" maxlength="4" min="1950" required></select>
+                                                <input type="text" class="form-control" id="annee" maxlength="4" min="1950" pattern="\d{4}" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -157,7 +157,7 @@ $listVehicule = new InfoVehicule();
                                     </div>
 
                                     <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
-                                    <input type="submit" id="cancel" class="btn pull-right" value="Annuler" style="margin-right: 10px;">
+                                    <input type="button" id="cancel" class="btn pull-right" value="Annuler" style="margin-right: 10px;">
                                     <div class="clearfix"></div>
                                 </form>
                             </div>
@@ -215,7 +215,7 @@ $listVehicule = new InfoVehicule();
           $("#modele").load("../controllers/getSelectModeles.php?idMarque=" + $('#marque').val() + "&idModele=0");
         });
 
-        $(document).on("click", "#confirmer", function(e) {
+        $(document).on("submit", "#formAjout", function(e) {
             e.preventDefault();
             var marque = $("#marque").val();
             var modele = $("#modele").val();

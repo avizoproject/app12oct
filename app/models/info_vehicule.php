@@ -160,9 +160,9 @@ AND v.fk_secteur = '" . $user_sector . "'");
 
     while ($row = $results->fetch_assoc()) {
         if ($row['pk_vehicule']==$pkvehicule){
-            echo "<option selected value='" . $row['pk_vehicule'] . " " . $row['fk_secteur'] ."'>" . $row['nom_marque'] . " " . $row['nom_modele'] . "</option>";
+            echo "<option selected value='" . $row['pk_vehicule'] . " " . $row['fk_secteur'] ."'>" . $row['nom_marque'] . " " . $row['nom_modele'] . " #".$row['pk_vehicule'] ."</option>";
         }else {
-            echo "<option value='" . $row['pk_vehicule'] . " " . $row['fk_secteur'] ."'>" . $row['nom_marque'] . " " . $row['nom_modele'] . "</option>";
+            echo "<option value='" . $row['pk_vehicule'] . " " . $row['fk_secteur'] ."'>" . $row['nom_marque'] . " " . $row['nom_modele'] . " #".$row['pk_vehicule'] ."</option>";
         }
     }
 

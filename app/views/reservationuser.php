@@ -44,19 +44,29 @@ $_SESSION['plusmoinsWeek'] = 0;
                                     <h4 class="title">Réservations</h4>
                                 </div>
                                 <div class="card-content table-responsive">
-                                    <div class="row col-md-4 center-block float-none">
-                                        <div class="buttons text-center" >
+                                    <h3>Historique de vos réservations</h3>
+                                    <table class="table table-striped table-bordered nowrap" id='example'>
+                                        <thead class='text-primary'>
+                                        <th class="hidden">ID Réservation</th>
+                                        <th>Date émise</th>
+                                        <th>Véhicule</th>
+                                        <th>Date de début</th>
+                                        <th>Date de retour</th>
+                                        <th>Statut</th>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        $id = $_SESSION['user']['pk_utilisateur'];
+                                        $gReservation->getListReservationsUser($id);
+                                        ?>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="text-center" style="margin-top:10px;">
+                                        <div class="margin-button2">
                                             <button class="btn btn-default" name="Ajouter" id="Ajouter">Ajouter</button>
-
                                             <button class="btn btn-default" name="Modifier" id="Modifier">Modifier</button>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row col-md-4 center-block float-none">
-                                        <div class="buttons text-center" >
-                                            <button class="btn btn-default" name="Consulter" id="Retourner">Retourner</button>
-
-                                            <button class="btn btn-default" name="Historique" id="Historique">Historique</button>
+                                            <button class="btn btn-default" name="Consulter" id="Retourner">Retourner véhicule</button>
                                         </div>
                                     </div>
                                 </div>
@@ -333,7 +343,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                     $.each(entretiens, function (index){
 
                         if (entretiens[index]['difference'] > kilo){
-                            var message = "Vous avez un changement d'huile à faire sur le " + entretiens[index]['nom_marque'] + " " + entretiens[index]['nom_modele'];
+                            var message = "Vous avez un changement d'huile à faire sur le " + entretiens[index]['nom_marque'] + " " + entretiens[index]['nom_modele']+" #"+entretiens[index]['pk_vehicule'];
                             demo.showNotification('top','right', message);
                         }
 
@@ -358,7 +368,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                     $.each(entretiens, function (index){
 
                         if (entretiens[index]['difference'] > kilo-100){
-                            var message = "Vous avez un changement de freins à faire sur le " + entretiens[index]['nom_marque'] + " " + entretiens[index]['nom_modele'];
+                            var message = "Vous avez un changement de freins à faire sur le " + entretiens[index]['nom_marque'] + " " + entretiens[index]['nom_modele']+" #"+entretiens[index]['pk_vehicule'];
                             demo.showNotification('top','right', message);
                         }
 
@@ -383,7 +393,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                     $.each(entretiens, function (index){
 
                         if (entretiens[index]['difference'] > kilo-100){
-                            var message = "Vous avez un entretien général à faire sur le " + entretiens[index]['nom_marque'] + " " + entretiens[index]['nom_modele'];
+                            var message = "Vous avez un entretien général à faire sur le " + entretiens[index]['nom_marque'] + " " + entretiens[index]['nom_modele']+" #"+entretiens[index]['pk_vehicule'];
                             demo.showNotification('top','right', message);
                         }
 
@@ -402,14 +412,34 @@ $_SESSION['plusmoinsWeek'] = 0;
 			// Javascript method's body can be found in assets/js/demos.js
         	demo.initDashboardPageCharts();
 
+            var table = $('#example').DataTable();
 
+            //modifie les styles pour la sélection de rangée
+            $('#example tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                } else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
 
                 //clic modifier, envoie en get le id selectionné
                 $('#Modifier').click(function () {
 
                     if ($('#example tr.selected td:first').length > 0) {
-                        var idcont = $('#example tr.selected td:first').html();
-                        window.location.href = "http://localhost/app/app/views/updateReservation.php?id=" + idcont + "";
+                        var statutReservation = $('#example tr.selected td:last').html();
+                        if(statutReservation == "Inactif"){
+                            swal({
+                                title:"",
+                                text:"Vous devez sélectionner une réservation présentement active",
+                                type:"warning",
+                                allowOutsideClick : true
+                            });
+                        }else{
+                            var idcont = $('#example tr.selected td:first').html();
+                            window.location.href = "http://localhost/app/app/views/updateReservation.php?id=" + idcont + "";
+                        }
                     }else{
                         swal({
                                 title:"",

@@ -77,12 +77,13 @@ $listVehicule = new InfoVehicule();
                                       <div class="form-group label-static">
                                         <label class="control-label">Véhicule</label>
                                         <select class="form-control" id="vehicule" name="select" required></select>
+                                          <p id="vehiculeError" hidden style="color:red; font-size:11px;">Aucun véhicule n'est disponible pour la période choisie</p>
                                       </div>
                                     </div>
                                   </div>
                                   <div class="row"></div>
                                   <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
-                                  <input type="submit" id="cancel" class="btn pull-right" value="Annuler"
+                                  <input type="button" id="cancel" class="btn pull-right" value="Annuler"
                                          style="margin-right: 10px;">
                                   <div class="clearfix"></div>
                                 </form>
@@ -139,7 +140,13 @@ $listVehicule = new InfoVehicule();
             var dateFrom = removeTime(deuxDates[0]);
             var dateTo = removeTime(deuxDates[1]);
 
-            $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&datedebut=" + dateFrom);
+            $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&datedebut=" + dateFrom, function(){
+                if( !$('#vehicule').val() ){
+                    $('#vehiculeError').show();
+                }else{
+                    $('#vehiculeError').hide();
+                }
+            });
         });
 
         $("#vehicule").change(function () {

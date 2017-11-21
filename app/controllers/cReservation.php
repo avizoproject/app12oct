@@ -65,9 +65,9 @@ if(isset($_GET['mod'])==true){
             $reservation->updateObjectDynamically('statut','0',$_POST['selectReservation']);
 
 		}else{
-			//Error, the vehicule can't have a lower odometer than it did before.
+			$erreur = 'error';
+			echo $erreur;
 		}
-
 	}
 }
 ?>

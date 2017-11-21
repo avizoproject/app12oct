@@ -45,7 +45,7 @@ class controller_reservation
     }
     function ajoutReservation()
     {
-        $today = strtotime('-1 day'); //For some reason it needs - 1 day or it always thinks it's one day forward, might be a timezone thing.
+        $today = strtotime('today'); //For some reason it needs - 1 day or it always thinks it's one day forward, might be a timezone thing. //FIXED WITH MOMENT?
         $this->InfosReservation->setDate_debut($this->arrayReservation[0]);
         $this->InfosReservation->setDate_fin($this->arrayReservation[1]);
         $this->InfosReservation->setDate_emise(date('Y-m-d',$today));
@@ -57,7 +57,7 @@ class controller_reservation
 
     function ajoutReservationAdmin()
     {
-        $today = strtotime('-1 day'); //For some reason it needs - 1 day or it always thinks it's one day forward, might be a timezone thing.
+        $today = strtotime('today'); //For some reason it needs - 1 day or it always thinks it's one day forward, might be a timezone thing. //FIXED WITH MOMENT?
         $this->InfosReservation->setDate_debut($this->arrayReservation[0]);
         $this->InfosReservation->setDate_fin($this->arrayReservation[1]);
         $this->InfosReservation->setDate_emise(date('Y-m-d',$today));

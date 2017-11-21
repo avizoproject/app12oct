@@ -139,11 +139,12 @@ function getListReservations(){
 function getListReservationsUser($id){
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-    $results = $conn->query("SELECT reservation.statut,reservation.date_emise, reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM reservation LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE reservation.fk_utilisateur=" . $id . " ORDER BY reservation.date_emise");
+    $results = $conn->query("SELECT reservation.pk_reservation, reservation.statut,reservation.date_emise, reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM reservation LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE reservation.fk_utilisateur=" . $id . " ORDER BY reservation.date_emise");
 
     $allreservation = array();
     while ($row = $results->fetch_assoc()) {
         $allreservation[] = array(
+            'pk_reservation' => $row['pk_reservation'],
             'date_emise' => $row['date_emise'],
             'nom_marque' => $row['nom_marque'],
             'nom_modele' => $row['nom_modele'],
@@ -158,6 +159,8 @@ function getListReservationsUser($id){
     if($size != null){
         for($i=0;$i<$size;$i++){
             echo "<tr class=''>";
+            echo "<td class='hidden'>";
+            echo $allreservation[$i]['pk_reservation'] . "</td>";
             echo "<td>";
             echo $allreservation[$i]['date_emise'] . "</td>";
             echo "<td>";
@@ -187,12 +190,13 @@ function getListReservationsUser($id){
 function getSelectReservations($id_user){
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-    $results = $conn->query("SELECT reservation.date_debut, reservation.date_fin, reservation.pk_reservation, marque.nom_marque, modele.nom_modele FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE reservation.fk_utilisateur='" . $id_user . "' AND reservation.statut='1' ORDER BY reservation.date_fin ASC");
+    $results = $conn->query("SELECT vehicule.pk_vehicule, reservation.date_debut, reservation.date_fin, reservation.pk_reservation, marque.nom_marque, modele.nom_modele FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE reservation.fk_utilisateur='" . $id_user . "' AND reservation.statut='1' ORDER BY reservation.date_fin ASC");
 
     $allreservation = array();
     while ($row = $results->fetch_assoc()) {
         $allreservation[] = array(
             'pk_reservation' => $row['pk_reservation'],
+            'pk_vehicule' => $row['pk_vehicule'],
             'nom_marque' => $row['nom_marque'],
             'nom_modele' => $row['nom_modele'],
             'date_debut' => $row['date_debut'],
@@ -203,7 +207,10 @@ function getSelectReservations($id_user){
     $size= sizeof($allreservation);
     if($size != null){
         for($i=0;$i<$size;$i++){
-            echo "<option value='".$allreservation[$i]['pk_reservation']."'>".$allreservation[$i]['nom_marque'] . " ".$allreservation[$i]['nom_modele']. " " . $allreservation[$i]['date_debut'] . " à " . $allreservation[$i]['date_fin'] ."</option>";
+            $dateTo = date('d-m-Y', strtotime( $allreservation[$i]['date_debut'] ));
+            $dateFrom = date('d-m-Y', strtotime( $allreservation[$i]['date_fin'] ));
+
+            echo "<option value='".$allreservation[$i]['pk_reservation']."'>".$allreservation[$i]['nom_modele']. " #". $allreservation[$i]['pk_vehicule'] . " " . $dateTo . " à " . $dateFrom ."</option>";
         }
     }
     echo "</select>";
@@ -317,13 +324,14 @@ function getWeekEntretiensForUser($iduser, $type)
 {
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
     //SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','')); pour config (section SQL) GROUP BY dans phpMyAdmin
-    $results = $conn->query("SELECT reservation.pk_reservation, marque.nom_marque, modele.nom_modele, vehicule.odometre, entretien.odometre_entretien, entretien.fk_type_entretien, vehicule.odometre-entretien.odometre_entretien as difference FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN entretien ON reservation.fk_vehicule = entretien.fk_vehicule WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE()) AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE())  AND utilisateur.pk_utilisateur='". $iduser . "' AND reservation.statut !=0 AND entretien.fk_type_entretien = '". $type ."' GROUP BY vehicule.pk_vehicule  ORDER BY ( DATEDIFF( NOW(),entretien.date_entretien ) ) LIMIT 5");
+    $results = $conn->query("SELECT reservation.pk_reservation, vehicule.pk_vehicule, marque.nom_marque, modele.nom_modele, vehicule.odometre, entretien.odometre_entretien, entretien.fk_type_entretien, vehicule.odometre-entretien.odometre_entretien as difference FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN entretien ON reservation.fk_vehicule = entretien.fk_vehicule WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE()) AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE())  AND utilisateur.pk_utilisateur='". $iduser . "' AND reservation.statut !=0 AND entretien.fk_type_entretien = '". $type ."' GROUP BY vehicule.pk_vehicule  ORDER BY ( DATEDIFF( NOW(),entretien.date_entretien ) ) LIMIT 5");
 
 
     $allreservation = array();
     while ($row = $results->fetch_assoc()) {
         $allreservation[] = array(
             'pk_reservation' => $row['pk_reservation'],
+            'pk_vehicule' => $row['pk_vehicule'],
             'nom_marque' => $row['nom_marque'],
             'nom_modele' => $row['nom_modele'],
             'odometre' => $row['odometre'],

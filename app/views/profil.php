@@ -51,7 +51,7 @@ $currentUser = $listUser->getObjectFromDB($_SESSION['user']['pk_utilisateur']);
                                         <div class="col-md-12">
                                             <div class="form-group label-floating col-md-4">
                                                 <label class="control-label">Téléphone</label>
-                                                <input type="text" class="form-control" id="telephone" maxlength="12" value='<?php echo $currentUser['telephone']; ?>'>
+                                                <input type="tel" class="form-control" id="telephone" maxlength="12" value='<?php echo $currentUser['telephone']; ?>' pattern="\d{3}[ ]\d{3}[\-]\d{4}" title="Le format doit être 555 555-5555.">
                                             </div>
                                         </div>
                                     </div>
@@ -69,7 +69,7 @@ $currentUser = $listUser->getObjectFromDB($_SESSION['user']['pk_utilisateur']);
                                         <div class="col-md-12">
                                             <div class="form-group label-floating col-md-4">
                                                 <label class="control-label">Nouveau mot de passe</label>
-                                                <input type="password" class="form-control" id="password" maxlength="50">
+                                                <input type="password" class="form-control" id="password" maxlength="50" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" Title="Le mot de passe doit contenir au moins huit charactères, une minuscule, une majuscule, un chiffre.">
                                             </div>
                                         </div>
                                     </div>
@@ -78,7 +78,7 @@ $currentUser = $listUser->getObjectFromDB($_SESSION['user']['pk_utilisateur']);
                                         <div class="col-md-12">
                                             <div class="form-group label-floating col-md-4">
                                                 <label class="control-label">Confirmation du mot de passe</label>
-                                                <input type="password" class="form-control" id="passwordConfirmed" maxlength="50">
+                                                <input type="password" class="form-control" id="passwordConfirmed" maxlength="50" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" Title="Le mot de passe doit contenir au moins huit charactères, une minuscule, une majuscule, un chiffre.">
                                             </div>
                                         </div>
                                     </div>
@@ -163,13 +163,39 @@ $currentUser = $listUser->getObjectFromDB($_SESSION['user']['pk_utilisateur']);
                 var passwordConfirmed = $("#passwordConfirmed").val();
 
                 if ((passwordOld == passwordOldTrue) && telephone) {
-                    if ($("#password").val() != null && $("#password").val() === $("#passwordConfirmed").val()) {
-                        location.href = "../controllers/controller_users.php?profil=1&id=<?php echo $_SESSION['user']['pk_utilisateur']; ?>&telephone="+ telephone +"&password="+ password;
+                    if ($("#password").val() != null) {
+                        if($("#password").val() === $("#passwordConfirmed").val()){
+                            swal({
+                                title: "Modifié",
+                                text: "Les informations du profil ont été modifiées.",
+                                type: "success"
+                            }).then(function(){
+                                location.href = "../controllers/controller_users.php?profil=1&id=<?php echo $_SESSION['user']['pk_utilisateur']; ?>&telephone="+ telephone +"&password="+ password;
+                            })
+                        }else{
+                            swal({
+                                title: "Erreur",
+                                type: "error",
+                                text: "Le nouveau mot de passe n'est pas le même que sa confirmation.",
+                                showCancelButton: false,
+                                confirmButtonText: "Ok",
+                                animation : "pop",
+                                allowOutsideClick : true
+                            });
+                        }
                     } else {
                         location.href = "../controllers/controller_users.php?profil=1&id=<?php echo $_SESSION['user']['pk_utilisateur']; ?>&telephone="+ telephone;
                     }
                 } else {
-                    alert("Le mot de passe actuel entré est incorrect !!");
+                    swal({
+                        title: "Erreur",
+                        type: "error",
+                        text: "Veuillez entrer votre mot de passe actuel pour confirmation.",
+                        showCancelButton: false,
+                        confirmButtonText: "Ok",
+                        animation : "pop",
+                        allowOutsideClick : true
+                    });
                 }
             });
 

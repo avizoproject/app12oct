@@ -69,8 +69,6 @@ class controller_users
       if ($this->arrayUsers[4] != null) {
         $this->infosUsers->updateObjectDynamically("mot_de_passe", $this->arrayUsers[4], $id);
       }
-      header("Location: http://localhost/app/app/views/dashboard.php");
-      exit();
     }
 
     function getInfosUsers() {
@@ -93,5 +91,5 @@ if (isset($_GET['ajout'])) {
   $usersControl->profilUser($_GET['id']);
 }
 
-header("Location: http://localhost/app/app/views/user.php");
+header("Location: http://localhost/app/app/views/dashboard.php");
 ?>

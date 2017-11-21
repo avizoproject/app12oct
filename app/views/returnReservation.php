@@ -39,34 +39,23 @@ $gReservation = new InfoReservation();
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
-                            <form action="../controllers/cReservation.php?mod=3" method="post"
-                                  enctype="multipart/form-data">
-                                <fieldset>
-                                    <div class="col-md-6">
-                                        <div class="form-group label-static">
-                                            <label for='selectReservation'>Choisissez le véhicule à retourner</label>
-                                            <?php $gReservation->getSelectReservations($_SESSION['user']['pk_utilisateur']); ?>
-                                        </div>
+                            <form id="formRetour" action="" enctype="multipart/form-data" accept-charset="utf-8">
+                                <div class="col-md-6">
+                                    <div class="form-group label-static">
+                                        <label for='selectReservation'>Choisissez le véhicule à retourner</label>
+                                        <?php $gReservation->getSelectReservations($_SESSION['user']['pk_utilisateur']); ?>
                                     </div>
+                                </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group label-static">
-                                            <label for='odometer'>Kilométrage du véhicule</label>
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
+                                        <label for='odometer'>Kilométrage du véhicule</label>
 
-                                            <input type="text" size="40" maxlenght="50" class="form-control"
-                                                   id="odometer" name="odometer" placeholder="Kilométrage au retour"
-                                                   required>
-                                        </div>
+                                        <input type="text" size="40" maxlenght="50" class="form-control" id="odometer" name="odometer" required>
                                     </div>
-                                    <div class=" col-md-12 buttons">
-                                        <div class="centerbuttons">
-                                            <button class="btn btn-default" type="button" id="retour" name="Retour">
-                                                Annuler
-                                            </button>
-                                            <button class="btn btn-default" type="submit">Confirmer</button>
-                                        </div>
-                                    </div>
-                                </fieldset>
+                                </div>
+                                <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
+                                <input class="btn pull-right" type="button" id="retour" name="Retour" value="Annuler" style="margin-right: 10px;">
                             </form>
                         </div>
                     </div>
@@ -118,13 +107,73 @@ $gReservation = new InfoReservation();
 
         //clic consulter, envoie en get le id selectionné
         $('#retour').click(function () {
-            window.location.href = "http://localhost/app/app/views/reservationuser.php";
+            swal({
+                title: "",
+                text: "La retour va être annulé.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ok",
+                cancelButtonColor: "#969696",
+                cancelButtonText: "Annuler"
+            }).then(function () {
+                location.href = "../views/reservationuser.php";
+            })
         });
 
-        //clic envoyer
-        $('#Ajouter').click(function () {
-            window.location.href = "http://localhost/app/app/views/addReservation.php";
+        // this is the id of the form
+        $(document).on("click", "#confirmer", function(e) {
+            e.preventDefault();
+            if($('#odometer').val() != ""){
+                var url = "../controllers/cReservation.php?mod=3";
+
+                var form = $('#formRetour')[0];
+
+                var formData = new FormData(form);
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: formData, // serializes the form's elements.
+                    processData: false,
+                    contentType: false,
+                    success: function(data)
+                    {
+                        console.log(data);
+                        //If error is found inside of the return data.
+                        if(data.toLowerCase().indexOf('error')!= -1){
+                            swal({
+                                title: "Erreur",
+                                type: "error",
+                                text: "Le kilométrage de retour ne peut pas être plus petit que celui de départ.",
+                                showCancelButton: false,
+                                confirmButtonText: "Ok",
+                                animation : "pop",
+                                allowOutsideClick : true
+                            });
+                        }else{
+                            swal({
+                                title: "Retour",
+                                text: "Le retour du véhicule a été effectué.",
+                                type: "success"
+                            });
+                        }
+                    },error: function(trace){
+                        alert(trace);
+                    }
+                });
+            }else{
+                swal({
+                    title: "Erreur",
+                    type: "error",
+                    text: "Veuillez remplir le kilométrage de retour.",
+                    showCancelButton: false,
+                    confirmButtonText: "Ok",
+                    animation : "pop",
+                    allowOutsideClick : true
+                });
+            }
+
         });
+
 
         $('.navbar-header a').html("Retour de véhicule");
 

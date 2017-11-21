@@ -88,7 +88,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            <div class="col-md-7">
                                                <div class="form-group label-static">
                                                    <label class="control-label">Année</label>
-                                                   <input type='number' class='form-control' id='annee' maxlength='4' min='1950' value='<?php echo $currentVehicule['annee']; ?>' required>
+                                                   <input type='number' class='form-control' id='annee' maxlength="4" min="1950" pattern="\d{4}" value='<?php echo $currentVehicule['annee']; ?>' required>
                                                </div>
                                            </div>
                                        </div>
@@ -175,8 +175,8 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                        ?>
 
                                        <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
-                                       <input type="submit" id="supprimer" class="btn pull-right" value="Supprimer" style="margin-right: 10px;">
-                                       <input type="submit" id="cancel" class="btn pull-right" value="Annuler" style="margin-right: 10px;">
+                                       <input type="button" id="supprimer" class="btn pull-right" value="Supprimer" style="margin-right: 10px;">
+                                       <input type="button" id="cancel" class="btn pull-right" value="Annuler" style="margin-right: 10px;">
                                        <div class="clearfix"></div>
                                    </form>
                                  </div>
@@ -234,7 +234,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
           $("#modele").load("../controllers/getSelectModeles.php?idMarque=" + $('#marque').val() + "&idModele=0");
         });
 
-        $(document).on("click", "#confirmer", function(e) {
+        $(document).on("submit", "#formAjout", function(e) {
             e.preventDefault();
             var marque = $("#marque").val();
             var modele = $("#modele").val();
@@ -266,7 +266,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
              e.preventDefault();
              swal({
                  title: "",
-                 text: "Le véhicule va être supprimé.",
+                 text: "Le véhicule sera mis hors service de façon permanente. Êtes-vous certain de vouloir continuer?",
                  type: "warning",
                  showCancelButton: true,
                  confirmButtonText: "Ok",

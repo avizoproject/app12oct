@@ -93,6 +93,7 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
                                            <div class="form-group label-static">
                                              <label class="control-label">Véhicule</label>
                                              <select class="form-control" id="vehicule" name="select"></select>
+                                               <p id="vehiculeError" hidden style="color:red; font-size:11px;">Aucun véhicule n'est disponible pour la période choisie et/ou l'utilisateur choisi.</p>
                                            </div>
                                          </div>
                                        </div>
@@ -176,6 +177,8 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
 
  	<script type="text/javascript">
      	$(document).ready(function(){
+            var currentIDVehicule;
+
             function removeTime(dateStr) {
                 var parts = dateStr.split(" ");
                 return parts[0];
@@ -191,9 +194,9 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
                 var deuxfks = utilisateurfks.split(' ');
                 var fk_secteur = deuxfks[0];
 
-                $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom + "&secteur=" + fk_secteur);
-
-
+                $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom + "&secteur=" + fk_secteur, function(){
+                    currentIDVehicule = $("#vehicule").val().substr(0,$("#vehicule").val().indexOf(' '));
+                });
             });
 
 
@@ -202,14 +205,13 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
                 var deuxDates = date.split(' à ');
                 var dateFrom = removeTime(deuxDates[0]);
                 var dateTo = removeTime(deuxDates[1]);
-
                 var utilisateurfks = $("#user").val();
                 var deuxfks = utilisateurfks.split(' ');
                 var fk_secteur = deuxfks[0];
 
-
-
-                $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom + "&secteur=" + fk_secteur);
+                if ($("#acquisition").val()) {
+                    $("#acquisition").trigger("change");
+                }
             });
 
             $("#vehicule").change(function () {
@@ -226,26 +228,34 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
                 var deuxDates = date.split(' à ');
                 var dateFrom = removeTime(deuxDates[0]);
                 var dateTo = removeTime(deuxDates[1]);
-
                 var utilisateurfks = $("#user").val();
                 var deuxfks = utilisateurfks.split(' ');
                 var fk_secteur = deuxfks[0];
+                var found = false;
 
-                $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom + "&secteur=" + fk_secteur);
-            });
+                $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom + "&secteur=" + fk_secteur, function(){
+                    //Removes selected from any in the list in case the vehicule is still available during these dates
+                    $("#vehicule option:selected").prop("selected", false);
 
+                    //If the id of the vehicule selected previously is presented, it will be selected in the list.
 
-            $('#active').change(function(){
-                var date = $("#acquisition").val();
-                var deuxDates = date.split(' à ');
-                var dateFrom = removeTime(deuxDates[0]);
-                var dateTo = removeTime(deuxDates[1]);
+                    $("#vehicule option").each(function(){
+                        if($(this).val().substr(0,$(this).val().indexOf(' '))==currentIDVehicule){ // EDITED THIS LINE
+                            $(this).prop("selected","selected");
+                            found = true;
+                        }else{
+                            if(!found){
+                                $("#vehicule option:first").prop("selected", "selected");
+                            }
+                        }
+                    });
 
-                var utilisateurfks = $("#user").val();
-                var deuxfks = utilisateurfks.split(' ');
-                var fk_secteur = deuxfks[0];
-
-                $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom + "&secteur=" + fk_secteur);
+                    if( !$('#vehicule').val() ){
+                        $('#vehiculeError').show();
+                    }else{
+                        $('#vehiculeError').hide();
+                    }
+                });
             });
 
              $(document).on("click", "#confirmer", function(e) {

@@ -93,6 +93,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="form-group label-static">
                                           <label class="control-label">Véhicule</label>
                                           <select class="form-control" id="vehicule" name="select"></select>
+                                            <p id="vehiculeError" hidden style="color:red; font-size:9px;">Aucun véhicule n'est disponible pour la période choisie et/ou l'employé choisi.</p>
                                         </div>
                                       </div>
                                     </div>
@@ -109,7 +110,7 @@ $listVehicule = new InfoVehicule();
                                     </div>
 
                                     <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
-                                    <input type="submit" id="cancel" class="btn pull-right" value="Annuler" style="margin-right: 10px;">
+                                    <input type="button" id="cancel" class="btn pull-right" value="Annuler" style="margin-right: 10px;">
                                     <div class="clearfix"></div>
                                 </form>
                             </div>
@@ -186,7 +187,15 @@ $listVehicule = new InfoVehicule();
             var secteurETuser = user.split(' ');
             var secteur = secteurETuser[0];
 
-            $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&datedebut=" + dateFrom + "&secteur=" + secteur);
+            //loads the vehicules and callsbacks
+            $("#vehicule").load("../controllers/getSelectVehiculesAdmin.php?datefin=" + dateTo + "&datedebut=" + dateFrom + "&secteur=" + secteur, function(){
+                if( !$('#vehicule').val() ){
+                    $('#vehiculeError').show();
+                }else{
+                    $('#vehiculeError').hide();
+                }
+            });
+
 
             function removeTime(dateStr) {
                 var parts = dateStr.split(" ");
