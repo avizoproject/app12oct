@@ -474,5 +474,49 @@ function getDatesReservation($id_reservation){
         // close connection
         $conn->close();
     }
+
+    function getVehiculesPopulaires() {
+      include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+      $results = $conn->query('SELECT *, COUNT(reservation.pk_reservation) AS Total FROM reservation LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN marque ON modele.fk_marque = marque.pk_marque GROUP BY reservation.fk_vehicule ORDER BY Total DESC');
+
+      for ($i = 0; $i < 5; $i++) {
+        $row = $results->fetch_assoc();
+        if ($row['Total']) {
+          echo "<tr>";
+            echo "<td>".$row['nom_marque']." ".$row['nom_modele']." #".$row['pk_vehicule']."</td>";
+            echo "<td>".$row['Total']."</td>";
+          echo "</tr>";
+        }
+      }
+
+      // Frees the memory associated with a result
+      $results->free();
+
+      // close connection
+      $conn->close();
+    }
+
+    function getGrandsPromeneurs() {
+      include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+      $results = $conn->query('SELECT *, COUNT(reservation.pk_reservation) AS Total FROM reservation LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur GROUP BY reservation.fk_utilisateur');
+
+      for ($i = 0; $i < 5; $i++) {
+        $row = $results->fetch_assoc();
+        if ($row['Total']) {
+          echo "<tr>";
+            echo "<td>".$row['prenom']." ".$row['nom']."</td>";
+            echo "<td>".$row['Total']."</td>";
+          echo "</tr>";
+        }
+      }
+
+      // Frees the memory associated with a result
+      $results->free();
+
+      // close connection
+      $conn->close();
+    }
 }
 ?>
