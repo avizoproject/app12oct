@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2017 at 02:02 PM
+-- Generation Time: Nov 22, 2017 at 04:13 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -163,7 +163,7 @@ CREATE TABLE `facture` (
   `pk_facture` int(11) NOT NULL,
   `fk_entretien` int(11) NOT NULL,
   `montant_entretien` float DEFAULT NULL,
-  `photo` longblob
+  `photo` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -182,7 +182,7 @@ INSERT INTO `facture` (`pk_facture`, `fk_entretien`, `montant_entretien`, `photo
 CREATE TABLE `garage` (
   `pk_garage` int(11) NOT NULL,
   `nom` varchar(75) NOT NULL,
-  `telephone` bigint(20) NOT NULL,
+  `telephone` varchar(20) NOT NULL,
   `fk_statut_garage` int(11) NOT NULL,
   `Description` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -192,7 +192,7 @@ CREATE TABLE `garage` (
 --
 
 INSERT INTO `garage` (`pk_garage`, `nom`, `telephone`, `fk_statut_garage`, `Description`) VALUES
-(1, 'Relais Pneus & Mécanique', 8195667722, 1, '4255 Boul Bourque, Sherbrooke, QC J1N 1S4, Sherbrooke');
+(1, 'Relais Pneus & Mécanique', '8195667722', 1, '4255 Boul Bourque, Sherbrooke, QC J1N 1S4, Sherbrooke');
 
 -- --------------------------------------------------------
 
@@ -729,17 +729,17 @@ ALTER TABLE `alerte`
 -- AUTO_INCREMENT for table `couleur`
 --
 ALTER TABLE `couleur`
-  MODIFY `pk_couleur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `pk_couleur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `entretien`
 --
 ALTER TABLE `entretien`
-  MODIFY `pk_entretien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `pk_entretien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 --
 -- AUTO_INCREMENT for table `facture`
 --
 ALTER TABLE `facture`
-  MODIFY `pk_facture` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `pk_facture` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `garage`
 --
@@ -823,7 +823,7 @@ ALTER TABLE `entretien`
 -- Constraints for table `facture`
 --
 ALTER TABLE `facture`
-  ADD CONSTRAINT `facture_ibfk_1` FOREIGN KEY (`fk_entretien`) REFERENCES `entretien` (`pk_entretien`);
+  ADD CONSTRAINT `facture_ibfk_1` FOREIGN KEY (`fk_entretien`) REFERENCES `entretien` (`pk_entretien`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `garage`
