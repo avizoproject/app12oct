@@ -270,7 +270,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                             }
                         }
 
-                        var nom_vehicule = reservations[index]['nom_marque'] + " " + reservations[index]['nom_modele'];
+                        var nom_vehicule = reservations[index]['nom_modele'] + "  #" + reservations[index]['fk_vehicule'];
                         var nom_user = reservations[index]['prenom'] + " " + reservations[index]['nom'].charAt(0);
                         var dated = removeTime(splitDate(reservations[index]['date_debut'])[2]) + "-" + removeTime(splitDate(reservations[index]['date_fin'])[2]) + " " + getTime(splitDate(reservations[index]['date_fin'])[2])[0] + "h";
                         var pk = reservations[index]['pk_reservation'] + "";

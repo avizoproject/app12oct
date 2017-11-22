@@ -15,7 +15,7 @@ $gEntretiens = new InfoReservation();
 ?>
 <html>
 <head>
-    <title>Avizo - Entretiens de véhicules</title>
+    <title>Avizo - Entretiens à venir</title>
     <?php
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
     session_start();
@@ -41,16 +41,16 @@ $gEntretiens = new InfoReservation();
                         <div class="card">
                             <div class="card-header" data-background-color="blue">
                                 <h4 class="title">Entretiens</h4>
-                                <p class="category">Sélectionnez un véhicule avant de choisir une action</p>
+                                <p class="category">Liste des entretiens importants à venir</p>
                             </div>
                             <div class="card-content table-responsive">
                                 <table class="table" id="example">
                                     <thead class="text-primary">
                                         <th class="hidden">ID Entretien</th>
-                                        <th>Vehicule</th>
-                                        <th>Odomètre entretien</th>
-                                        <th>Odomètre</th>
-                                        <th>Nom entretien</th>
+                                        <th>Véhicule</th>
+                                        <th>Dernier entretien</th>
+                                        <th>Odomètre actuel</th>
+                                        <th>Entretien à faire</th>
                                     </thead>
                                     <tbody>
                                     <?php $gEntretiens->getListEntretiens(1);
@@ -64,8 +64,6 @@ $gEntretiens = new InfoReservation();
                     <div class="">
                         <div class="margin-button2">
                             <button class="btn btn-default" name="Ajouter" id="Ajouter">Ajouter</button>
-                            <button class="btn btn-default" name="Modifier" id="Modifier">Modifier</button>
-                            <button class="btn btn-default" name="Consulter" id="Consulter">Consulter</button>
                             <button class="btn btn-default" name="Historique" id="Historique">Historique</button>
                         </div>
                     </div>
@@ -127,45 +125,16 @@ $gEntretiens = new InfoReservation();
             }
         });
 
-        //clic modifier, envoie en get le id selectionné
-        $('#Modifier').click(function () {
 
-            if ($('#example tr.selected td:first').length > 0) {
-                var idcont = $('#example tr.selected td:first').html();
-                window.location.href = "updateVehiculeadmin.php?id=" + idcont;
-            } else {
-                swal({
-                    title: "",
-                    text: "Vous devez sélectionner un véhicule",
-                    type: "warning",
-                    allowOutsideClick: true
-                });
-            }
-        });
 
         //clic modifier, envoie en get le id selectionné
         $('#Historique').click(function () {
                 window.location.href = "entretienHistorique.php";
         });
 
-        //clic consulter, envoie en get le id selectionné
-        $('#Consulter').click(function () {
-            if ($('#example tr.selected td:first').length > 0) {
-                var idcons = $('#example tr.selected td:first').html();
-                window.location.href = "viewVehicule.php?id=" + idcons;
-            } else {
-                swal({
-                    title: "",
-                    text: "Vous devez sélectionner un véhicule",
-                    type: "warning",
-                    allowOutsideClick: true
-                });
-            }
-        });
-
         //clic ajouter
         $('#Ajouter').click(function () {
-            window.location.href = "addVehiculeadmin.php";
+            window.location.href = "addEntretiensadmin.php";
         });
 
         var activePage = window.location.href;
@@ -187,7 +156,7 @@ $gEntretiens = new InfoReservation();
 
         });
 
-        $('.navbar-header a').html("Véhicules");
+        $('.navbar-header a').html("Entretiens");
     });
 
 
