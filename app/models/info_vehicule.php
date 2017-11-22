@@ -160,9 +160,9 @@ AND v.fk_secteur = '" . $user_sector . "'");
 
     while ($row = $results->fetch_assoc()) {
         if ($row['pk_vehicule']==$pkvehicule){
-            echo "<option selected value='" . $row['pk_vehicule'] . " " . $row['fk_secteur'] ."'>" . $row['nom_marque'] . " " . $row['nom_modele'] . "</option>";
+            echo "<option selected value='" . $row['pk_vehicule'] . " " . $row['fk_secteur'] ."'>" . $row['nom_marque'] . " " . $row['nom_modele'] . " #".$row['pk_vehicule'] ."</option>";
         }else {
-            echo "<option value='" . $row['pk_vehicule'] . " " . $row['fk_secteur'] ."'>" . $row['nom_marque'] . " " . $row['nom_modele'] . "</option>";
+            echo "<option value='" . $row['pk_vehicule'] . " " . $row['fk_secteur'] ."'>" . $row['nom_marque'] . " " . $row['nom_modele'] . " #".$row['pk_vehicule'] ."</option>";
         }
     }
 
@@ -331,6 +331,30 @@ function getSecteurSelect($id) {
 
   while ($row = $results->fetch_assoc()) {
     echo "<option selected>" . $row['nom_secteur'] . "</option>";
+  }
+
+  // Frees the memory associated with a result
+  $results->free();
+
+  // close connection
+  $conn->close();
+}
+
+function getVehiculesCouteux() {
+  include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+  $results = $conn->query('SELECT *, SUM(entretien.cout_entretien) AS Cout FROM entretien LEFT JOIN vehicule ON entretien.fk_vehicule = vehicule.pk_vehicule LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN marque ON modele.fk_marque = marque.pk_marque GROUP BY entretien.fk_vehicule ORDER BY Cout DESC');
+
+  for ($i = 0; $i < 5; $i++) {
+    $row = $results->fetch_assoc();
+    $coutsKM = $row['Cout'] / $row['odometre'];
+    if ($row['Cout']) {
+      echo "<tr>";
+        echo "<td>".$row['nom_marque']." ".$row['nom_modele']." #".$row['pk_vehicule']."</td>";
+        echo "<td>".$row['Cout']." $</td>";
+        echo "<td>".round($coutsKM, 3)." $</td>";
+      echo "</tr>";
+    }
   }
 
   // Frees the memory associated with a result

@@ -6,7 +6,7 @@
         <button type='button' class='close' data-dismiss='modal'>&times;</button>
           <h3>Historique des réservations</h3>
          <div class='card-content table-responsive'>
-            <table id='example' class='table'>
+            <table class="table table-striped table-bordered nowrap" id='example'>
                 <thead class='text-primary'>
                 <th>Date émise</th>
                 <th>Véhicule</th>

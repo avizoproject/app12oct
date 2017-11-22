@@ -66,7 +66,10 @@ class controller_vehicules
 
     function suppVehicule($id)
     {
-      $this->infosVehicules->updateObjectDynamically("fk_statut", 2, $id);
+        $today = strtotime('today'); //For some reason it needs - 1 day or it always thinks it's one day forward, might be a timezone thing.
+        echo $today;
+        $this->infosVehicules->updateObjectDynamically("fk_statut", 2, $id);
+        $this->infosVehicules->updateObjectDynamically("date_mise_hors_service", date('Y-m-d',$today), $id);
     }
 
     function getInfosVehicules() {

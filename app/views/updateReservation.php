@@ -134,6 +134,8 @@
 
  	<script type="text/javascript">
      	$(document).ready(function(){
+            var currentIDVehicule; //keeps the current vehicule in memory if it exists
+
             function removeTime(dateStr) {
                 var parts = dateStr.split(" ");
                 return parts[0];
@@ -146,8 +148,9 @@
                 var dateFrom = removeTime(deuxDates[0]);
                 var dateTo = removeTime(deuxDates[1]);
 
-                $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom);
-
+                $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom, function(){
+                    currentIDVehicule = $("#vehicule").val().substr(0,$("#vehicule").val().indexOf(' '));
+                });
             });
 
              //si les dates sont changées, reload vehicules dispos
@@ -156,8 +159,25 @@
                  var deuxDates = date.split(' à ');
                  var dateFrom = removeTime(deuxDates[0]);
                  var dateTo = removeTime(deuxDates[1]);
+                 var found = false;
 
-                 $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom);
+                 $("#vehicule").load("../controllers/getSelectVehicules.php?datefin=" + dateTo + "&id=<?php echo $_GET['id']; ?>&datedebut=" + dateFrom, function(){
+                     //Removes selected from any in the list in case the vehicule is still available during these dates
+                     $("#vehicule option:selected").prop("selected", false);
+
+                     //If the id of the vehicule selected previously is presented, it will be selected in the list.
+
+                     $("#vehicule option").each(function(){
+                         if($(this).val().substr(0,$(this).val().indexOf(' '))==currentIDVehicule){ // EDITED THIS LINE
+                             $(this).prop("selected","selected");
+                             found = true;
+                         }else{
+                             if(!found){
+                                 $("#vehicule option:first").prop("selected", "selected");
+                             }
+                         }
+                     });
+                 });
              });
 
              $("#vehicule").change(function () {

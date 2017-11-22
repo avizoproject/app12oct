@@ -139,11 +139,12 @@ function getListReservations(){
 function getListReservationsUser($id){
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-    $results = $conn->query("SELECT reservation.statut,reservation.date_emise, reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM reservation LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE reservation.fk_utilisateur=" . $id . " ORDER BY reservation.date_emise");
+    $results = $conn->query("SELECT reservation.pk_reservation, reservation.statut,reservation.date_emise, reservation.pk_reservation, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM reservation LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE reservation.fk_utilisateur=" . $id . " ORDER BY reservation.date_emise");
 
     $allreservation = array();
     while ($row = $results->fetch_assoc()) {
         $allreservation[] = array(
+            'pk_reservation' => $row['pk_reservation'],
             'date_emise' => $row['date_emise'],
             'nom_marque' => $row['nom_marque'],
             'nom_modele' => $row['nom_modele'],
@@ -158,6 +159,8 @@ function getListReservationsUser($id){
     if($size != null){
         for($i=0;$i<$size;$i++){
             echo "<tr class=''>";
+            echo "<td class='hidden'>";
+            echo $allreservation[$i]['pk_reservation'] . "</td>";
             echo "<td>";
             echo $allreservation[$i]['date_emise'] . "</td>";
             echo "<td>";
@@ -187,12 +190,13 @@ function getListReservationsUser($id){
 function getSelectReservations($id_user){
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-    $results = $conn->query("SELECT reservation.date_debut, reservation.date_fin, reservation.pk_reservation, marque.nom_marque, modele.nom_modele FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE reservation.fk_utilisateur='" . $id_user . "' AND reservation.statut='1' ORDER BY reservation.date_fin ASC");
+    $results = $conn->query("SELECT vehicule.pk_vehicule, reservation.date_debut, reservation.date_fin, reservation.pk_reservation, marque.nom_marque, modele.nom_modele FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE reservation.fk_utilisateur='" . $id_user . "' AND reservation.statut='1' ORDER BY reservation.date_fin ASC");
 
     $allreservation = array();
     while ($row = $results->fetch_assoc()) {
         $allreservation[] = array(
             'pk_reservation' => $row['pk_reservation'],
+            'pk_vehicule' => $row['pk_vehicule'],
             'nom_marque' => $row['nom_marque'],
             'nom_modele' => $row['nom_modele'],
             'date_debut' => $row['date_debut'],
@@ -203,7 +207,10 @@ function getSelectReservations($id_user){
     $size= sizeof($allreservation);
     if($size != null){
         for($i=0;$i<$size;$i++){
-            echo "<option value='".$allreservation[$i]['pk_reservation']."'>".$allreservation[$i]['nom_marque'] . " ".$allreservation[$i]['nom_modele']. " " . $allreservation[$i]['date_debut'] . " à " . $allreservation[$i]['date_fin'] ."</option>";
+            $dateTo = date('d-m-Y', strtotime( $allreservation[$i]['date_debut'] ));
+            $dateFrom = date('d-m-Y', strtotime( $allreservation[$i]['date_fin'] ));
+
+            echo "<option value='".$allreservation[$i]['pk_reservation']."'>".$allreservation[$i]['nom_modele']. " #". $allreservation[$i]['pk_vehicule'] . " " . $dateTo . " à " . $dateFrom ."</option>";
         }
     }
     echo "</select>";
@@ -214,6 +221,140 @@ function getSelectReservations($id_user){
     // close connection
     $conn->close();
 }
+
+
+//Liste des entretiens à faire côté admin
+    function getListEntretiens($type)
+    {
+
+
+        include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+        //SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','')); pour config (section SQL) GROUP BY dans phpMyAdmin
+        $results = $conn->query("SELECT vehicule.pk_vehicule,entretien.pk_entretien , modele.nom_modele,couleur.nom_couleur, vehicule.odometre, entretien.odometre_entretien, type_entretien.nom, vehicule.odometre-entretien.odometre_entretien as difference FROM couleur LEFT JOIN vehicule ON couleur.pk_couleur=vehicule.fk_couleur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN entretien ON vehicule.pk_vehicule = entretien.fk_vehicule LEFT JOIN type_entretien ON type_entretien.pk_type_entretien=entretien.fk_type_entretien WHERE entretien.fk_type_entretien = ".$type." GROUP BY vehicule.pk_vehicule ORDER BY ( DATEDIFF( NOW(),entretien.date_entretien ) )");
+
+
+        $allentretiens = array();
+        while ($row = $results->fetch_assoc()) {
+            $allentretiens[] = array(
+                'pk_vehicule' => $row['pk_vehicule'],
+                'pk_entretien' => $row['pk_entretien'],
+                'nom_couleur' => $row['nom_couleur'],
+                'nom_modele' => $row['nom_modele'],
+                'odometre' => $row['odometre'],
+                'odometre_entretien' => $row['odometre_entretien'],
+                'nom' => $row['nom'],
+                'difference' => $row['difference']
+            );
+        }
+
+
+
+
+        $size = sizeof($allentretiens);
+        if ($size != null) {
+            for ($i = 0; $i < $size; $i++) {
+                if ($type === 1) {
+                    if ($allentretiens[$i]['difference']>=7000) {
+                        echo "<tr class=''>";
+                        echo "<td class='hidden'>";
+                        echo $allentretiens[$i]['pk_entretien'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['nom_modele'] . " " . $allentretiens[$i]['nom_couleur'] . " #" . $allentretiens[$i]['pk_vehicule'] . " </td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['odometre_entretien'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['odometre'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['nom'] . "</td>";
+                        echo "</tr>";
+                    }
+                }
+                if ($type === 2) {
+                    if ($allentretiens[$i]['difference']>=50000) {
+                        echo "<tr class=''>";
+                        echo "<td class='hidden'>";
+                        echo $allentretiens[$i]['pk_entretien'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['nom_modele'] . " " . $allentretiens[$i]['nom_couleur'] . " #" . $allentretiens[$i]['pk_vehicule'] . " </td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['odometre_entretien'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['odometre'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['nom'] . "</td>";
+                        echo "</tr>";
+                    }
+                }
+                if ($type == 5) {
+                    if ($allentretiens[$i]['difference']>=75000) {
+                        echo "<tr class=''>";
+                        echo "<td class='hidden'>";
+                        echo $allentretiens[$i]['pk_entretien'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['nom_modele'] . " " . $allentretiens[$i]['nom_couleur'] . " #" . $allentretiens[$i]['pk_vehicule'] . " </td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['odometre_entretien'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['odometre'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['nom'] . "</td>";
+                        echo "</tr>";
+                    }
+                }
+            }
+        }
+
+        return json_encode($allentretiens);
+    }
+
+
+function getHistoriqueEntretiens($type)
+{
+
+
+    include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+//SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','')); pour config (section SQL) GROUP BY dans phpMyAdmin
+    $results = $conn->query("SELECT vehicule.pk_vehicule,modele.nom_modele ,couleur.nom_couleur,entretien.pk_entretien, type_entretien.nom, odometre_entretien, entretien.date_entretien, cout_entretien FROM entretien JOIN vehicule on entretien.fk_vehicule=vehicule.pk_vehicule JOIN modele ON modele.pk_modele=vehicule.fk_modele JOIN couleur ON couleur.pk_couleur=vehicule.fk_couleur JOIN type_entretien ON type_entretien.pk_type_entretien=entretien.fk_type_entretien
+group by pk_entretien");
+
+
+    $allentretiens = array();
+    while ($row = $results->fetch_assoc()) {
+        $allentretiens[] = array(
+            'pk_vehicule' => $row['pk_vehicule'],
+            'pk_entretien' => $row['pk_entretien'],
+            'nom' => $row['nom'],
+            'date_entretien' => $row['date_entretien'],
+            'nom_couleur' => $row['nom_couleur'],
+            'nom_modele' => $row['nom_modele'],
+            'cout_entretien' => $row['cout_entretien'],
+            'odometre_entretien' => $row['odometre_entretien'],
+        );
+    }
+
+
+    $size = sizeof($allentretiens);
+    if ($size != null) {
+        for ($i = 0; $i < $size; $i++) {
+            echo "<tr class=''>";
+            echo "<td class='hidden'>";
+            echo $allentretiens[$i]['pk_entretien'] . "</td>";
+            echo "<td>";
+            echo $allentretiens[$i]['nom_modele'] . " " . $allentretiens[$i]['nom_couleur'] . " #" . $allentretiens[$i]['pk_vehicule'] . " </td>";
+            echo "<td>";
+            echo $allentretiens[$i]['odometre_entretien'] . "</td>";
+            echo "<td>";
+            echo $allentretiens[$i]['date_entretien'] . "</td>";
+            echo "<td>";
+            echo $allentretiens[$i]['nom'] . "</td>";
+            echo "<td>";
+            echo $allentretiens[$i]['cout_entretien'] . "</td>";
+            echo "</tr>";
+        }
+    }
+}
+
+
 
 function getReservationsNamesCalendar(){
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
@@ -317,13 +458,14 @@ function getWeekEntretiensForUser($iduser, $type)
 {
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
     //SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','')); pour config (section SQL) GROUP BY dans phpMyAdmin
-    $results = $conn->query("SELECT reservation.pk_reservation, marque.nom_marque, modele.nom_modele, vehicule.odometre, entretien.odometre_entretien, entretien.fk_type_entretien, vehicule.odometre-entretien.odometre_entretien as difference FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN entretien ON reservation.fk_vehicule = entretien.fk_vehicule WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE()) AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE())  AND utilisateur.pk_utilisateur='". $iduser . "' AND reservation.statut !=0 AND entretien.fk_type_entretien = '". $type ."' GROUP BY vehicule.pk_vehicule  ORDER BY ( DATEDIFF( NOW(),entretien.date_entretien ) ) LIMIT 5");
+    $results = $conn->query("SELECT reservation.pk_reservation, vehicule.pk_vehicule, marque.nom_marque, modele.nom_modele, vehicule.odometre, entretien.odometre_entretien, entretien.fk_type_entretien, vehicule.odometre-entretien.odometre_entretien as difference FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN entretien ON reservation.fk_vehicule = entretien.fk_vehicule WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE()) AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE())  AND utilisateur.pk_utilisateur='". $iduser . "' AND reservation.statut !=0 AND entretien.fk_type_entretien = '". $type ."' GROUP BY vehicule.pk_vehicule  ORDER BY ( DATEDIFF( NOW(),entretien.date_entretien ) ) LIMIT 5");
 
 
     $allreservation = array();
     while ($row = $results->fetch_assoc()) {
         $allreservation[] = array(
             'pk_reservation' => $row['pk_reservation'],
+            'pk_vehicule' => $row['pk_vehicule'],
             'nom_marque' => $row['nom_marque'],
             'nom_modele' => $row['nom_modele'],
             'odometre' => $row['odometre'],
@@ -465,6 +607,50 @@ function getDatesReservation($id_reservation){
 
         // close connection
         $conn->close();
+    }
+
+    function getVehiculesPopulaires() {
+      include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+      $results = $conn->query('SELECT *, COUNT(reservation.pk_reservation) AS Total FROM reservation LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN marque ON modele.fk_marque = marque.pk_marque GROUP BY reservation.fk_vehicule ORDER BY Total DESC');
+
+      for ($i = 0; $i < 5; $i++) {
+        $row = $results->fetch_assoc();
+        if ($row['Total']) {
+          echo "<tr>";
+            echo "<td>".$row['nom_marque']." ".$row['nom_modele']." #".$row['pk_vehicule']."</td>";
+            echo "<td>".$row['Total']."</td>";
+          echo "</tr>";
+        }
+      }
+
+      // Frees the memory associated with a result
+      $results->free();
+
+      // close connection
+      $conn->close();
+    }
+
+    function getGrandsPromeneurs() {
+      include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+      $results = $conn->query('SELECT *, COUNT(reservation.pk_reservation) AS Total FROM reservation LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur GROUP BY reservation.fk_utilisateur');
+
+      for ($i = 0; $i < 5; $i++) {
+        $row = $results->fetch_assoc();
+        if ($row['Total']) {
+          echo "<tr>";
+            echo "<td>".$row['prenom']." ".$row['nom']."</td>";
+            echo "<td>".$row['Total']."</td>";
+          echo "</tr>";
+        }
+      }
+
+      // Frees the memory associated with a result
+      $results->free();
+
+      // close connection
+      $conn->close();
     }
 }
 ?>

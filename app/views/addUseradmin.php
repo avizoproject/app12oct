@@ -54,7 +54,7 @@ $listUser = new InfoUser();
                                         <div class="col-md-6">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Nom</label>
-                                                <input type="text" class="form-control" id="nom" maxlength="100">
+                                                <input type="text" class="form-control" id="nom" maxlength="100" required>
                                             </div>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@ $listUser = new InfoUser();
                                         <div class="col-md-6">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Prénom</label>
-                                                <input type="text" class="form-control" id="prenom" maxlength="100">
+                                                <input type="text" class="form-control" id="prenom" maxlength="100" required>
                                             </div>
                                         </div>
                                     </div>
@@ -73,7 +73,7 @@ $listUser = new InfoUser();
                                             <div class="form-group label-static">
                                                 <label class="control-label">Téléphone</label>
                                                 <input type="text" class="form-control" id="telephone"
-                                                       placeholder="000 000-0000" maxlength="12">
+                                                       placeholder="000 000-0000" maxlength="12" pattern="\d{3}[ ]\d{3}[\-]\d{4}" title="Le format doit être 555 555-5555." required>
                                             </div>
                                         </div>
                                     </div>
@@ -82,7 +82,7 @@ $listUser = new InfoUser();
                                         <div class="col-md-6">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Courriel</label>
-                                                <input type="text" class="form-control" id="courriel" maxlength="150">
+                                                <input type="text" class="form-control" id="courriel" maxlength="150" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" title="Le format doit resemblé à: exemple@exemple.ca" required>
                                             </div>
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@ $listUser = new InfoUser();
                                             <div class="form-group label-static">
                                                 <label class="control-label">Mot de passe</label>
                                                 <input type="password" class="form-control" id="password"
-                                                       maxlength="50">
+                                                       maxlength="50" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" Title="Le mot de passe doit contenir au moins huit charactères, une minuscule, une majuscule, un chiffre." required>
                                             </div>
                                         </div>
                                     </div>
@@ -102,7 +102,7 @@ $listUser = new InfoUser();
                                             <div class="form-group label-static">
                                                 <label class="control-label">Confirmation du mot de passe</label>
                                                 <input type="password" class="form-control" id="passwordConfirmed"
-                                                       maxlength="50">
+                                                       maxlength="50" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" Title="Le mot de passe doit contenir au moins huit charactères, une minuscule, une majuscule, un chiffre." required>
                                             </div>
                                         </div>
                                     </div>
@@ -132,7 +132,7 @@ $listUser = new InfoUser();
                                     </div>
 
                                     <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
-                                    <input type="submit" id="cancel" class="btn pull-right" value="Annuler"
+                                    <input type="button" id="cancel" class="btn pull-right" value="Annuler"
                                            style="margin-right: 10px;">
                                     <div class="clearfix"></div>
                                 </form>
@@ -184,24 +184,12 @@ $listUser = new InfoUser();
 
         $("#secteur").load("../controllers/getSelectSecteurs.php");
 
-        $(document).on("click", "#confirmer", function (e) {
+        $(document).on("submit", "#formAjout", function (e) {
             e.preventDefault();
             var nom = $("#nom").val();
             var prenom = $("#prenom").val();
             var telephone = $("#telephone").val();
-            if (/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test($("#courriel").val())) {
-                var courriel = $("#courriel").val();
-            } else {
-              swal({
-                  title: "",
-                  text: "Le courriel entré est invalide",
-                  type: "error",
-                  showCancelButton: false,
-                  confirmButtonText: "Ok",
-                  cancelButtonColor: "#969696",
-                  cancelButtonText: "Annuler"
-              })
-            }
+            var courriel = $("#courriel").val();
             var secteur = $("#secteur").val();
 
             if ($("#password").val() === $("#passwordConfirmed").val()) {

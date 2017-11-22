@@ -20,7 +20,7 @@ echo "<div class='sidebar' data-color='blue' data-image='../img/sidebar-1.jpg'>
 	                    </a>
 	                </li>
 	                <li id='entretien' >
-	                    <a href='entretien.php'>
+	                    <a href='entretienAdmin.php'>
 	                        <i class='material-icons'>library_books</i>
 	                        <p>Entretiens</p>
 	                    </a>

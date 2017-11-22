@@ -22,7 +22,7 @@ echo "<meta charset='utf-8' />
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href='../css/demo.css' rel='stylesheet' />
     
-    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <!--  CSS for Tables   -->
     <link rel='stylesheet' href='../css/table.css'>
     <link rel='stylesheet' href='../css/flatpickr.css'>
     
