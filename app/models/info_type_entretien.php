@@ -51,14 +51,20 @@ function setDescription($description) {
     $this->description = $description;
 }
 
-    function getSelectTypeEntretien() {
+    function getSelectTypeEntretien($pk) {
         include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
         $results = $conn->query("SELECT * FROM type_entretien");
 
-        echo "<option value=''>Sélectionnez un entretien...</option>";
+        if ($pk == null) {
+            echo "<option>Sélectionnez un entretien...</option>";
+        }
         while ($row = $results->fetch_assoc()) {
-            echo "<option value='" . $row['pk_type_entretien'] . "'>" . $row['nom'] . "</option>";
+            if ($row['pk_type_entretien'] == $pk){
+                echo "<option selected value='" . $row['pk_type_entretien'] . "'>" . $row['nom'] . "</option>";
+            }else {
+                echo "<option value='" . $row['pk_type_entretien'] . "'>" . $row['nom'] . "</option>";
+            }
         }
 
         // Frees the memory associated with a result

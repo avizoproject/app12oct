@@ -61,14 +61,20 @@ class InfoGarage extends InfoModel
         $this->fk_statut_garage = $fk_statut_garage;
     }
 
-    function getSelectGarage() {
+    function getSelectGarage($pk) {
         include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
         $results = $conn->query("SELECT * FROM garage");
+        if ($pk == null){
+            echo "<option>Sélectionnez un garage...</option>";
+        }
 
-        echo "<option value=''>Sélectionnez un garage...</option>";
         while ($row = $results->fetch_assoc()) {
+            if($row['pk_garage'] == $pk){
+                echo "<option selected value='" . $row['pk_garage'] . "'>" . $row['nom'] . "</option>";
+            }else {
                 echo "<option value='" . $row['pk_garage'] . "'>" . $row['nom'] . "</option>";
+            }
         }
 
         // Frees the memory associated with a result

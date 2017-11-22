@@ -138,7 +138,8 @@ $listVehicule = new InfoVehicule();
                                                 <script>
                                                     flatpickr(".selector", {});
                                                     document.getElementById("acquisition").flatpickr({
-                                                        mode: "single"
+                                                        mode: "single",
+                                                        disableMobile:true
                                                     });
                                                 </script>
                                             </div>

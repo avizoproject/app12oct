@@ -14,7 +14,7 @@ Dernière modification:
 session_start();
 
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_entretien.php';
-
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_invoice.php';
 
 
 /**
@@ -22,18 +22,24 @@ require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_entretien.php';
  */
 class controller_entretien
 {
-    private $arrayReservation = array();
+
     private $InfosEntretien;
+    private $InfosFacture;
 
     function __construct()
     {
-        $this->arrayEntretien[0] = isset($_GET['date']) ? $_GET['date'] : null;
-        $this->arrayEntretien[1] = isset($_GET['type']) ? $_GET['type'] : null;
-        $this->arrayEntretien[2] = isset($_GET['vehiculefk']) ? $_GET['vehiculefk'] : null;
-        $this->arrayEntretien[3] = isset($_GET['garage']) ? $_GET['garage'] : null;
-        $this->arrayEntretien[4] = isset($_GET['cout']) ? $_GET['cout'] : null;
-        $this->arrayEntretien[5] = isset($_GET['description']) ? $_GET['description'] : null;   $this->InfosEntretien = new InfoEntretien();
-        $this->arrayEntretien[6] = isset($_GET['odometre']) ? $_GET['odometre'] : null;
+
+
+        $this->arrayEntretien[0] = isset($_POST['date']) ? $_POST['date'] : null;
+        $this->arrayEntretien[1] = isset($_POST['type']) ? $_POST['type'] : null;
+        $this->arrayEntretien[2] = isset($_POST['vehiculefk']) ? $_POST['vehiculefk'] : null;
+        $this->arrayEntretien[3] = isset($_POST['garage']) ? $_POST['garage'] : null;
+        $this->arrayEntretien[4] = isset($_POST['cout']) ? $_POST['cout'] : null;
+        $this->arrayEntretien[5] = isset($_POST['description']) ? $_POST['description'] : null;
+        $this->arrayEntretien[6] = isset($_POST['odometre']) ? $_POST['odometre'] : null;
+
+        $this->InfosEntretien = new InfoEntretien();
+        $this->InfosFacture = new InfoInvoice();
     }
     function ajoutEntretien()
     {
@@ -44,27 +50,36 @@ class controller_entretien
         $this->InfosEntretien->setCout_entretien($this->arrayEntretien[4]);
         $this->InfosEntretien->setDescription($this->arrayEntretien[5]);
         $this->InfosEntretien->setOdometre_entretien($this->arrayEntretien[6]);
-        $this->InfosEntretien->addDBObject();
+        $this->InfosFacture->setFk_entretien($this->InfosEntretien->addDBObject());
+        $this->InfosFacture->setMontant_entretien($this->arrayEntretien[4]);
+        $this->InfosFacture->setPhoto($this->addImage());
+        $this->InfosFacture->addDBObject();
     }
 
-    /*function modReservation($id)
+    function modEntretien($id)
     {
-        $object = $this->InfosEntretien->getObjectFromDB($id); //Gets the date of the reservation (should think to add a date modified for the reservation, maybe.)
+        $facture = $this->InfosFacture->findFactureByFk($id);
 
-        $this->InfosEntretien->setPk_reservation($id);
-        $this->InfosEntretien->setDate_debut($this->arrayEntretien[0]);
-        $this->InfosEntretien->setDate_fin($this->arrayEntretien[1]);
-        $this->InfosEntretien->setDate_emise($object['date_emise']);
+        $this->InfosEntretien->setPk_entretien($id);
+        $this->InfosEntretien->setDate_entretien($this->arrayEntretien[0]);
+        $this->InfosEntretien->setFk_type_entretien($this->arrayEntretien[1]);
         $this->InfosEntretien->setFk_vehicule($this->arrayEntretien[2]);
-        $this->InfosEntretien->setFk_utilisateur($this->arrayEntretien[3]);
-        $this->InfosEntretien->setStatut($this->arrayEntretien[4]);
+        $this->InfosEntretien->setFk_garage($this->arrayEntretien[3]);
+        $this->InfosEntretien->setCout_entretien($this->arrayEntretien[4]);
+        $this->InfosEntretien->setDescription($this->arrayEntretien[5]);
+        $this->InfosEntretien->setOdometre_entretien($this->arrayEntretien[6]);
         $this->InfosEntretien->updateDBObject();
+        $this->InfosFacture->setPk_facture($facture["pk_facture"]);
+        $this->InfosFacture->setFk_entretien($id);
+        $this->InfosFacture->setMontant_entretien($this->arrayEntretien[4]);
+        $this->InfosFacture->setPhoto($this->addImage($id));
+        $this->InfosFacture->updateDBObject();
     }
 
-    function suppReservation($id)
+    function suppEntretien($id)
     {
-      $this->InfosEntretien->updateObjectDynamically("statut", 0, $id);
-    }*/
+      $this->InfosEntretien->deleteDBObject($id); //cascade sur facture à ajouter !!!!
+    }
 
     function getInfosEntretien(){
         return $this->InfosEntretien;
@@ -74,9 +89,60 @@ class controller_entretien
         return $this->arrayEntretien;
     }
 
+    function addImage($pkentretien){
+        if ($pkentretien == null){
+            $pkentretien = $this->InfosFacture->getFk_entretien();
+        }
+
+        $target_dir = $_SERVER["DOCUMENT_ROOT"] . "/app/app/img/";
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+
+        // Check if image file is a actual image or fake image
+        if(isset($_POST["submit"])) {
+            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+            if($check !== false) {
+                $uploadOk = 1;
+            } else {
+                $uploadOk = 0;
+            }
+        }
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            chmod($target_file,0755); //Change the file permissions if allowed
+            unlink($target_file); //remove the file
+        }
+        // Check file size
+        if ($_FILES["fileToUpload"]["size"] > 500000) {
+            $uploadOk = 0;
+        }
+        // Allow certain file formats
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+            && $imageFileType != "gif" ) {
+            $uploadOk = 0;
+        }
+        // If everything is ok, upload file
+        if ($uploadOk == 1) {
+            if (!$_GET['mod']) {
+                move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . "facture" . strval($pkentretien) . ".jpg");
+                return "img/facture" . strval($pkentretien) . ".jpg";
+            } else {
+                move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . "facture" . strval($pkentretien) . ".jpg");
+                return "img/facture" . strval($pkentretien) . ".jpg";
+            }
+        }
+}
+
 }
 $entControl = new controller_entretien();
-$entControl->ajoutEntretien();
+if (isset($_GET["supp"])){
+    $entControl->suppEntretien($_GET["id"]);
+}elseif (isset($_GET["mod"])){
+    $entControl->modEntretien($_GET["id"]);
+}else {
+    $entControl->ajoutEntretien();
+}
 
 
     if ($_SESSION['admin'] === 1)

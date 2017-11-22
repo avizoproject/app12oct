@@ -50,6 +50,21 @@ class InfoInvoice extends InfoModel
     function setMontant_entretien($montant_entretien) {
         $this->montant_entretien = $montant_entretien;
     }
+
+    function findFactureByFk($fkentretien){
+        include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+        $results = $conn->query("SELECT pk_facture, photo FROM facture WHERE facture.fk_entretien='" . $fkentretien ."'");
+
+        $allreservation = array();
+        while ($row = $results->fetch_assoc()) {
+            $allreservation[] = array(
+                'pk_facture' => $row['pk_facture'],
+                'photo' => $row['photo']
+            );
+        }
+        return $allreservation[0]['photo'];
+    }
 }
 
 ?>

@@ -12,15 +12,23 @@
  ******************************************************************/
 session_start();
 error_reporting(0);
-require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_reservation.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_entretien.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_vehicule.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_user.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_invoice.php';
+
 $listVehicule = new InfoVehicule();
+$gEntretien = new InfoEntretien();
+$currentEntretien = $gEntretien->getObjectFromDB($_GET["id"]);
+$date = date_create($currentEntretien['date_entretien']);
+$date = date_format($date,"Y-m-d");
+$gFacture = new InfoInvoice();
 
 
 ?>
 <html>
 <head>
-    <title>Avizo - Ajout d'un entretien</title>
+    <title>Avizo - Modification d'un entretien</title>
     <?php
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
     session_start();
@@ -58,7 +66,7 @@ $listVehicule = new InfoVehicule();
 
                                                 <label class="control-label">Choisissez un garage</label>
                                                 <select class="form-control" id="garage" name="garage"
-                                                        required></select><label onclick="ajoutGarage()" style="float: right;">Ajouter</label>
+                                                        required disabled></select>
                                             </div>
                                         </div>
                                     </div>
@@ -67,16 +75,17 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Date</label>
-
                                                 <input type='text' size="40" class="flatpickr form-control"
                                                        name="date" id='acquisition'
-                                                       placeholder="Choisissez la date de l'entretien" required>
+                                                       placeholder="Choisissez la date de l'entretien" required disabled>
 
                                                 <script src="../js/flatpickr.js" type="text/javascript"></script>
                                                 <script>
                                                     flatpickr(".selector", {});
                                                     document.getElementById("acquisition").flatpickr({
-                                                        disableMobile:true
+                                                        disableMobile:true,
+                                                        defaultDate: <?php echo "'".$currentEntretien['date_entretien']."'";  ?>
+
                                                     });
                                                 </script>
 
@@ -90,7 +99,7 @@ $listVehicule = new InfoVehicule();
 
                                                 <label class="control-label">Choisissez un véhicule</label>
                                                 <select class="form-control" id="vehicule" name="vehiculefk"
-                                                        required></select>
+                                                        required disabled></select>
                                             </div>
                                         </div>
                                     </div>
@@ -101,7 +110,7 @@ $listVehicule = new InfoVehicule();
 
                                                 <label class="control-label">Choisissez le type d'entretien</label>
                                                 <select class="form-control" id="type" name="type"
-                                                        required></select>
+                                                        required disabled></select>
                                             </div>
                                         </div>
                                     </div>
@@ -110,7 +119,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Coût</label>
-                                                <input type="number" class="form-control" id="cout" name="cout" maxlength="7" required></select>
+                                                <input type="number" class="form-control" id="cout" name="cout" maxlength="7" value="<?php echo $currentEntretien["cout_entretien"] ?>" required disabled></select>
                                             </div>
                                         </div>
                                     </div>
@@ -119,7 +128,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Odomètre</label>
-                                                <input type="number" class="form-control" id="odometre" name="odometre" required></select>
+                                                <input type="number" class="form-control" id="odometre" name="odometre" value="<?php echo $currentEntretien["odometre_entretien"] ?>" required disabled></select>
                                             </div>
                                         </div>
                                     </div>
@@ -128,7 +137,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Description</label>
-                                                <textarea class="form-control" id="description" name="description"></textarea>
+                                                <textarea class="form-control" id="description" name="description" disabled><?php echo $currentEntretien["description"] ?></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -137,14 +146,16 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Facture</label>
-                                                <input type="file" class="btn-default" name="fileToUpload" id="fileToUpload">
+                                                <?php
+                                                    echo '<img src="../'. $gFacture->findFactureByFk($currentEntretien["pk_entretien"]) .'"/>';
+                                                ?>
+
                                             </div>
                                         </div>
                                     </div>
 
-                                    <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
-                                    <input type="submit" id="cancel" class="btn pull-right" value="Annuler"
-                                           style="margin-right: 10px;">
+                                    <input type="submit" id="modifier" class="btn pull-right margin-button2" value="Modifier">
+                                    <button id="retour" class="btn pull-right">Retour</button>
                                     <div class="clearfix"></div>
                                 </form>
                             </div>
@@ -191,71 +202,24 @@ $listVehicule = new InfoVehicule();
 <script src="../js/demo.js"></script>
 
 <script type="text/javascript">
-    function ajoutGarage() {
-        var name = prompt("Veuillez entrer le nom du garage :");
-        var tel = prompt("Veuillez entrer le téléphone du garage :");
-        var desc = prompt("Veuillez entrer l'adresse du garage :");
-        if (name != null && name != "" && tel != null && tel != "" && desc != null && desc != "") {
-            location.href = "../controllers/ajouterGarage.php?nom=" + name + "&tel=" + tel + "&desc=" + desc;
-        }
-    }
+
 
     $(document).ready(function () {
-        $("#vehicule").load("../controllers/getSelectReservationsWeek.php");
-        $("#garage").load("../controllers/getSelectGarage.php");
-        $("#type").load("../controllers/getSelectTypeEntretien.php");
+        $("#vehicule").load("../controllers/getSelectAllVehicules.php?pk=<?php echo $currentEntretien["fk_vehicule"]; ?>");
+        $("#garage").load("../controllers/getSelectGarage.php?pk=<?php echo $currentEntretien["fk_garage"]; ?>");
+        $("#type").load("../controllers/getSelectTypeEntretien.php?pk=<?php echo $currentEntretien["fk_type_entretien"]; ?>");
 
-        $(document).on("click", "#confirmer", function (e) {
+
+
+        $(document).on("click", "#retour", function (e) {
             e.preventDefault();
-            swal({
-                title: "Ajouté",
-                text: "L'entretien a bien été ajoutée.",
-                type: "success"
-            }).then(function () {
-
-                var form = $("#formAjout")[0];
-
-                var formData = new FormData(form);
-
-                $.ajax({method : "POST",
-                    url : "../controllers/controller_entretien.php",
-                    data : formData,
-                    async: false,
-                    cache: false,
-                    contentType: false,
-
-                    processData: false,
-                    beforeSend : function() {
-                        // TO INSERT - loading animation
-                    },
-                    success : function(response) {
-                        console.log(response);
-                        window.location.replace("http://localhost/app/app/views/entretien.php");
-                    },
-                    error : function(xhr, title, trace) {
-                        console.error(title + trace);
-                    }
-
-
-                });
-
-
-            })
+            location.href = "http://localhost/app/app/views/entretien.php";
         });
 
-        $(document).on("click", "#cancel", function (e) {
+        $(document).on("click", "#modifier", function(e) {
             e.preventDefault();
-            swal({
-                title: "",
-                text: "L'entretien va être annulée.",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Ok",
-                cancelButtonColor: "#969696",
-                cancelButtonText: "Annuler"
-            }).then(function () {
-                location.href = "../views/entretien.php";
-            })
+            location.href = "http://localhost/app/app/views/updateEntretiensAdmin.php?id=<?php echo $_GET["id"]; ?>";
+
         });
 
         $('.navbar-header a').html("Ajout d'entretien");
@@ -306,7 +270,11 @@ if ($_SESSION['loggedIn'] == false) {
     '</script>';
 }
 
-
+if ($_SESSION['admin'] == 2) {
+    echo '<script type="text/javascript">',
+    'noAuthorize();',
+    '</script>';
+}
 
 ?>
 <script src="../js/calendarModernizr.js"></script>

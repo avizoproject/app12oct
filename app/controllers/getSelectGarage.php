@@ -8,6 +8,9 @@
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_garage.php';
 session_start();
 $gGarage = new InfoGarage();
-
-$gGarage->getSelectGarage();
+if (isset($_GET['pk'])) {
+    $gGarage->getSelectGarage($_GET['pk']);
+}else{
+    $gGarage->getSelectGarage();
+}
 ?>

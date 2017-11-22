@@ -67,3 +67,8 @@
 .page-signin{
     margin-top:20px;
 }
+
+.facture{
+    max-width:300px;
+    max-height:300px;
+}

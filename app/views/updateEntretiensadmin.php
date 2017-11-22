@@ -12,15 +12,23 @@
  ******************************************************************/
 session_start();
 error_reporting(0);
-require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_reservation.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_entretien.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_vehicule.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_user.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_invoice.php';
+
 $listVehicule = new InfoVehicule();
+$gEntretien = new InfoEntretien();
+$currentEntretien = $gEntretien->getObjectFromDB($_GET["id"]);
+$date = date_create($currentEntretien['date_entretien']);
+$date = date_format($date,"Y-m-d");
+$gFacture = new InfoInvoice();
 
 
 ?>
 <html>
 <head>
-    <title>Avizo - Ajout d'un entretien</title>
+    <title>Avizo - Modification d'un entretien</title>
     <?php
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
     session_start();
@@ -67,7 +75,6 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Date</label>
-
                                                 <input type='text' size="40" class="flatpickr form-control"
                                                        name="date" id='acquisition'
                                                        placeholder="Choisissez la date de l'entretien" required>
@@ -76,7 +83,9 @@ $listVehicule = new InfoVehicule();
                                                 <script>
                                                     flatpickr(".selector", {});
                                                     document.getElementById("acquisition").flatpickr({
-                                                        disableMobile:true
+                                                        disableMobile:true,
+                                                        defaultDate: <?php echo "'".$currentEntretien['date_entretien']."'";  ?>
+
                                                     });
                                                 </script>
 
@@ -110,7 +119,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Coût</label>
-                                                <input type="number" class="form-control" id="cout" name="cout" maxlength="7" required></select>
+                                                <input type="number" class="form-control" id="cout" name="cout" maxlength="7" value="<?php echo $currentEntretien["cout_entretien"] ?>" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -119,7 +128,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Odomètre</label>
-                                                <input type="number" class="form-control" id="odometre" name="odometre" required></select>
+                                                <input type="number" class="form-control" id="odometre" name="odometre" value="<?php echo $currentEntretien["odometre_entretien"] ?>" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -128,7 +137,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Description</label>
-                                                <textarea class="form-control" id="description" name="description"></textarea>
+                                                <textarea class="form-control" id="description" name="description"><?php echo $currentEntretien["description"] ?></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -137,12 +146,16 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Facture</label>
+                                                <?php
+                                                    echo '<img src="../'. $gFacture->findFactureByFk($currentEntretien["pk_entretien"]) .'"/>';
+                                                ?>
                                                 <input type="file" class="btn-default" name="fileToUpload" id="fileToUpload">
                                             </div>
                                         </div>
                                     </div>
 
                                     <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
+                                    <input type="submit" id="supprimer" class="btn pull-right" value="Supprimer" style="margin-right: 10px;">
                                     <input type="submit" id="cancel" class="btn pull-right" value="Annuler"
                                            style="margin-right: 10px;">
                                     <div class="clearfix"></div>
@@ -201,43 +214,43 @@ $listVehicule = new InfoVehicule();
     }
 
     $(document).ready(function () {
-        $("#vehicule").load("../controllers/getSelectReservationsWeek.php");
-        $("#garage").load("../controllers/getSelectGarage.php");
-        $("#type").load("../controllers/getSelectTypeEntretien.php");
+        $("#vehicule").load("../controllers/getSelectAllVehicules.php?pk=<?php echo $currentEntretien["fk_vehicule"]; ?>");
+        $("#garage").load("../controllers/getSelectGarage.php?pk=<?php echo $currentEntretien["fk_garage"]; ?>");
+        $("#type").load("../controllers/getSelectTypeEntretien.php?pk=<?php echo $currentEntretien["fk_type_entretien"]; ?>");
 
         $(document).on("click", "#confirmer", function (e) {
             e.preventDefault();
             swal({
                 title: "Ajouté",
-                text: "L'entretien a bien été ajoutée.",
+                text: "L'entretien a bien été modifié.",
                 type: "success"
             }).then(function () {
 
-                var form = $("#formAjout")[0];
+                    var form = $("#formAjout")[0];
+                    var id = <?php echo $currentEntretien["pk_entretien"]; ?>;
+                    var formData = new FormData(form);
 
-                var formData = new FormData(form);
+                    $.ajax({method : "POST",
+                        url : "../controllers/controller_entretien.php?mod=1&id=" + id,
+                        data : formData,
+                        async: false,
+                        cache: false,
+                        contentType: false,
 
-                $.ajax({method : "POST",
-                    url : "../controllers/controller_entretien.php",
-                    data : formData,
-                    async: false,
-                    cache: false,
-                    contentType: false,
-
-                    processData: false,
-                    beforeSend : function() {
-                        // TO INSERT - loading animation
-                    },
-                    success : function(response) {
-                        console.log(response);
-                        window.location.replace("http://localhost/app/app/views/entretien.php");
-                    },
-                    error : function(xhr, title, trace) {
-                        console.error(title + trace);
-                    }
+                        processData: false,
+                        beforeSend : function() {
+                            // TO INSERT - loading animation
+                        },
+                        success : function(response) {
+                            console.log(response);
+                            window.location.replace("http://localhost/app/app/views/entretien.php");
+                        },
+                        error : function(xhr, title, trace) {
+                            console.error(title + trace);
+                        }
 
 
-                });
+                    });
 
 
             })
@@ -247,7 +260,7 @@ $listVehicule = new InfoVehicule();
             e.preventDefault();
             swal({
                 title: "",
-                text: "L'entretien va être annulée.",
+                text: "Les changements vont être annulés.",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Ok",
@@ -255,6 +268,21 @@ $listVehicule = new InfoVehicule();
                 cancelButtonText: "Annuler"
             }).then(function () {
                 location.href = "../views/entretien.php";
+            })
+        });
+
+        $(document).on("click", "#supprimer", function(e) {
+            e.preventDefault();
+            swal({
+                title: "",
+                text: "L'entretien va être supprimé.",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ok",
+                cancelButtonColor: "#969696",
+                cancelButtonText: "Annuler"
+            }).then(function () {
+                location.href = "../controllers/controller_entretien.php?supp=1&id=<?php echo $_GET['id']; ?>";
             })
         });
 
@@ -306,7 +334,11 @@ if ($_SESSION['loggedIn'] == false) {
     '</script>';
 }
 
-
+if ($_SESSION['admin'] == 2) {
+    echo '<script type="text/javascript">',
+    'noAuthorize();',
+    '</script>';
+}
 
 ?>
 <script src="../js/calendarModernizr.js"></script>

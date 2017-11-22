@@ -201,7 +201,7 @@ $listVehicule = new InfoVehicule();
     }
 
     $(document).ready(function () {
-        $("#vehicule").load("../controllers/getSelectReservationsWeek.php");
+        $("#vehicule").load("../controllers/getSelectAllVehicules.php");
         $("#garage").load("../controllers/getSelectGarage.php");
         $("#type").load("../controllers/getSelectTypeEntretien.php");
 
@@ -213,31 +213,31 @@ $listVehicule = new InfoVehicule();
                 type: "success"
             }).then(function () {
 
-                var form = $("#formAjout")[0];
+                    var form = $("#formAjout")[0];
 
-                var formData = new FormData(form);
+                    var formData = new FormData(form);
 
-                $.ajax({method : "POST",
-                    url : "../controllers/controller_entretien.php",
-                    data : formData,
-                    async: false,
-                    cache: false,
-                    contentType: false,
+                    $.ajax({method : "POST",
+                        url : "../controllers/controller_entretien.php",
+                        data : formData,
+                        async: false,
+                        cache: false,
+                        contentType: false,
 
-                    processData: false,
-                    beforeSend : function() {
-                        // TO INSERT - loading animation
-                    },
-                    success : function(response) {
-                        console.log(response);
-                        window.location.replace("http://localhost/app/app/views/entretien.php");
-                    },
-                    error : function(xhr, title, trace) {
-                        console.error(title + trace);
-                    }
+                        processData: false,
+                        beforeSend : function() {
+                            // TO INSERT - loading animation
+                        },
+                        success : function(response) {
+                            console.log(response);
+                            window.location.replace("http://localhost/app/app/views/entretien.php");
+                        },
+                        error : function(xhr, title, trace) {
+                            console.error(title + trace);
+                        }
 
 
-                });
+                    });
 
 
             })
@@ -306,7 +306,11 @@ if ($_SESSION['loggedIn'] == false) {
     '</script>';
 }
 
-
+if ($_SESSION['admin'] == 2) {
+    echo '<script type="text/javascript">',
+    'noAuthorize();',
+    '</script>';
+}
 
 ?>
 <script src="../js/calendarModernizr.js"></script>

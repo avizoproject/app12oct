@@ -8,6 +8,9 @@
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_type_entretien.php';
 session_start();
 $gType = new InfoTypeEntretien();
-
-$gType->getSelectTypeEntretien();
+if (isset($_GET['pk'])) {
+    $gType->getSelectTypeEntretien($_GET['pk']);
+}else{
+    $gType->getSelectTypeEntretien();
+}
 ?>

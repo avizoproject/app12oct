@@ -175,6 +175,33 @@ AND v.fk_secteur = '" . $user_sector . "'");
     //return $allvehicule;
 }
 
+    function getListVehicule ($pk)
+    {
+        include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+
+        $results = $conn->query("SELECT v.fk_secteur, v.pk_vehicule, m.nom_marque, o.nom_modele FROM vehicule v LEFT JOIN marque m ON v.fk_marque=m.pk_marque LEFT JOIN modele o ON o.pk_modele = v.fk_modele");
+
+        if ($pk == null) {
+            echo "<option>Sélectionnez un véhicule...</option>";
+        }
+        while ($row = $results->fetch_assoc()) {
+            if ($row['pk_vehicule'] == $pk){
+                echo "<option selected value='" . $row['pk_vehicule'] . "'>" . $row['nom_marque'] . " " . $row['nom_modele'] . " #" . $row['pk_vehicule'] . "</option>";
+            }else {
+                echo "<option value='" . $row['pk_vehicule'] . "'>" . $row['nom_marque'] . " " . $row['nom_modele'] . " #" . $row['pk_vehicule'] . "</option>";
+            }
+
+        }
+        // Frees the memory associated with a result
+        $results->free();
+
+        // close connection
+        $conn->close();
+
+        //return $allvehicule;
+    }
+
 function getVehiculeReservation ($id_reservation){
   include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
