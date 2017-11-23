@@ -54,12 +54,12 @@ $gReservation = new InfoReservation();
                                         <input type="text" size="40" maxlenght="50" class="form-control" id="odometer" name="odometer" required>
                                     </div>
                                 </div>
-                                <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
-                                <input class="btn pull-right" type="button" id="retour" name="Retour" value="Annuler" style="margin-right: 10px;">
+                                <br><br><br><br><br><br>
+                                <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer" style="margin-right:10px;margin-bottom:10px;">
+                                <input class="btn pull-right" type="button" id="retour" name="Retour" value="Annuler" style="margin-right:10px;">
                             </form>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -87,9 +87,6 @@ $gReservation = new InfoReservation();
 <!--  Notifications Plugin    -->
 <script src="../js/bootstrap-notify.js"></script>
 
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-
 <!-- Material Dashboard javascript methods -->
 <script src="../js/material-dashboard.js"></script>
 
@@ -109,7 +106,7 @@ $gReservation = new InfoReservation();
         $('#retour').click(function () {
             swal({
                 title: "",
-                text: "La retour va être annulé.",
+                text: "Le retour va être annulé.",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Ok",

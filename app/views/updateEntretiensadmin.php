@@ -53,7 +53,7 @@ $gFacture = new InfoInvoice();
                     <div class="col-md-8 center-block float-none">
                         <div class="card">
                             <div class="card-header" data-background-color="blue">
-                                <h4 class="title">Formulaire d'ajout</h4>
+                                <h4 class="title">Formulaire de modification</h4>
                                 <p class="category">Tous les champs sont obligatoires.</p>
                             </div>
                             <div class="card-content">
@@ -119,7 +119,7 @@ $gFacture = new InfoInvoice();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Coût</label>
-                                                <input type="number" class="form-control" id="cout" name="cout" maxlength="7" value="<?php echo $currentEntretien["cout_entretien"] ?>" required></select>
+                                                <input type="number" class="form-control" id="cout" name="cout" maxlength="7" min="0" value="<?php echo $currentEntretien["cout_entretien"] ?>" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -128,7 +128,7 @@ $gFacture = new InfoInvoice();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Odomètre</label>
-                                                <input type="number" class="form-control" id="odometre" name="odometre" value="<?php echo $currentEntretien["odometre_entretien"] ?>" required></select>
+                                                <input type="number" class="form-control" id="odometre" name="odometre" maxlength="20" min="0" value="<?php echo $currentEntretien["odometre_entretien"] ?>" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -147,7 +147,11 @@ $gFacture = new InfoInvoice();
                                             <div class="form-group label-static">
                                                 <label class="control-label">Facture</label>
                                                 <?php
+                                                  if ($gFacture->findFactureByFk($currentEntretien["pk_entretien"])) {
                                                     echo '<img src="../'. $gFacture->findFactureByFk($currentEntretien["pk_entretien"]) .'"/>';
+                                                  } else {
+                                                    echo 'Aucune facture enregistrée';
+                                                  }
                                                 ?>
                                                 <input type="file" class="btn-default" name="fileToUpload" id="fileToUpload">
                                             </div>
@@ -194,9 +198,6 @@ $gFacture = new InfoInvoice();
 <!--  Notifications Plugin    -->
 <script src="../js/bootstrap-notify.js"></script>
 
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-
 <!-- Material Dashboard javascript methods -->
 <script src="../js/material-dashboard.js"></script>
 
@@ -206,10 +207,14 @@ $gFacture = new InfoInvoice();
 <script type="text/javascript">
     function ajoutGarage() {
         var name = prompt("Veuillez entrer le nom du garage :");
-        var tel = prompt("Veuillez entrer le téléphone du garage :");
-        var desc = prompt("Veuillez entrer l'adresse du garage :");
-        if (name != null && name != "" && tel != null && tel != "" && desc != null && desc != "") {
-            location.href = "../controllers/ajouterGarage.php?nom=" + name + "&tel=" + tel + "&desc=" + desc;
+        if (name != null) {
+          var tel = prompt("Veuillez entrer le téléphone du garage :");
+          if (tel != null) {
+            var desc = prompt("Veuillez entrer l'adresse du garage :");
+            if (name != null && name != "" && tel != null && tel != "" && desc != null && desc != "") {
+                location.href = "../controllers/ajouterGarage.php?nom=" + name + "&tel=" + tel + "&desc=" + desc;
+            }
+          }
         }
     }
 
@@ -243,7 +248,7 @@ $gFacture = new InfoInvoice();
                         },
                         success : function(response) {
                             console.log(response);
-                            window.location.replace("http://localhost/app/app/views/entretien.php");
+                            window.location.replace("http://localhost/app/app/views/entretienAdmin.php");
                         },
                         error : function(xhr, title, trace) {
                             console.error(title + trace);
@@ -267,7 +272,7 @@ $gFacture = new InfoInvoice();
                 cancelButtonColor: "#969696",
                 cancelButtonText: "Annuler"
             }).then(function () {
-                location.href = "../views/entretien.php";
+                location.href = "../views/entretienAdmin.php";
             })
         });
 
@@ -286,7 +291,7 @@ $gFacture = new InfoInvoice();
             })
         });
 
-        $('.navbar-header a').html("Ajout d'entretien");
+        $('.navbar-header a').html("Modification d'entretien");
 
         function removeTime(dateStr) {
             var parts = dateStr.split(" ");

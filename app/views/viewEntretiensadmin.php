@@ -28,7 +28,7 @@ $gFacture = new InfoInvoice();
 ?>
 <html>
 <head>
-    <title>Avizo - Modification d'un entretien</title>
+    <title>Avizo - Consultation d'un entretien</title>
     <?php
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
     session_start();
@@ -53,8 +53,7 @@ $gFacture = new InfoInvoice();
                     <div class="col-md-8 center-block float-none">
                         <div class="card">
                             <div class="card-header" data-background-color="blue">
-                                <h4 class="title">Formulaire d'ajout</h4>
-                                <p class="category">Tous les champs sont obligatoires.</p>
+                                <h4 class="title">Consultation d'un entretien</h4>
                             </div>
                             <div class="card-content">
 
@@ -147,9 +146,12 @@ $gFacture = new InfoInvoice();
                                             <div class="form-group label-static">
                                                 <label class="control-label">Facture</label>
                                                 <?php
+                                                  if ($gFacture->findFactureByFk($currentEntretien["pk_entretien"])) {
                                                     echo '<img src="../'. $gFacture->findFactureByFk($currentEntretien["pk_entretien"]) .'"/>';
+                                                  } else {
+                                                    echo 'Aucune facture enregistrée';
+                                                  }
                                                 ?>
-
                                             </div>
                                         </div>
                                     </div>
@@ -192,9 +194,6 @@ $gFacture = new InfoInvoice();
 <!--  Notifications Plugin    -->
 <script src="../js/bootstrap-notify.js"></script>
 
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-
 <!-- Material Dashboard javascript methods -->
 <script src="../js/material-dashboard.js"></script>
 
@@ -213,7 +212,7 @@ $gFacture = new InfoInvoice();
 
         $(document).on("click", "#retour", function (e) {
             e.preventDefault();
-            location.href = "http://localhost/app/app/views/entretien.php";
+            location.href = "http://localhost/app/app/views/entretienAdmin.php";
         });
 
         $(document).on("click", "#modifier", function(e) {
@@ -222,7 +221,7 @@ $gFacture = new InfoInvoice();
 
         });
 
-        $('.navbar-header a').html("Ajout d'entretien");
+        $('.navbar-header a').html("Consultation d'entretien");
 
         function removeTime(dateStr) {
             var parts = dateStr.split(" ");

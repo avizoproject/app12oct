@@ -112,12 +112,9 @@ $currentUser = $listUser->getObjectFromDB($_SESSION['user']['pk_utilisateur']);
     <!--  Sweet alert -->
     <script src="../js/sweetalert2.min.js"></script>
     <script src="../js/sweetalert2.js"></script>
-        
+
 	<!--  Notifications Plugin    -->
 	<script src="../js/bootstrap-notify.js"></script>
-
-	<!--  Google Maps Plugin    -->
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 
 	<!-- Material Dashboard javascript methods -->
 	<script src="../js/material-dashboard.js"></script>
