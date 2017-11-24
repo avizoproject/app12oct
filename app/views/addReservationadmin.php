@@ -281,7 +281,6 @@ function erreurNonCon(){
 	</script>
 
         <?php
-        var_dump($_SESSION);
         if($_SESSION['loggedIn']==false){
                 echo '<script type="text/javascript">',
                       'erreurNonCon();',
