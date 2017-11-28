@@ -230,7 +230,7 @@ function getSelectReservations($id_user){
 
         include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
         //SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','')); pour config (section SQL) GROUP BY dans phpMyAdmin
-        $results = $conn->query("SELECT vehicule.pk_vehicule,entretien.pk_entretien , modele.nom_modele,couleur.nom_couleur, vehicule.odometre, entretien.odometre_entretien, type_entretien.nom, vehicule.odometre-entretien.odometre_entretien as difference FROM couleur LEFT JOIN vehicule ON couleur.pk_couleur=vehicule.fk_couleur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN entretien ON vehicule.pk_vehicule = entretien.fk_vehicule LEFT JOIN type_entretien ON type_entretien.pk_type_entretien=entretien.fk_type_entretien WHERE entretien.fk_type_entretien = ".$type." GROUP BY vehicule.pk_vehicule ORDER BY ( DATEDIFF( NOW(),entretien.date_entretien ) )");
+        $results = $conn->query("SELECT vehicule.pk_vehicule,entretien.pk_entretien ,utilisateur.prenom, entretien.fk_utilisateur, modele.nom_modele,couleur.nom_couleur, vehicule.odometre, entretien.odometre_entretien, type_entretien.nom, vehicule.odometre-entretien.odometre_entretien as difference FROM couleur LEFT JOIN vehicule ON couleur.pk_couleur=vehicule.fk_couleur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN entretien ON vehicule.pk_vehicule = entretien.fk_vehicule LEFT JOIN type_entretien ON type_entretien.pk_type_entretien=entretien.fk_type_entretien LEFT JOIN utilisateur ON entretien.fk_utilisateur = utilisateur.pk_utilisateur WHERE entretien.fk_type_entretien = ".$type." GROUP BY vehicule.pk_vehicule ORDER BY ( DATEDIFF( NOW(),entretien.date_entretien ) )");
 
 
         $allentretiens = array();
@@ -243,7 +243,9 @@ function getSelectReservations($id_user){
                 'odometre' => $row['odometre'],
                 'odometre_entretien' => $row['odometre_entretien'],
                 'nom' => $row['nom'],
-                'difference' => $row['difference']
+                'difference' => $row['difference'],
+                'prenom' => $row['prenom'],
+                'fk_utilisateur' => $row['fk_utilisateur']
             );
         }
 
@@ -266,6 +268,8 @@ function getSelectReservations($id_user){
                         echo $allentretiens[$i]['odometre'] . "</td>";
                         echo "<td>";
                         echo $allentretiens[$i]['nom'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['prenom'] . "  #" . $allentretiens[$i]['fk_utilisateur']. "</td>";
                         echo "</tr>";
                     }
                 }
