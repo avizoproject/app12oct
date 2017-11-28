@@ -52,6 +52,7 @@ $gEntretiens = new InfoReservation();
                                     <th>Date entretien</th>
                                     <th>Type d'entretien</th>
                                     <th>Coût de l'entretien</th>
+                                    <th>Entretien fait par</th>
                                     </thead>
                                     <tbody>
                                     <?php $gEntretiens->getHistoriqueEntretiens();?>
