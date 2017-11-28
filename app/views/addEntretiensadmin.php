@@ -58,7 +58,9 @@ $listVehicule = new InfoVehicule();
 
                                                 <label class="control-label">Choisissez un garage</label>
                                                 <select class="form-control" id="garage" name="garage"
-                                                        required></select><label onclick="ajoutGarage()" style="float: right;">Ajouter</label>
+                                                        required></select><label
+                                                        onclick="modGarage()">Modifier</label><label
+                                                        onclick="ajoutGarage()" style="float: right;">Ajouter</label>
                                             </div>
                                         </div>
                                     </div>
@@ -76,7 +78,7 @@ $listVehicule = new InfoVehicule();
                                                 <script>
                                                     flatpickr(".selector", {});
                                                     document.getElementById("acquisition").flatpickr({
-                                                        disableMobile:true
+                                                        disableMobile: true
                                                     });
                                                 </script>
 
@@ -110,7 +112,8 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Coût</label>
-                                                <input type="number" class="form-control" id="cout" name="cout" maxlength="7" min="0" required></select>
+                                                <input type="number" class="form-control" id="cout" name="cout"
+                                                       maxlength="7" min="0" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -119,7 +122,8 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Odomètre</label>
-                                                <input type="number" class="form-control" id="odometre" name="odometre" maxlength="20" min="0" required></select>
+                                                <input type="number" class="form-control" id="odometre" name="odometre"
+                                                       maxlength="20" min="0" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -128,7 +132,8 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Description</label>
-                                                <textarea class="form-control" id="description" name="description"></textarea>
+                                                <textarea class="form-control" id="description"
+                                                          name="description"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -137,7 +142,8 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Facture</label>
-                                                <input type="file" class="btn-default" name="fileToUpload" id="fileToUpload">
+                                                <input type="file" class="btn-default" name="fileToUpload"
+                                                       id="fileToUpload">
                                             </div>
                                         </div>
                                     </div>
@@ -188,18 +194,111 @@ $listVehicule = new InfoVehicule();
 <script src="../js/demo.js"></script>
 
 <script type="text/javascript">
-function ajoutGarage() {
-    var name = prompt("Veuillez entrer le nom du garage :");
-    if (name != null) {
-      var tel = prompt("Veuillez entrer le téléphone du garage :");
-      if (tel != null) {
-        var desc = prompt("Veuillez entrer l'adresse du garage :");
-        if (name != null && name != "" && tel != null && tel != "" && desc != null && desc != "") {
-            location.href = "../controllers/ajouterGarage.php?nom=" + name + "&tel=" + tel + "&desc=" + desc;
-        }
-      }
+
+    function ajoutGarage() {
+
+        swal.setDefaults({
+            input: 'text',
+            confirmButtonText: 'suivant &rarr;',
+            showCancelButton: true,
+            cancelButtonText: "Annuler",
+            progressSteps: ['1', '2', '3']
+        })
+
+        var steps = [
+            {
+                title: 'Garage',
+                text: 'Veuillez entrer le nom'
+            }, {
+                title: 'Garage',
+                text: 'Veuillez entrer le numéro de téléphone (Format:555 555-4444)'
+            }, {
+                title: 'Garage',
+                text: 'Veuillez entrer une description (adresse etc...)'
+            }
+        ]
+
+        swal.queue(steps).then(function (result) {
+            swal.resetDefaults()
+
+            if (result) {
+                name = result[0];
+                tel = result[1];
+                desc = result[2];
+                swal({
+                    title: 'Le garage a été ajouté!',
+                    showConfirmButton: false
+
+
+                })
+                location.href = "../controllers/ajouterGarage.php?nom=" + name + "&tel=" + tel + "&desc=" + desc;
+            }
+        })
+
     }
-}
+
+    function modGarage() {
+        swal.resetDefaults()
+        if ($("#garage").val() !== '0') {
+            swal.setDefaults({
+                input: 'text',
+                confirmButtonText: 'suivant &rarr;',
+                showCancelButton: true,
+                cancelButtonText: "Annuler",
+                progressSteps: ['1', '2', '3', '4']
+            })
+
+            var steps = [
+                {
+                    title: 'Garage',
+                    text: 'Veuillez entrer le nom'
+                }, {
+                    title: 'Garage',
+                    text: 'Veuillez entrer le numéro de téléphone (Format:555 555-4444)'
+                }, {
+                    title: 'Garage',
+                    text: 'Veuillez entrer le statut du garage (1=approuvé, 2=non-approuvé)'
+                }, {
+                    title: 'Garage',
+                    text: 'Veuillez entrer la description du garage'
+                }
+            ]
+
+            swal.queue(steps).then(function (result) {
+                    swal.resetDefaults()
+
+                    if (result) {
+                        name = result[0];
+                        tel = result[1];
+                        statut = result[2];
+                        if (statut === '1' || statut === '2') {
+                            desc = result[3];
+                            var id = $("#garage").val();
+
+                            swal({
+                                title: 'Le garage a été modifié!',
+                                showConfirmButton: false
+
+                            })
+                            location.href = "../controllers/ajouterGarage.php?mod=1&id=" + id + "&nom=" + name + "&tel=" + tel + "&statut=" + statut + "&desc=" + desc;
+                        } else swal({
+                            title: 'Le statut doit être 1 ou 2!',
+                            type: "warning",
+                            confirmButtonText: 'Ok'
+                        }).then(function () {
+                            modGarage();
+                        }, 1800);
+                    }
+                }
+            )
+        } else
+            swal({
+                title: 'Vous devez sélectionner un garage',
+                type: 'warning',
+                confirmButtonText: 'Ok'
+            })
+    }
+
 
     $(document).ready(function () {
         $("#vehicule").load("../controllers/getSelectAllVehicules.php");
