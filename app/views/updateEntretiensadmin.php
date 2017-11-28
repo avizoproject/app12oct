@@ -58,7 +58,7 @@ $gFacture = new InfoInvoice();
                             </div>
                             <div class="card-content">
 
-                                <form id="formAjout">
+                                <form id="formModifEntretien">
 
                                     <div class="row">
                                         <div class="col-md-5">
@@ -159,8 +159,8 @@ $gFacture = new InfoInvoice();
                                     </div>
 
                                     <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
-                                    <input type="submit" id="supprimer" class="btn pull-right" value="Supprimer" style="margin-right: 10px;">
-                                    <input type="submit" id="cancel" class="btn pull-right" value="Annuler"
+                                    <input type="button" id="supprimer" class="btn pull-right" value="Supprimer" style="margin-right: 10px;">
+                                    <input type="button" id="cancel" class="btn pull-right" value="Annuler"
                                            style="margin-right: 10px;">
                                     <div class="clearfix"></div>
                                 </form>
@@ -223,41 +223,35 @@ $gFacture = new InfoInvoice();
         $("#garage").load("../controllers/getSelectGarage.php?pk=<?php echo $currentEntretien["fk_garage"]; ?>");
         $("#type").load("../controllers/getSelectTypeEntretien.php?pk=<?php echo $currentEntretien["fk_type_entretien"]; ?>");
 
-        $(document).on("click", "#confirmer", function (e) {
+        $(document).on("submit", "#formModifEntretien", function (e) {
             e.preventDefault();
             swal({
-                title: "Ajouté",
+                title: "Modifié",
                 text: "L'entretien a bien été modifié.",
                 type: "success"
             }).then(function () {
+                var form = $("#formModifEntretien")[0];
+                var id = <?php echo $currentEntretien["pk_entretien"]; ?>;
+                var formData = new FormData(form);
 
-                    var form = $("#formAjout")[0];
-                    var id = <?php echo $currentEntretien["pk_entretien"]; ?>;
-                    var formData = new FormData(form);
-
-                    $.ajax({method : "POST",
-                        url : "../controllers/controller_entretien.php?mod=1&id=" + id,
-                        data : formData,
-                        async: false,
-                        cache: false,
-                        contentType: false,
-
-                        processData: false,
-                        beforeSend : function() {
-                            // TO INSERT - loading animation
-                        },
-                        success : function(response) {
-                            console.log(response);
-                            window.location.replace("http://localhost/app/app/views/entretienAdmin.php");
-                        },
-                        error : function(xhr, title, trace) {
-                            console.error(title + trace);
-                        }
-
-
-                    });
-
-
+                $.ajax({method : "POST",
+                    url : "../controllers/controller_entretien.php?mod=1&id=" + id,
+                    data : formData,
+                    async: false,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend : function() {
+                        // TO INSERT - loading animation
+                    },
+                    success : function(response) {
+                        console.log(response);
+                        window.location.replace("http://localhost/app/app/views/entretienAdmin.php");
+                    },
+                    error : function(xhr, title, trace) {
+                        console.error(title + trace);
+                    }
+                });
             })
         });
 

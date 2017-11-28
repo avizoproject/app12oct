@@ -156,7 +156,7 @@ $gFacture = new InfoInvoice();
                                         </div>
                                     </div>
 
-                                    <input type="submit" id="modifier" class="btn pull-right margin-button2" value="Modifier">
+                                    <input type="button" id="modifier" class="btn pull-right margin-button2" value="Modifier">
                                     <button id="retour" class="btn pull-right">Retour</button>
                                     <div class="clearfix"></div>
                                 </form>

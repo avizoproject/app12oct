@@ -143,7 +143,7 @@ $listVehicule = new InfoVehicule();
                                     </div>
 
                                     <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
-                                    <input type="submit" id="cancel" class="btn pull-right" value="Annuler"
+                                    <input type="button" id="cancel" class="btn pull-right" value="Annuler"
                                            style="margin-right: 10px;">
                                     <div class="clearfix"></div>
                                 </form>
@@ -202,7 +202,7 @@ $listVehicule = new InfoVehicule();
         $("#garage").load("../controllers/getSelectGarage.php");
         $("#type").load("../controllers/getSelectTypeEntretien.php");
 
-        $(document).on("click", "#confirmer", function (e) {
+        $(document).on("submit", "#formAjout", function (e) {
             e.preventDefault();
             swal({
                 title: "Ajouté",
