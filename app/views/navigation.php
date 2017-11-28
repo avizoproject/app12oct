@@ -12,18 +12,6 @@ echo "<nav class='navbar navbar-transparent navbar-absolute'>
 					</div>
 					<div class='collapse navbar-collapse'>
 						<ul class='nav navbar-nav navbar-right'>
-							
-							<li class='dropdown'>
-								<a href='notifications.php' class='dropdown-toggle' data-toggle='dropdown'>
-									<i class='material-icons'>notifications</i>
-									<span class='notification'>33</span>
-									<p class='hidden-lg hidden-md'>Notifications</p>
-								</a>
-								<ul class='dropdown-menu'>
-                                                                    <li><a href='notifications.php'>Mike John responded to your email</a></li>
-									
-								</ul>
-							</li>
 							<li class='dropdown'>
 								<a href='#pablo' class='dropdown-toggle' data-toggle='dropdown'>
 	 							   <i class='material-icons'>person</i>
@@ -31,7 +19,7 @@ echo "<nav class='navbar navbar-transparent navbar-absolute'>
 		 						</a>
                                                             <ul class='dropdown-menu'>
                                                                 <li><a href='../views/profil.php'>Profil</a></li>
-                                                                <li><a href='../views/signin.php'>Se déconnecter</a></li>									
+                                                                <li><a href='../views/signin.php'>Se déconnecter</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -42,4 +30,3 @@ echo "<nav class='navbar navbar-transparent navbar-absolute'>
 
 
 ?>
-

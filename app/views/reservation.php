@@ -119,9 +119,6 @@ $_SESSION['plusmoinsWeek'] = 0;
 	<!--  Notifications Plugin    -->
 	<script src="../js/bootstrap-notify.js"></script>
 
-	<!--  Google Maps Plugin    -->
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-
     <!--  Moments   -->
     <script type="text/javascript" src="../js/moment-with-locales.js"></script>
 

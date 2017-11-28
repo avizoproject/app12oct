@@ -110,7 +110,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Coût</label>
-                                                <input type="number" class="form-control" id="cout" name="cout" maxlength="7" required></select>
+                                                <input type="number" class="form-control" id="cout" name="cout" maxlength="7" min="0" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -119,7 +119,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Odomètre</label>
-                                                <input type="number" class="form-control" id="odometre" name="odometre" required></select>
+                                                <input type="number" class="form-control" id="odometre" name="odometre" maxlength="20" min="0" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -181,9 +181,6 @@ $listVehicule = new InfoVehicule();
 <!--  Notifications Plugin    -->
 <script src="../js/bootstrap-notify.js"></script>
 
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-
 <!-- Material Dashboard javascript methods -->
 <script src="../js/material-dashboard.js"></script>
 
@@ -191,14 +188,18 @@ $listVehicule = new InfoVehicule();
 <script src="../js/demo.js"></script>
 
 <script type="text/javascript">
-    function ajoutGarage() {
-        var name = prompt("Veuillez entrer le nom du garage :");
-        var tel = prompt("Veuillez entrer le téléphone du garage :");
+function ajoutGarage() {
+    var name = prompt("Veuillez entrer le nom du garage :");
+    if (name != null) {
+      var tel = prompt("Veuillez entrer le téléphone du garage :");
+      if (tel != null) {
         var desc = prompt("Veuillez entrer l'adresse du garage :");
         if (name != null && name != "" && tel != null && tel != "" && desc != null && desc != "") {
             location.href = "../controllers/ajouterGarage.php?nom=" + name + "&tel=" + tel + "&desc=" + desc;
         }
+      }
     }
+}
 
     $(document).ready(function () {
         $("#vehicule").load("../controllers/getSelectAllVehicules.php");
@@ -207,54 +208,48 @@ $listVehicule = new InfoVehicule();
 
         $(document).on("click", "#confirmer", function (e) {
             e.preventDefault();
-            swal({
-                title: "Ajouté",
-                text: "L'entretien a bien été ajoutée.",
-                type: "success"
-            }).then(function () {
+            var form = $("#formAjout")[0];
+            var formData = new FormData(form);
 
-                    var form = $("#formAjout")[0];
+            $.ajax({method : "POST",
+                url : "../controllers/controller_entretien.php",
+                data : formData,
+                async: false,
+                cache: false,
+                contentType: false,
 
-                    var formData = new FormData(form);
-
-                    $.ajax({method : "POST",
-                        url : "../controllers/controller_entretien.php",
-                        data : formData,
-                        async: false,
-                        cache: false,
-                        contentType: false,
-
-                        processData: false,
-                        beforeSend : function() {
-                            // TO INSERT - loading animation
-                        },
-                        success : function(response) {
-                            console.log(response);
-                            window.location.replace("http://localhost/app/app/views/entretien.php");
-                        },
-                        error : function(xhr, title, trace) {
-                            console.error(title + trace);
-                        }
-
-
-                    });
-
-
-            })
+                processData: false,
+                beforeSend : function() {
+                    // TO INSERT - loading animation
+                },
+                success : function(response) {
+                    console.log(response);
+                    swal({
+                        title: "Ajouté",
+                        text: "L'entretien a bien été ajouté.",
+                        type: "success"
+                    }).then(function () {
+                      window.location.replace("http://localhost/app/app/views/entretienAdmin.php");
+                    })
+                },
+                error : function(xhr, title, trace) {
+                    console.error(title + trace);
+                }
+            });
         });
 
         $(document).on("click", "#cancel", function (e) {
             e.preventDefault();
             swal({
                 title: "",
-                text: "L'entretien va être annulée.",
+                text: "L'entretien va être annulé.",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Ok",
                 cancelButtonColor: "#969696",
                 cancelButtonText: "Annuler"
             }).then(function () {
-                location.href = "../views/entretien.php";
+                location.href = "../views/entretienAdmin.php";
             })
         });
 

@@ -140,7 +140,8 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                                        flatpickr(".selector", {});
                                                        document.getElementById("acquisition").flatpickr({
                                                          defaultDate: "<?php echo $currentVehicule['date_achat']; ?>",
-                                                         mode: "single"
+                                                         mode: "single",
+                                                         disableMobile:true
                                                        });
                                                    </script>
                                                </div>
@@ -212,9 +213,6 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
 
  	<!--  Notifications Plugin    -->
  	<script src="../js/bootstrap-notify.js"></script>
-
- 	<!--  Google Maps Plugin    -->
- 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 
  	<!-- Material Dashboard javascript methods -->
  	<script src="../js/material-dashboard.js"></script>

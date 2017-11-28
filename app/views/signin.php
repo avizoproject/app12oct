@@ -12,7 +12,7 @@ if (session_status() == true) {
             $params["secure"], $params["httponly"]
             );
     }
-    
+
     session_unset();
     session_destroy();
 }
@@ -29,16 +29,16 @@ if (session_status() == true) {
     <div class="center-block">
         <div class="center-block">
             <section class="logo">
-                
+
                   <img class="center-block" src="../img/avizo-logo.png">
-                
+
             </section>
         </div>
     </div>
 
     <div class="main-body">
         <div class="container">
-            <div class="form-container">              
+            <div class="form-container">
 
                 <br/>
 
@@ -46,7 +46,7 @@ if (session_status() == true) {
                     <fieldset>
                         <div class="row">
                             <div class="center-block float-none col-md-4">
-                                <div class="form-group label-floating">
+                                <div class="form-group label-static">
                                     <label class="control-label">Adresse courriel</label>
                                     <input class="form-control" name="email" type="text">
                                 </div>
@@ -55,7 +55,7 @@ if (session_status() == true) {
                         <br>
                         <div class="row">
                             <div class="center-block float-none col-md-4">
-                                <div class="form-group label-floating">
+                                <div class="form-group label-static">
                                     <label class="control-label">Mot de passe</label>
                                     <input class="form-control" name="password" type="password">
                                 </div>
@@ -68,17 +68,12 @@ if (session_status() == true) {
                         <br>
                     </fieldset>
                 </form>
-
-                <section>
-                    <p class="text-center"><a href="signin.html#/pages/forgot">Mot de passe oublié?</a></p>
-                </section>
-                
             </div>
         </div>
     </div>
 
 </div>
- 
+
 </body>
 	<!--   Core JS Files   -->
 	<script src="../js/jquery-3.1.0.min.js" type="text/javascript"></script>
@@ -91,12 +86,9 @@ if (session_status() == true) {
     <!--  Sweet alert -->
     <script src="../js/sweetalert2.min.js"></script>
     <script src="../js/sweetalert2.js"></script>
-        
+
 	<!--  Notifications Plugin    -->
 	<script src="../js/bootstrap-notify.js"></script>
-
-	<!--  Google Maps Plugin    -->
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 
 	<!-- Material Dashboard javascript methods -->
 	<script src="../js/material-dashboard.js"></script>

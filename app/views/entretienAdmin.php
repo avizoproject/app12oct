@@ -64,6 +64,7 @@ $gEntretiens = new InfoReservation();
                     <div class="">
                         <div class="margin-button2">
                             <button class="btn btn-default" name="Ajouter" id="Ajouter">Ajouter</button>
+                            <button class="btn btn-default" name="Imprimer" id="Imprimer">Imprimer</button>
                             <button class="btn btn-default" name="Historique" id="Historique">Historique</button>
                         </div>
                     </div>
@@ -97,9 +98,6 @@ $gEntretiens = new InfoReservation();
 <!--  Notifications Plugin    -->
 <script src="../js/bootstrap-notify.js"></script>
 
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-
 <!-- Material Dashboard javascript methods -->
 <script src="../js/material-dashboard.js"></script>
 
@@ -125,16 +123,33 @@ $gEntretiens = new InfoReservation();
             }
         });
 
-
-
-        //clic modifier, envoie en get le id selectionné
         $('#Historique').click(function () {
-                window.location.href = "entretienHistorique.php";
+          window.location.href = "entretienHistorique.php";
         });
 
-        //clic ajouter
+        $('#Imprimer').click(function () {
+          var divToPrint = document.getElementById('example');
+          var htmlToPrint = '' +
+              '<style type="text/css">' +
+              'table {' +
+              'border-collapse:collapse;' +
+              '}' +
+              'table th, table td {' +
+              'border:1px solid #000;' +
+              'padding:0.5em;' +
+              'text-align:center;' +
+              '}' +
+              '</style>' +
+              '<h1>Entretiens à faire</h1>';
+          htmlToPrint += divToPrint.outerHTML;
+          newWin = window.open("");
+          newWin.document.write(htmlToPrint);
+          newWin.print();
+          newWin.close();
+        });
+
         $('#Ajouter').click(function () {
-            window.location.href = "addEntretiensadmin.php";
+          window.location.href = "addEntretiensadmin.php";
         });
 
         var activePage = window.location.href;

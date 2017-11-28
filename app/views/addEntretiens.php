@@ -31,7 +31,7 @@ $listVehicule = new InfoVehicule();
 
 <div class="wrapper">
     <?php
-    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapper.php';
+    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapperUser.php';
     ?>
 
     <div class="main-panel">
@@ -110,7 +110,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Coût</label>
-                                                <input type="number" class="form-control" id="cout" name="cout" maxlength="7" required></select>
+                                                <input type="number" class="form-control" id="cout" name="cout" maxlength="7" min="0" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -119,7 +119,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-5">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Odomètre</label>
-                                                <input type="number" class="form-control" id="odometre" name="odometre" required></select>
+                                                <input type="number" class="form-control" id="odometre" name="odometre" maxlength="20" min="0" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -181,9 +181,6 @@ $listVehicule = new InfoVehicule();
 <!--  Notifications Plugin    -->
 <script src="../js/bootstrap-notify.js"></script>
 
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-
 <!-- Material Dashboard javascript methods -->
 <script src="../js/material-dashboard.js"></script>
 
@@ -209,7 +206,7 @@ $listVehicule = new InfoVehicule();
             e.preventDefault();
             swal({
                 title: "Ajouté",
-                text: "L'entretien a bien été ajoutée.",
+                text: "L'entretien a bien été ajouté.",
                 type: "success"
             }).then(function () {
 
@@ -230,7 +227,7 @@ $listVehicule = new InfoVehicule();
                     },
                     success : function(response) {
                         console.log(response);
-                        window.location.replace("http://localhost/app/app/views/entretien.php");
+                        window.location.replace("http://localhost/app/app/views/dashboard.php");
                     },
                     error : function(xhr, title, trace) {
                         console.error(title + trace);
@@ -247,14 +244,14 @@ $listVehicule = new InfoVehicule();
             e.preventDefault();
             swal({
                 title: "",
-                text: "L'entretien va être annulée.",
+                text: "L'entretien va être annulé.",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Ok",
                 cancelButtonColor: "#969696",
                 cancelButtonText: "Annuler"
             }).then(function () {
-                location.href = "../views/entretien.php";
+                location.href = "../views/dashboard.php";
             })
         });
 

@@ -1,6 +1,6 @@
 <?php
 echo "<div class='sidebar' data-color='blue' data-image='../img/sidebar-1.jpg'>
-			
+
 			<div class='logo'>
                             <img src='../img/avizo-logo.png' alt='logo'>
 			</div>
@@ -24,13 +24,13 @@ echo "<div class='sidebar' data-color='blue' data-image='../img/sidebar-1.jpg'>
 	                        <i class='material-icons'>library_books</i>
 	                        <p>Entretiens</p>
 	                    </a>
-	                </li>  
+	                </li>
 	                <li id='vehiculeLink' >
 	                    <a href='vehicule.php'>
 	                        <i class='material-icons'>directions_car</i>
 	                        <p>Véhicules</p>
 	                    </a>
-	                </li>    
+	                </li>
 	                <li id='userLink' >
 	                    <a href='user.php'>
 	                        <i class='material-icons'>group</i>
@@ -47,5 +47,3 @@ echo "<div class='sidebar' data-color='blue' data-image='../img/sidebar-1.jpg'>
 	            </ul>
 	    	</div>
 	    </div>";
-
-
