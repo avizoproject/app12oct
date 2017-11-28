@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2017 at 03:27 PM
+-- Generation Time: Nov 28, 2017 at 03:32 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -435,9 +435,9 @@ INSERT INTO `type_entretien` (`pk_type_entretien`, `intervalle`, `nom`, `descrip
 (1, 7000, 'Changement d\'huile', 'Changement d\'huile moteur'),
 (2, 50000, 'Changement freins', 'Changement freins'),
 (3, NULL, 'Accident', 'Réparation suite à un accident'),
-(4, NULL, 'Changement pneux', 'Changement de pneux'),
+(4, NULL, 'Changement pneus', 'Changement de pneus'),
 (5, 75000, 'Entretien regulier', 'Vérification des fluides et inspection'),
-(6, NULL, 'Reparations', 'Réparation causée par l\'usure normal');
+(6, NULL, 'Reparations', 'Réparation causée par l\'usure normale');
 
 -- --------------------------------------------------------
 
@@ -483,7 +483,7 @@ INSERT INTO `utilisateur` (`pk_utilisateur`, `nom`, `prenom`, `telephone`, `cour
 (20, 'Pinsonneault', 'Daniel', '819 446-5525', 'daniel.pinsonneault@avizo.ca', 'avizo', 2, 3),
 (21, 'Ducharme', 'Danny', '514 318-2488', 'danny.ducharme@avizo.ca', 'avizo', 2, 4),
 (22, 'Rosenfeld', 'David', '819 640-1874', 'david.rosenfeld@avizo.ca', 'avizo', 2, 4),
-(23, 'Massée', 'Dorothée', NULL, 'dorothee.massee@avizo.ca', 'avizo', 2, 6),
+(23, 'Massé', 'Dorothée', NULL, 'dorothee.masse@avizo.ca', 'avizo', 2, 6),
 (24, 'Rouleau', 'Étienne', NULL, 'etienne.rouleau@avizo.ca', 'avizo', 2, 7),
 (25, 'Morin', 'Flore', NULL, 'flore.morin@avizo.ca', 'avizo', 2, 7),
 (26, 'Asfar', 'Francesca', '450 775-6141', 'francesca.asfar@avizo.ca', 'avizo', 2, 3),
