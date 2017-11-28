@@ -90,12 +90,13 @@ $_SESSION['plusmoinsWeek'] = 0;
 	                </div>
 	            </div>
                 <br>
+                <?php
+                require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/footer.php';
+                ?>
 	        </div>
 	    </div>
 	</div>
-    <?php
-    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/footer.php';
-    ?>
+
     </body>
 
     <!--   Core JS Files   -->

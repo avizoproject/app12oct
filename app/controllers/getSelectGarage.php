@@ -11,6 +11,6 @@ $gGarage = new InfoGarage();
 if (isset($_GET['pk'])) {
     $gGarage->getSelectGarage($_GET['pk']);
 }else{
-    $gGarage->getSelectGarage();
+    $gGarage->getSelectGarage(null);
 }
 ?>
