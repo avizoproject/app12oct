@@ -227,7 +227,7 @@ $listVehicule = new InfoVehicule();
                     },
                     success : function(response) {
                         console.log(response);
-                        window.location.replace("http://localhost/app/app/views/dashboard.php");
+                        window.location.replace("http://localhost/app/app/views/entretien.php");
                     },
                     error : function(xhr, title, trace) {
                         console.error(title + trace);
@@ -251,7 +251,7 @@ $listVehicule = new InfoVehicule();
                 cancelButtonColor: "#969696",
                 cancelButtonText: "Annuler"
             }).then(function () {
-                location.href = "../views/dashboard.php";
+                location.href = "../views/entretien.php";
             })
         });
 
