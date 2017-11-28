@@ -323,9 +323,19 @@ $_SESSION['plusmoinsWeek'] = 0;
                     init_data: function (node, data) {
                     },
                     click: function (node, data) {
-                        //sweetalert moé ca
-                        var pk = node.find('.hidden').text();
-                        window.location.href = "http://localhost/app/app/views/updateReservationadmin.?id=" + pk;
+                        swal({
+                            title: "",
+                            text: "Voulez-vous modifier cette réservation?",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "Ok",
+                            cancelButtonColor: "#969696",
+                            cancelButtonText: "Annuler"
+                        }).then(function () {
+                            var pk = node.find('.hidden').text();
+                            window.location.href = "http://localhost/app/app/views/updateReservationadmin.?id=" + pk;
+                        })
+
                     },
 
 

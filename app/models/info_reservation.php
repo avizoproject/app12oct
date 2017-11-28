@@ -254,7 +254,7 @@ function getSelectReservations($id_user){
         if ($size != null) {
             for ($i = 0; $i < $size; $i++) {
                 if ($type === 1) {
-                    if ($allentretiens[$i]['difference']>=7000) {
+                    if ($allentretiens[$i]['difference']>=6500) {
                         echo "<tr class=''>";
                         echo "<td class='hidden'>";
                         echo $allentretiens[$i]['pk_entretien'] . "</td>";
@@ -270,7 +270,7 @@ function getSelectReservations($id_user){
                     }
                 }
                 if ($type === 2) {
-                    if ($allentretiens[$i]['difference']>=50000) {
+                    if ($allentretiens[$i]['difference']>=49500) {
                         echo "<tr class=''>";
                         echo "<td class='hidden'>";
                         echo $allentretiens[$i]['pk_entretien'] . "</td>";
@@ -286,10 +286,91 @@ function getSelectReservations($id_user){
                     }
                 }
                 if ($type == 5) {
-                    if ($allentretiens[$i]['difference']>=75000) {
+                    if ($allentretiens[$i]['difference']>=74500) {
                         echo "<tr class=''>";
                         echo "<td class='hidden'>";
                         echo $allentretiens[$i]['pk_entretien'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['nom_modele'] . " " . $allentretiens[$i]['nom_couleur'] . " #" . $allentretiens[$i]['pk_vehicule'] . " </td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['odometre_entretien'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['odometre'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['nom'] . "</td>";
+                        echo "</tr>";
+                    }
+                }
+            }
+        }
+
+        return json_encode($allentretiens);
+    }
+
+    //Liste des entretiens à faire côté admin
+    function getListEntretiensUser($iduser,$type)
+    {
+        include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+        //SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','')); pour config (section SQL) GROUP BY dans phpMyAdmin
+        $results = $conn->query("SELECT reservation.pk_reservation, vehicule.pk_vehicule, type_entretien.nom, marque.nom_marque, modele.nom_modele, vehicule.odometre, entretien.odometre_entretien, entretien.fk_type_entretien, vehicule.odometre-entretien.odometre_entretien as difference FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN entretien ON reservation.fk_vehicule = entretien.fk_vehicule LEFT JOIN type_entretien ON type_entretien.pk_type_entretien=entretien.fk_type_entretien WHERE  YEARWEEK(reservation.date_debut) <= YEARWEEK(CURDATE()) AND  YEARWEEK(reservation.date_fin) >= YEARWEEK(CURDATE())  AND utilisateur.pk_utilisateur='". $iduser . "' AND reservation.statut !=0 AND entretien.fk_type_entretien = '". $type ."' GROUP BY vehicule.pk_vehicule  ORDER BY ( DATEDIFF( NOW(),entretien.date_entretien ) ) LIMIT 5");
+
+
+        $allentretiens = array();
+        while ($row = $results->fetch_assoc()) {
+            $allentretiens[] = array(
+                'pk_reservation' => $row['pk_reservation'],
+                'pk_vehicule' => $row['pk_vehicule'],
+                'nom_marque' => $row['nom_marque'],
+                'nom_modele' => $row['nom_modele'],
+                'odometre' => $row['odometre'],
+                'odometre_entretien' => $row['odometre_entretien'],
+                'difference' => $row['difference'],
+                'nom' => $row['nom']
+            );
+        }
+
+
+        $size = sizeof($allentretiens);
+
+        if ($size != null) {
+            for ($i = 0; $i < $size; $i++) {
+                if ($type === 1) {
+                    if ($allentretiens[$i]['difference']>=6500) {
+                        echo "<tr class=''>";
+                        echo "<td class='hidden'>";
+                        echo $allentretiens[$i]['pk_reservation'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['nom_modele'] . " " . $allentretiens[$i]['nom_couleur'] . " #" . $allentretiens[$i]['pk_vehicule'] . " </td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['odometre_entretien'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['odometre'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['nom'] . "</td>";
+                        echo "</tr>";
+                    }
+                }
+                if ($type === 2) {
+                    if ($allentretiens[$i]['difference']>=49500) {
+                        echo "<tr class=''>";
+                        echo "<td class='hidden'>";
+                        echo $allentretiens[$i]['pk_reservation'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['nom_modele'] . " " . $allentretiens[$i]['nom_couleur'] . " #" . $allentretiens[$i]['pk_vehicule'] . " </td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['odometre_entretien'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['odometre'] . "</td>";
+                        echo "<td>";
+                        echo $allentretiens[$i]['nom'] . "</td>";
+                        echo "</tr>";
+                    }
+                }
+                if ($type == 5) {
+                    if ($allentretiens[$i]['difference']>=74500) {
+                        echo "<tr class=''>";
+                        echo "<td class='hidden'>";
+                        echo $allentretiens[$i]['pk_reservation'] . "</td>";
                         echo "<td>";
                         echo $allentretiens[$i]['nom_modele'] . " " . $allentretiens[$i]['nom_couleur'] . " #" . $allentretiens[$i]['pk_vehicule'] . " </td>";
                         echo "<td>";
@@ -442,6 +523,31 @@ function getWeekReservationsForUser($iduser, $week)
 
     return json_encode($allreservation);
 }
+
+    function getActiveReservationsForUser($iduser)
+    {
+        include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+
+        $results = $conn->query("SELECT reservation.pk_reservation, reservation.fk_vehicule, marque.nom_marque, modele.nom_modele, utilisateur.nom, utilisateur.prenom, reservation.date_debut, reservation.date_fin, reservation.statut FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE  utilisateur.pk_utilisateur='". $iduser ."' AND reservation.statut !=0");
+
+
+        $allreservation = array();
+        while ($row = $results->fetch_assoc()) {
+            $allreservation[] = array(
+                'pk_reservation' => $row['pk_reservation'],
+                'fk_vehicule' => $row['fk_vehicule'],
+                'nom_marque' => $row['nom_marque'],
+                'nom_modele' => $row['nom_modele'],
+                'nom' => $row['nom'],
+                'prenom' => $row['prenom'],
+                'date_debut' => $row['date_debut'],
+                'date_fin' => $row['date_fin']
+            );
+        }
+
+        return json_encode($allreservation);
+    }
+
 
     function getWeekReservationsForEntretiens($iduser)
     {
