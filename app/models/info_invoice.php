@@ -63,7 +63,7 @@ class InfoInvoice extends InfoModel
                 'photo' => $row['photo']
             );
         }
-        return $allreservation[0]['photo'];
+        return $allreservation[0];
     }
 }
 

@@ -59,7 +59,7 @@
                                          ?>
                                          <div>
                                            <div class="col-md-7">
-                                             <div class="form-group label-static">
+                                             <div class="form-group">
                                                <label class="control-label">Dates</label>
                                                <input type='text' size="40" class="flatpickr form-control" name="date_acquisition" id='acquisition' placeholder="Choisissez la période de réservation">
                                                <script src="../js/flatpickr.js" type="text/javascript"></script>
@@ -68,7 +68,8 @@
                                                    document.getElementById("acquisition").flatpickr({
                                                        defaultDate: <?php $gReservation->getDatesReservation($_GET["id"]); ?>
                                                        enableTime: true,
-                                                       mode: "range"
+                                                       mode: "range",
+                                                       disableMobile:true
                                                    });
                                                </script>
                                              </div>

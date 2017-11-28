@@ -94,6 +94,9 @@ $_SESSION['plusmoinsWeek'] = 0;
                 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/footer.php';
                 ?>
 	        </div>
+            <?php
+            require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/footer.php';
+            ?>
 	    </div>
 	</div>
 
@@ -161,7 +164,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 
                 var StartDate = moment(startdate).format("YYYY-MM-DD HH:mm:ss");
                 var EndDate = moment(enddate).format("YYYY-MM-DD HH:mm:ss");
-                console.log(StartDate +" "+ EndDate);
+
                 return [StartDate, EndDate];
             }
 
@@ -313,16 +316,55 @@ $_SESSION['plusmoinsWeek'] = 0;
                     init_data: function (node, data) {
                     },
                     click: function (node, data) {
-                        //sweetalert moé ca
-                        var pk = node.find('.hidden').text();
-                        window.location.href = "http://localhost/app/app/views/updateReservation.php?id=" + pk;
+                        swal({
+                            title: "",
+                            text: "Voulez-vous modifier cette réservation?",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "Ok",
+                            cancelButtonColor: "#969696",
+                            cancelButtonText: "Annuler"
+                        }).then(function () {
+                            var pk = node.find('.hidden').text();
+                            window.location.href = "http://localhost/app/app/views/updateReservation.php?id=" + pk;
+                        })
                     },
-
 
                 });
 
             }
         }
+
+
+        function checkLateReservations(){
+            var today = moment();
+            var reservations = null;
+            var data = null;
+            $.ajax({
+                url: "../controllers/getActiveReservationsUser.php",
+                type: "POST",
+                data: data,
+                success: function (data) {
+
+                   reservations = JSON.parse(data);
+                    $.each(reservations, function (index){
+
+                        if (moment(reservations[index]['date_fin']) < today){
+                            var message = "(Retard) Vous devez retourner le " + reservations[index]['nom_marque'] + " " + reservations[index]['nom_modele']+" #"+reservations[index]['fk_vehicule'];
+                            demo.showNotification('top','left', message);
+                        }
+
+                    });
+                },
+
+
+                error: function (trace) {
+                    alert(trace);
+                }
+            });
+        }
+
+
         function checkEntretiens(){
 
             var entretiens = null;
@@ -330,13 +372,13 @@ $_SESSION['plusmoinsWeek'] = 0;
 
             //HUILE
             var type = 1;
-            var kilo = 7000;
+            var kilo = 6500;
             $.ajax({
                 url: "../controllers/getWeekEntretiensUser.php",
                 type: "POST",
                 data: {type: type},
                 success: function (data) {
-                    console.log(data);
+
                       entretiens = JSON.parse(data);
                     $.each(entretiens, function (index){
 
@@ -354,9 +396,9 @@ $_SESSION['plusmoinsWeek'] = 0;
                 }
             });
 
-            /*//FREINS
+            //FREINS
             type = 2;
-            kilo = 50000;
+            kilo = 49500;
             $.ajax({
                 url: "../controllers/getWeekEntretiensUser.php",
                 type: "POST",
@@ -365,7 +407,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                     entretiens = JSON.parse(data);
                     $.each(entretiens, function (index){
 
-                        if (entretiens[index]['difference'] > kilo-100){
+                        if (entretiens[index]['difference'] > kilo){
                             var message = "Vous avez un changement de freins à faire sur le " + entretiens[index]['nom_marque'] + " " + entretiens[index]['nom_modele']+" #"+entretiens[index]['pk_vehicule'];
                             demo.showNotification('top','right', message);
                         }
@@ -381,7 +423,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 
             //ENTRETIEN RÉGULIER
             type = 5;
-            kilo = 75000;
+            kilo = 74500;
             $.ajax({
                 url: "../controllers/getWeekEntretiensUser.php",
                 type: "POST",
@@ -390,7 +432,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                     entretiens = JSON.parse(data);
                     $.each(entretiens, function (index){
 
-                        if (entretiens[index]['difference'] > kilo-100){
+                        if (entretiens[index]['difference'] > kilo){
                             var message = "Vous avez un entretien général à faire sur le " + entretiens[index]['nom_marque'] + " " + entretiens[index]['nom_modele']+" #"+entretiens[index]['pk_vehicule'];
                             demo.showNotification('top','right', message);
                         }
@@ -402,9 +444,10 @@ $_SESSION['plusmoinsWeek'] = 0;
                 error: function (trace) {
                     alert(trace);
                 }
-            });*/
+            });
 
         }
+
     	$(document).ready(function(){
 
 			// Javascript method's body can be found in assets/js/demos.js
@@ -464,12 +507,12 @@ $_SESSION['plusmoinsWeek'] = 0;
                 });
 
                 var activePage = window.location.href;
-            	console.log(activePage);
+
                 var active = activePage.substring(activePage.lastIndexOf('/') + 1);
 
                 $('.sidebar-wrapper a').each(function () {
                     var linkPage = this.href;
-					console.log(linkPage);
+
                     if (activePage == linkPage) {
                         $(this).closest("li").addClass("active");
                         $('li').each(function () {
@@ -491,7 +534,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 
             CreateHoraire();
             checkEntretiens();
-
+            checkLateReservations();
     	});
         //clic next
         $('#nextWeek').click(function () {
@@ -513,13 +556,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                 }
             });
 
-            /*$.post( "../controllers/changeWeek.php", { modifWeek: 1})
-                .done(function( data ) {
-                    $('#schedule').html(' ');
 
-                    console.log(data);
-                    CreateHoraire(data[0], data[1]);
-                });*/
 
         });
 

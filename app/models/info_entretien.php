@@ -14,6 +14,8 @@ class InfoEntretien extends InfoModel
 
     protected $odometre_entretien = 0;
 
+    protected $fk_utilisateur = 0;
+
     protected $fk_garage = 0;
 
     protected $fk_vehicule = 0;
@@ -38,6 +40,10 @@ class InfoEntretien extends InfoModel
 
     function getOdometre_entretien() {
         return $this->odometre_entretien;
+    }
+
+    function getFk_utilisateur() {
+        return $this->fk_utilisateur;
     }
 
     function getFk_garage() {
@@ -70,6 +76,10 @@ class InfoEntretien extends InfoModel
 
     function setOdometre_entretien($odometre_entretien) {
         $this->odometre_entretien = $odometre_entretien;
+    }
+
+    function setFk_utilisateur($fk_utilisateur) {
+        $this->fk_utilisateur = $fk_utilisateur;
     }
 
     function setFk_garage($fk_garage) {

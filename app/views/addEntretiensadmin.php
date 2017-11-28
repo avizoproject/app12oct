@@ -149,7 +149,7 @@ $listVehicule = new InfoVehicule();
                                     </div>
 
                                     <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer">
-                                    <input type="submit" id="cancel" class="btn pull-right" value="Annuler"
+                                    <input type="button" id="cancel" class="btn pull-right" value="Annuler"
                                            style="margin-right: 10px;">
                                     <div class="clearfix"></div>
                                 </form>
@@ -305,37 +305,46 @@ $listVehicule = new InfoVehicule();
         $("#garage").load("../controllers/getSelectGarage.php");
         $("#type").load("../controllers/getSelectTypeEntretien.php");
 
-        $(document).on("click", "#confirmer", function (e) {
+        $(document).on("submit", "#formAjout", function (e) {
             e.preventDefault();
-            var form = $("#formAjout")[0];
-            var formData = new FormData(form);
+            if ($("#garage").val() && $("#acquisition").val() && $("#vehicule").val() && $("#type").val()) {
+                var form = $("#formAjout")[0];
+                var formData = new FormData(form);
 
-            $.ajax({
-                method: "POST",
-                url: "../controllers/controller_entretien.php",
-                data: formData,
-                async: false,
-                cache: false,
-                contentType: false,
+                $.ajax({
+                    method: "POST",
+                    url: "../controllers/controller_entretien.php",
+                    data: formData,
+                    async: false,
+                    cache: false,
+                    contentType: false,
 
-                processData: false,
-                beforeSend: function () {
-                    // TO INSERT - loading animation
-                },
-                success: function (response) {
-                    console.log(response);
-                    swal({
-                        title: "Ajouté",
-                        text: "L'entretien a bien été ajouté.",
-                        type: "success"
-                    }).then(function () {
-                        window.location.replace("http://localhost/app/app/views/entretienAdmin.php");
-                    })
-                },
-                error: function (xhr, title, trace) {
-                    console.error(title + trace);
-                }
-            });
+                    processData: false,
+                    beforeSend: function () {
+                        // TO INSERT - loading animation
+                    },
+                    success: function (response) {
+
+                        swal({
+                            title: "Ajouté",
+                            text: "L'entretien a bien été ajouté.",
+                            type: "success"
+                        }).then(function () {
+                            window.location.replace("http://localhost/app/app/views/entretienAdmin.php");
+                        })
+                    },
+                    error: function (xhr, title, trace) {
+                        console.error(title + trace);
+                    }
+                });
+            }else {
+                swal({
+                    title:"",
+                    text:"Vous avez oublié une liste déroulante.",
+                    type:"warning",
+                    allowOutsideClick : true
+                });
+            }
         });
 
         $(document).on("click", "#cancel", function (e) {

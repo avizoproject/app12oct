@@ -7,10 +7,10 @@
     <orderEntry type="module-library">
       <library name="PHP" type="php">
         <CLASSES>
-          <root url="file://$MODULE_DIR$/../../bin/apache/apache2.4.23/bin" />
+          <root url="file://C:/wamp64/bin/apache/apache2.4.23/bin" />
         </CLASSES>
         <SOURCES>
-          <root url="file://$MODULE_DIR$/../../bin/apache/apache2.4.23/bin" />
+          <root url="file://C:/wamp64/bin/apache/apache2.4.23/bin" />
         </SOURCES>
       </library>
     </orderEntry>

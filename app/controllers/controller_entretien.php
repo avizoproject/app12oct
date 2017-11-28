@@ -37,7 +37,9 @@ class controller_entretien
         $this->arrayEntretien[4] = isset($_POST['cout']) ? $_POST['cout'] : null;
         $this->arrayEntretien[5] = isset($_POST['description']) ? $_POST['description'] : null;
         $this->arrayEntretien[6] = isset($_POST['odometre']) ? $_POST['odometre'] : null;
+        $this->arrayEntretien[7] = $_SESSION['user']['pk_utilisateur'];
 
+        echo $this->InfosEntretien;
         $this->InfosEntretien = new InfoEntretien();
         $this->InfosFacture = new InfoInvoice();
     }
@@ -50,9 +52,12 @@ class controller_entretien
         $this->InfosEntretien->setCout_entretien($this->arrayEntretien[4]);
         $this->InfosEntretien->setDescription($this->arrayEntretien[5]);
         $this->InfosEntretien->setOdometre_entretien($this->arrayEntretien[6]);
-        $this->InfosFacture->setFk_entretien($this->InfosEntretien->addDBObject());
+        $this->InfosEntretien->setFk_utilisateur($this->arrayEntretien[7]);
+        $insertedID = $this->InfosEntretien->addDBObject();
+
+        $this->InfosFacture->setFk_entretien($insertedID);
         $this->InfosFacture->setMontant_entretien($this->arrayEntretien[4]);
-        $this->InfosFacture->setPhoto($this->addImage());
+        $this->InfosFacture->setPhoto($this->addImage($insertedID));
         $this->InfosFacture->addDBObject();
     }
 
@@ -68,12 +73,21 @@ class controller_entretien
         $this->InfosEntretien->setCout_entretien($this->arrayEntretien[4]);
         $this->InfosEntretien->setDescription($this->arrayEntretien[5]);
         $this->InfosEntretien->setOdometre_entretien($this->arrayEntretien[6]);
+        $this->InfosEntretien->setFk_utilisateur($this->arrayEntretien[7]);
         $this->InfosEntretien->updateDBObject();
-        $this->InfosFacture->setPk_facture($facture["pk_facture"]);
-        $this->InfosFacture->setFk_entretien($id);
-        $this->InfosFacture->setMontant_entretien($this->arrayEntretien[4]);
-        $this->InfosFacture->setPhoto($this->addImage($id));
-        $this->InfosFacture->updateDBObject();
+
+        if($facture == null){
+            $this->InfosFacture->setFk_entretien($id);
+            $this->InfosFacture->setMontant_entretien($this->arrayEntretien[4]);
+            $this->InfosFacture->setPhoto($this->addImage($id));
+            $this->InfosFacture->addDBObject();
+        }else{
+            $this->InfosFacture->setPk_facture($facture["pk_facture"]);
+            $this->InfosFacture->setFk_entretien($id);
+            $this->InfosFacture->setMontant_entretien($this->arrayEntretien[4]);
+            $this->InfosFacture->setPhoto($this->addImage($id));
+            $this->InfosFacture->updateDBObject();
+        }
     }
 
     function suppEntretien($id)
@@ -132,8 +146,7 @@ class controller_entretien
                 return "img/facture" . strval($pkentretien) . ".jpg";
             }
         }
-}
-
+    }
 }
 $entControl = new controller_entretien();
 if (isset($_GET["supp"])){
@@ -148,7 +161,7 @@ if (isset($_GET["supp"])){
     if ($_SESSION['admin'] === 1)
         header("Location: http://localhost/app/app/views/entretienAdmin.php");
     else{
-        header("Location: http://localhost/app/app/views/addEntretiens.php");
+        header("Location: http://localhost/app/app/views/entretien.php");
     exit();
     }
 

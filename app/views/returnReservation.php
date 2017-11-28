@@ -134,7 +134,7 @@ $gReservation = new InfoReservation();
                     contentType: false,
                     success: function(data)
                     {
-                        console.log(data);
+
                         //If error is found inside of the return data.
                         if(data.toLowerCase().indexOf('error')!= -1){
                             swal({

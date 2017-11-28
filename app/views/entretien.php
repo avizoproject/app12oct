@@ -10,12 +10,12 @@
  ******************************************************************/
 session_start();
 error_reporting(0);
-require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_user.php';
-$gUser = new InfoUser();
+require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_reservation.php';
+$gEntretiens = new InfoReservation();
 ?>
 <html>
 <head>
-    <title>Avizo - Gestionnaire de véhicules</title>
+    <title>Avizo - Entretiens</title>
     <?php
     require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/header.php';
     session_start();
@@ -26,7 +26,7 @@ $gUser = new InfoUser();
 
 <div class="wrapper">
     <?php
-    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapper.php';
+    require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/views/wrapperUser.php';
     ?>
 
     <div class="main-panel">
@@ -40,31 +40,31 @@ $gUser = new InfoUser();
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header" data-background-color="blue">
-                                <h4 class="title">Utilisateurs</h4>
-                                <p class="category">Sélectionnez un utilisateur avant de choisir une action</p>
+                                <h4 class="title">Entretiens</h4>
+                                <p class="category">Liste des entretiens importants à venir</p>
                             </div>
                             <div class="card-content table-responsive">
+                                <div class="text-center" style="margin-top:10px;">
+                                    <div class="margin-button2">
+                                        <button class="btn btn-default" name="Ajouter" id="Ajouter">Ajouter</button>
+                                    </div>
+                                </div>
+                                <br>
                                 <table class="table" id="example">
                                     <thead class="text-primary">
-                                    <th class="hidden">ID Utilisateur</th>
-                                    <th>Nom</th>
-                                    <th>Prénom</th>
-                                    <th>Téléphone</th>
-                                    <th>Courriel</th>
-                                    <th>Statut</th>
+                                    <th class="hidden">ID Entretien</th>
+                                    <th>Véhicule</th>
+                                    <th>Dernier entretien</th>
+                                    <th>Odomètre actuel</th>
+                                    <th>Entretien à faire</th>
                                     </thead>
                                     <tbody>
-                                    <?php $gUser->populateUserTable(); ?>
+                                    <?php $gEntretiens->getListEntretiensUser($_SESSION['user']['pk_utilisateur'],1);
+                                    $gEntretiens->getListEntretiensUser($_SESSION['user']['pk_utilisateur'],2);
+                                    $gEntretiens->getListEntretiensUser($_SESSION['user']['pk_utilisateur'],5); ?>
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                    </div>
-                    <div class="">
-                        <div class="margin-button2">
-                            <button class="btn btn-default" name="Ajouter" id="Ajouter">Ajouter</button>
-                            <button class="btn btn-default" name="Modifier" id="Modifier">Modifier</button>
-                            <button class="btn btn-default" name="Consulter" id="Consulter">Consulter</button>
                         </div>
                     </div>
                 </div>
@@ -97,6 +97,9 @@ $gUser = new InfoUser();
 <!--  Notifications Plugin    -->
 <script src="../js/bootstrap-notify.js"></script>
 
+<!--  Google Maps Plugin    -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+
 <!-- Material Dashboard javascript methods -->
 <script src="../js/material-dashboard.js"></script>
 
@@ -122,40 +125,12 @@ $gUser = new InfoUser();
             }
         });
 
-        //clic modifier, envoie en get le id selectionné
-        $('#Modifier').click(function () {
 
-            if ($('#example tr.selected td:first').length > 0) {
-                var idcont = $('#example tr.selected td:first').html();
-                window.location.href = "http://localhost/app/app/views/updateUseradmin.php?id=" + idcont + "";
-            } else {
-                swal({
-                    title: "",
-                    text: "Vous devez sélectionner un utilisateur",
-                    type: "warning",
-                    allowOutsideClick: true
-                });
-            }
-        });
 
-        //clic consulter, envoie en get le id selectionné
-        $('#Consulter').click(function () {
-            if ($('#example tr.selected td:first').length > 0) {
-                var idcons = $('#example tr.selected td:first').html();
-                window.location.href = "http://localhost/app/app/views/viewUser.php?id=" + idcons + "";
-            } else {
-                swal({
-                    title: "",
-                    text: "Vous devez sélectionner un utilisateur",
-                    type: "warning",
-                    allowOutsideClick: true
-                });
-            }
-        });
 
         //clic ajouter
         $('#Ajouter').click(function () {
-            window.location.href = "http://localhost/app/app/views/addUseradmin.php";
+            window.location.href = "addEntretiens.php";
         });
 
         var activePage = window.location.href;
@@ -177,7 +152,7 @@ $gUser = new InfoUser();
 
         });
 
-        $('.navbar-header a').html("Utilisateurs");
+        $('.navbar-header a').html("Entretiens");
     });
 
 
@@ -195,7 +170,6 @@ $gUser = new InfoUser();
         }, 1800);
     }
 
-
     function noAuthorize() {
 
         swal({
@@ -211,7 +185,6 @@ $gUser = new InfoUser();
             window.location.href = '../views/dashboard.php';
         }, 1800);
     }
-
 </script>
 
 <?php
@@ -219,14 +192,8 @@ if ($_SESSION['loggedIn'] == false) {
     echo '<script type="text/javascript">',
     'erreurNonCon();',
     '</script>';
-
 }
 
-if ($_SESSION['admin'] == 2) {
-    echo '<script type="text/javascript">',
-    'noAuthorize();',
-    '</script>';
-}
 ?>
 <script>
     if (!window.jQuery) document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');

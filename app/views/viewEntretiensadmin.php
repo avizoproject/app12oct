@@ -146,8 +146,8 @@ $gFacture = new InfoInvoice();
                                             <div class="form-group label-static">
                                                 <label class="control-label">Facture</label>
                                                 <?php
-                                                  if ($gFacture->findFactureByFk($currentEntretien["pk_entretien"])) {
-                                                    echo '<img src="../'. $gFacture->findFactureByFk($currentEntretien["pk_entretien"]) .'"/>';
+                                                  if ($gFacture->findFactureByFk($currentEntretien["pk_entretien"])['photo']) {
+                                                    echo '<img src="../'. $gFacture->findFactureByFk($currentEntretien["pk_entretien"])['photo'] .'"/>';
                                                   } else {
                                                     echo 'Aucune facture enregistrée';
                                                   }
@@ -156,7 +156,7 @@ $gFacture = new InfoInvoice();
                                         </div>
                                     </div>
 
-                                    <input type="submit" id="modifier" class="btn pull-right margin-button2" value="Modifier">
+                                    <input type="button" id="modifier" class="btn pull-right margin-button2" value="Modifier">
                                     <button id="retour" class="btn pull-right">Retour</button>
                                     <div class="clearfix"></div>
                                 </form>
