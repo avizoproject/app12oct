@@ -166,7 +166,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 
                 var StartDate = moment(startdate).format("YYYY-MM-DD HH:mm:ss");
                 var EndDate = moment(enddate).format("YYYY-MM-DD HH:mm:ss");
-                console.log(StartDate +" "+ EndDate);
+
                 return [StartDate, EndDate];
             }
 
@@ -320,9 +320,19 @@ $_SESSION['plusmoinsWeek'] = 0;
                     init_data: function (node, data) {
                     },
                     click: function (node, data) {
-                        //sweetalert moé ca
-                        var pk = node.find('.hidden').text();
-                        window.location.href = "http://localhost/app/app/views/updateReservationadmin.?id=" + pk;
+                        swal({
+                            title: "",
+                            text: "Voulez-vous modifier cette réservation?",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "Ok",
+                            cancelButtonColor: "#969696",
+                            cancelButtonText: "Annuler"
+                        }).then(function () {
+                            var pk = node.find('.hidden').text();
+                            window.location.href = "http://localhost/app/app/views/updateReservationadmin.?id=" + pk;
+                        })
+
                     },
 
 
@@ -393,7 +403,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 
                 $('.sidebar-wrapper a').each(function () {
                     var linkPage = this.href;
-					console.log(linkPage);
+
                     if (activePage == linkPage) {
                         $(this).closest("li").addClass("active");
                         $('li').each(function () {

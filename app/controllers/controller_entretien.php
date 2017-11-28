@@ -76,11 +76,18 @@ class controller_entretien
         $this->InfosEntretien->setFk_utilisateur($this->arrayEntretien[7]);
         $this->InfosEntretien->updateDBObject();
 
-        $this->InfosFacture->setPk_facture($facture["pk_facture"]);
-        $this->InfosFacture->setFk_entretien($id);
-        $this->InfosFacture->setMontant_entretien($this->arrayEntretien[4]);
-        $this->InfosFacture->setPhoto($this->addImage($id));
-        $this->InfosFacture->updateDBObject();
+        if($facture == null){
+            $this->InfosFacture->setFk_entretien($id);
+            $this->InfosFacture->setMontant_entretien($this->arrayEntretien[4]);
+            $this->InfosFacture->setPhoto($this->addImage($id));
+            $this->InfosFacture->addDBObject();
+        }else{
+            $this->InfosFacture->setPk_facture($facture["pk_facture"]);
+            $this->InfosFacture->setFk_entretien($id);
+            $this->InfosFacture->setMontant_entretien($this->arrayEntretien[4]);
+            $this->InfosFacture->setPhoto($this->addImage($id));
+            $this->InfosFacture->updateDBObject();
+        }
     }
 
     function suppEntretien($id)
@@ -154,7 +161,7 @@ if (isset($_GET["supp"])){
     if ($_SESSION['admin'] === 1)
         header("Location: http://localhost/app/app/views/entretienAdmin.php");
     else{
-        header("Location: http://localhost/app/app/views/addEntretiens.php");
+        header("Location: http://localhost/app/app/views/entretien.php");
     exit();
     }
 

@@ -148,7 +148,7 @@ $gFacture = new InfoInvoice();
                                                 <label class="control-label">Facture</label>
                                                 <?php
                                                   if ($gFacture->findFactureByFk($currentEntretien["pk_entretien"])) {
-                                                    echo '<img src="../'. $gFacture->findFactureByFk($currentEntretien["pk_entretien"]) .'"/>';
+                                                    echo '<img src="../'. $gFacture->findFactureByFk($currentEntretien["pk_entretien"])['photo'] .'"/>';
                                                   } else {
                                                     echo 'Aucune facture enregistrée';
                                                   }
@@ -225,34 +225,44 @@ $gFacture = new InfoInvoice();
 
         $(document).on("submit", "#formModifEntretien", function (e) {
             e.preventDefault();
-            swal({
-                title: "Modifié",
-                text: "L'entretien a bien été modifié.",
-                type: "success"
-            }).then(function () {
-                var form = $("#formModifEntretien")[0];
-                var id = <?php echo $currentEntretien["pk_entretien"]; ?>;
-                var formData = new FormData(form);
+            if ($("#garage").val() && $("#acquisition").val() && $("#vehicule").val() && $("#type").val()) {
+                swal({
+                    title: "Modifié",
+                    text: "L'entretien a bien été modifié.",
+                    type: "success"
+                }).then(function () {
+                    var form = $("#formModifEntretien")[0];
+                    var id = <?php echo $currentEntretien["pk_entretien"]; ?>;
+                    var formData = new FormData(form);
 
-                $.ajax({method : "POST",
-                    url : "../controllers/controller_entretien.php?mod=1&id=" + id,
-                    data : formData,
-                    async: false,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    beforeSend : function() {
-                        // TO INSERT - loading animation
-                    },
-                    success : function(response) {
-                        console.log(response);
-                        window.location.replace("http://localhost/app/app/views/entretienAdmin.php");
-                    },
-                    error : function(xhr, title, trace) {
-                        console.error(title + trace);
-                    }
+                    $.ajax({
+                        method: "POST",
+                        url: "../controllers/controller_entretien.php?mod=1&id=" + id,
+                        data: formData,
+                        async: false,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function () {
+                            // TO INSERT - loading animation
+                        },
+                        success: function (response) {
+                            console.log(response);
+                            window.location.replace("http://localhost/app/app/views/entretienAdmin.php");
+                        },
+                        error: function (xhr, title, trace) {
+                            console.error(title + trace);
+                        }
+                    });
                 });
-            })
+            } else {
+                    swal({
+                        title:"",
+                        text:"Vous avez oublié une liste déroulante.",
+                        type:"warning",
+                        allowOutsideClick : true
+                    });
+                }
         });
 
         $(document).on("click", "#cancel", function (e) {

@@ -146,8 +146,8 @@ $gFacture = new InfoInvoice();
                                             <div class="form-group label-static">
                                                 <label class="control-label">Facture</label>
                                                 <?php
-                                                  if ($gFacture->findFactureByFk($currentEntretien["pk_entretien"])) {
-                                                    echo '<img src="../'. $gFacture->findFactureByFk($currentEntretien["pk_entretien"]) .'"/>';
+                                                  if ($gFacture->findFactureByFk($currentEntretien["pk_entretien"])['photo']) {
+                                                    echo '<img src="../'. $gFacture->findFactureByFk($currentEntretien["pk_entretien"])['photo'] .'"/>';
                                                   } else {
                                                     echo 'Aucune facture enregistrée';
                                                   }
