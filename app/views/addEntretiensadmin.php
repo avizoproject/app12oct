@@ -223,7 +223,7 @@ function ajoutGarage() {
                     // TO INSERT - loading animation
                 },
                 success : function(response) {
-                    console.log(response);
+
                     swal({
                         title: "Ajouté",
                         text: "L'entretien a bien été ajouté.",

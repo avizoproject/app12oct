@@ -161,7 +161,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 
                 var StartDate = moment(startdate).format("YYYY-MM-DD HH:mm:ss");
                 var EndDate = moment(enddate).format("YYYY-MM-DD HH:mm:ss");
-                console.log(StartDate +" "+ EndDate);
+
                 return [StartDate, EndDate];
             }
 
@@ -327,7 +327,6 @@ $_SESSION['plusmoinsWeek'] = 0;
                         })
                     },
 
-
                 });
 
             }
@@ -343,7 +342,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                 type: "POST",
                 data: data,
                 success: function (data) {
-                    console.log(data);
+
                    reservations = JSON.parse(data);
                     $.each(reservations, function (index){
 
@@ -445,6 +444,7 @@ $_SESSION['plusmoinsWeek'] = 0;
             });
 
         }
+
     	$(document).ready(function(){
 
 			// Javascript method's body can be found in assets/js/demos.js
@@ -504,12 +504,12 @@ $_SESSION['plusmoinsWeek'] = 0;
                 });
 
                 var activePage = window.location.href;
-            	console.log(activePage);
+
                 var active = activePage.substring(activePage.lastIndexOf('/') + 1);
 
                 $('.sidebar-wrapper a').each(function () {
                     var linkPage = this.href;
-					console.log(linkPage);
+
                     if (activePage == linkPage) {
                         $(this).closest("li").addClass("active");
                         $('li').each(function () {

@@ -166,7 +166,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 
                 var StartDate = moment(startdate).format("YYYY-MM-DD HH:mm:ss");
                 var EndDate = moment(enddate).format("YYYY-MM-DD HH:mm:ss");
-                console.log(StartDate +" "+ EndDate);
+
                 return [StartDate, EndDate];
             }
 
@@ -403,7 +403,7 @@ $_SESSION['plusmoinsWeek'] = 0;
 
                 $('.sidebar-wrapper a').each(function () {
                     var linkPage = this.href;
-					console.log(linkPage);
+
                     if (activePage == linkPage) {
                         $(this).closest("li").addClass("active");
                         $('li').each(function () {

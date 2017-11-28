@@ -36,14 +36,6 @@ echo "<div class='sidebar' data-color='blue' data-image='../img/sidebar-1.jpg'>
 	                        <i class='material-icons'>group</i>
 	                        <p>Utilisateurs</p>
 	                    </a>
-	                </li>        
-	             
-	                <li id='notifications' >
-	                    <a href='notifications.php'>
-	                        <i class='material-icons text-gray'>notifications</i>
-	                        <p>Notifications</p>
-	                    </a>
-	             
 	            </ul>
 	    	</div>
 	    </div>";

@@ -247,7 +247,7 @@ $gFacture = new InfoInvoice();
                             // TO INSERT - loading animation
                         },
                         success : function(response) {
-                            console.log(response);
+
                             window.location.replace("http://localhost/app/app/views/entretienAdmin.php");
                         },
                         error : function(xhr, title, trace) {

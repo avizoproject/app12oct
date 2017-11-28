@@ -40,7 +40,7 @@ $gEntretiens = new InfoReservation();
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header" data-background-color="blue">
-                                <h4 class="title">Entretiens</h4>
+                                <h4 class="title">Entretiens à venir</h4>
                                 <p class="category">Liste des entretiens importants à venir</p>
                             </div>
                             <div class="card-content table-responsive">
@@ -153,12 +153,12 @@ $gEntretiens = new InfoReservation();
         });
 
         var activePage = window.location.href;
-        console.log(activePage);
+
         var active = activePage.substring(activePage.lastIndexOf('/') + 1);
 
         $('.sidebar-wrapper a').each(function () {
             var linkPage = this.href;
-            console.log(linkPage);
+
             if (activePage == linkPage) {
                 $(this).closest("li").addClass("active");
                 $('li').each(function () {

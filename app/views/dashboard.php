@@ -169,12 +169,12 @@
         demo.initDashboardPageCharts();
 
         var activePage = window.location.href;
-        console.log(activePage);
+
         var active = activePage.substring(activePage.lastIndexOf('/') + 1);
 
         $('.sidebar-wrapper a').each(function () {
             var linkPage = this.href;
-            console.log(linkPage);
+
             if (activePage == linkPage) {
                 $(this).closest("li").addClass("active");
                 $('li').each(function () {

@@ -204,40 +204,50 @@ $listVehicule = new InfoVehicule();
 
         $(document).on("click", "#confirmer", function (e) {
             e.preventDefault();
-            swal({
-                title: "Ajouté",
-                text: "L'entretien a bien été ajouté.",
-                type: "success"
-            }).then(function () {
+            if ($("#garage").val() && $("#acquisition").val() && $("#vehicule").val() && $("#type").val()) {
+                swal({
+                    title: "Ajouté",
+                    text: "L'entretien a bien été ajouté.",
+                    type: "success"
+                }).then(function () {
 
-                var form = $("#formAjout")[0];
+                    var form = $("#formAjout")[0];
 
-                var formData = new FormData(form);
+                    var formData = new FormData(form);
 
-                $.ajax({method : "POST",
-                    url : "../controllers/controller_entretien.php",
-                    data : formData,
-                    async: false,
-                    cache: false,
-                    contentType: false,
+                    $.ajax({
+                        method: "POST",
+                        url: "../controllers/controller_entretien.php",
+                        data: formData,
+                        async: false,
+                        cache: false,
+                        contentType: false,
 
-                    processData: false,
-                    beforeSend : function() {
-                        // TO INSERT - loading animation
-                    },
-                    success : function(response) {
-                        console.log(response);
-                        window.location.replace("http://localhost/app/app/views/dashboard.php");
-                    },
-                    error : function(xhr, title, trace) {
-                        console.error(title + trace);
-                    }
+                        processData: false,
+                        beforeSend: function () {
+                            // TO INSERT - loading animation
+                        },
+                        success: function (response) {
+
+                            window.location.replace("http://localhost/app/app/views/dashboard.php");
+                        },
+                        error: function (xhr, title, trace) {
+                            console.error(title + trace);
+                        }
 
 
+                    });
+
+
+                })
+            }else{
+                swal({
+                    title:"",
+                    text:"Vous avez oublié une liste déroulante.",
+                    type:"warning",
+                    allowOutsideClick : true
                 });
-
-
-            })
+            }
         });
 
         $(document).on("click", "#cancel", function (e) {
