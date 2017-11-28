@@ -148,7 +148,7 @@ if (isset($_GET["supp"])){
     if ($_SESSION['admin'] === 1)
         header("Location: http://localhost/app/app/views/entretienAdmin.php");
     else{
-        header("Location: http://localhost/app/app/views/addEntretiens.php");
+        header("Location: http://localhost/app/app/views/entretien.php");
     exit();
     }
 

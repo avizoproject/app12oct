@@ -204,6 +204,7 @@ $listVehicule = new InfoVehicule();
 
         $(document).on("click", "#confirmer", function (e) {
             e.preventDefault();
+
             if ($("#garage").val() && $("#acquisition").val() && $("#vehicule").val() && $("#type").val()) {
                 swal({
                     title: "Ajouté",
@@ -261,7 +262,7 @@ $listVehicule = new InfoVehicule();
                 cancelButtonColor: "#969696",
                 cancelButtonText: "Annuler"
             }).then(function () {
-                location.href = "../views/dashboard.php";
+                location.href = "../views/entretien.php";
             })
         });
 

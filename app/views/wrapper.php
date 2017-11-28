@@ -36,6 +36,8 @@ echo "<div class='sidebar' data-color='blue' data-image='../img/sidebar-1.jpg'>
 	                        <i class='material-icons'>group</i>
 	                        <p>Utilisateurs</p>
 	                    </a>
+	                </li>
+	                
 	            </ul>
 	    	</div>
 	    </div>";
