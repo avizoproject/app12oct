@@ -238,6 +238,7 @@ $listVehicule = new InfoVehicule();
             e.preventDefault();
 
             if ($("#garage").val() && $("#acquisition").val() && $("#vehicule").val() && $("#type").val()) {
+              swal.resetDefaults()
                 swal({
                     title: "Ajouté",
                     text: "L'entretien a bien été ajouté.",
@@ -274,6 +275,7 @@ $listVehicule = new InfoVehicule();
 
                 })
             }else{
+              swal.resetDefaults()
                 swal({
                     title:"",
                     text:"Vous avez oublié une liste déroulante.",
@@ -285,6 +287,7 @@ $listVehicule = new InfoVehicule();
 
         $(document).on("click", "#cancel", function (e) {
             e.preventDefault();
+            swal.resetDefaults()
             swal({
                 title: "",
                 text: "L'entretien va être annulé.",

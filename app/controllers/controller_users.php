@@ -91,5 +91,5 @@ if (isset($_GET['ajout'])) {
   $usersControl->profilUser($_GET['id']);
 }
 
-header("Location: http://localhost/app/app/views/dashboard.php");
+header("Location: http://localhost/app/app/views/user.php");
 ?>

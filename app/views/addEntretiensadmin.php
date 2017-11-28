@@ -291,12 +291,14 @@ $listVehicule = new InfoVehicule();
                     }
                 }
             )
-        } else
+        } else {
+            swal.resetDefaults()
             swal({
                 title: 'Vous devez sélectionner un garage',
                 type: 'warning',
                 confirmButtonText: 'Ok'
             })
+          }
     }
 
 
@@ -324,7 +326,7 @@ $listVehicule = new InfoVehicule();
                         // TO INSERT - loading animation
                     },
                     success: function (response) {
-
+                        swal.resetDefaults()
                         swal({
                             title: "Ajouté",
                             text: "L'entretien a bien été ajouté.",
@@ -338,6 +340,7 @@ $listVehicule = new InfoVehicule();
                     }
                 });
             }else {
+                swal.resetDefaults()
                 swal({
                     title:"",
                     text:"Vous avez oublié une liste déroulante.",
@@ -349,6 +352,7 @@ $listVehicule = new InfoVehicule();
 
         $(document).on("click", "#cancel", function (e) {
             e.preventDefault();
+            swal.resetDefaults()
             swal({
                 title: "",
                 text: "L'entretien va être annulé.",

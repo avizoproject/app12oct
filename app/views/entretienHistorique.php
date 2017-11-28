@@ -131,7 +131,7 @@ $gEntretiens = new InfoReservation();
             } else {
                 swal({
                     title: "",
-                    text: "Vous devez sélectionner un entretien",
+                    text: "Vous devez sélectionner un entretien.",
                     type: "warning",
                     allowOutsideClick: true
                 });
@@ -147,7 +147,7 @@ $gEntretiens = new InfoReservation();
             } else {
                 swal({
                     title: "",
-                    text: "Vous devez sélectionner un entretien",
+                    text: "Vous devez sélectionner un entretien.",
                     type: "warning",
                     allowOutsideClick: true
                 });

@@ -312,12 +312,14 @@ $gFacture = new InfoInvoice();
                     }
                 }
             )
-        } else
+        } else {
+            swal.resetDefaults()
             swal({
                 title: 'Vous devez sélectionner un garage',
                 type: 'warning',
                 confirmButtonText: 'Ok'
             })
+          }
     }
 
 
@@ -330,6 +332,7 @@ $gFacture = new InfoInvoice();
             e.preventDefault();
 
             if ($("#garage").val() && $("#acquisition").val() && $("#vehicule").val() && $("#type").val()) {
+              swal.resetDefaults()
                 swal({
                     title: "Modifié",
                     text: "L'entretien a bien été modifié.",
@@ -360,6 +363,7 @@ $gFacture = new InfoInvoice();
                     });
                 });
             } else {
+              swal.resetDefaults()
                     swal({
                         title:"",
                         text:"Vous avez oublié une liste déroulante.",
@@ -371,6 +375,7 @@ $gFacture = new InfoInvoice();
 
         $(document).on("click", "#cancel", function (e) {
             e.preventDefault();
+            swal.resetDefaults()
             swal({
                 title: "",
                 text: "Les changements vont être annulés.",
@@ -386,6 +391,7 @@ $gFacture = new InfoInvoice();
 
         $(document).on("click", "#supprimer", function (e) {
             e.preventDefault();
+            swal.resetDefaults()
             swal({
                 title: "",
                 text: "L'entretien va être supprimé.",

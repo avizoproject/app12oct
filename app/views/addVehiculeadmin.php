@@ -48,21 +48,20 @@ $listVehicule = new InfoVehicule();
                                 <p class="category">Tous les champs sont obligatoires.</p>
                             </div>
                             <div class="card-content">
-                              <?php
-                              include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
-                              $results = $conn->query("SELECT MAX(pk_vehicule) + 1 AS Top FROM vehicule");
-                              $row = $results->fetch_assoc();
-                              if (file_exists("../img/car" . $row['Top']. ".jpg") && $_GET['upload']) {
-                                echo '<div class="col-md-5 pull-right"><img src="../img/car' . $row["Top"] . '.jpg" /></div>';
-                              } else {
-                                echo '<div class="col-md-5 pull-right"><form action="../controllers/uploadImg.php" method="post" enctype="multipart/form-data">';
-                                  echo '<label class="control-label">Image du véhicule</label><br><br>';
-                                  echo '<input type="file" name="fileToUpload" id="fileToUpload" required><br>';
-                                  echo '<input type="submit" class="btn" value="Enregistrer l\'image" name="submit">';
-                                echo '</form></div>';
-                              } ?>
-
-                                <form id="formAjout" >
+                                <form id="formAjout">
+                                  <?php
+                                  include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+                                  $results = $conn->query("SELECT MAX(pk_vehicule) + 1 AS Top FROM vehicule");
+                                  $row = $results->fetch_assoc();
+                                  if (file_exists("../img/car" . $row['Top']. ".jpg") && $_GET['upload']) {
+                                    echo '<div class="col-md-5 pull-right"><div class="form-group"><img src="../img/car' . $row["Top"] . '.jpg" /></div></div><div class="clearfix visible-xs"></div>';
+                                  } else {
+                                    echo '<div class="col-md-5 pull-right"><form action="../controllers/uploadImg.php" method="post" enctype="multipart/form-data">';
+                                      echo '<label class="control-label">Image du véhicule</label><br><br>';
+                                      echo '<input type="file" name="fileToUpload" id="fileToUpload" required><br>';
+                                      echo '<input type="submit" class="btn" value="Enregistrer l\'image" name="submit">';
+                                    echo '</form></div><div class="clearfix visible-xs"></div>';
+                                  } ?>
                                     <div>
                                         <div class="col-md-7">
                                             <div class="form-group label-static">
