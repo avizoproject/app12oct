@@ -44,7 +44,7 @@ $gEntretiens = new InfoReservation();
                                 <p class="category">Sélectionnez un entretien avant de choisir une action</p>
                             </div>
                             <div class="card-content table-responsive">
-                                <table class="table" id="example" disabled>
+                                <table class="table" id="example">
                                     <thead class="text-primary">
                                     <th class="hidden">ID Entretien</th>
                                     <th>Véhicule</th>
