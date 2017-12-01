@@ -189,12 +189,44 @@ $listVehicule = new InfoVehicule();
 
 <script type="text/javascript">
     function ajoutGarage() {
-        var name = prompt("Veuillez entrer le nom du garage :");
-        var tel = prompt("Veuillez entrer le téléphone du garage :");
-        var desc = prompt("Veuillez entrer l'adresse du garage :");
-        if (name != null && name != "" && tel != null && tel != "" && desc != null && desc != "") {
-            location.href = "../controllers/ajouterGarage.php?nom=" + name + "&tel=" + tel + "&desc=" + desc;
-        }
+
+        swal.setDefaults({
+            input: 'text',
+            confirmButtonText: 'suivant &rarr;',
+            showCancelButton: true,
+            cancelButtonText: "Annuler",
+            progressSteps: ['1', '2', '3']
+        })
+
+        var steps = [
+            {
+                title: 'Garage',
+                text: 'Veuillez entrer le nom'
+            }, {
+                title: 'Garage',
+                text: 'Veuillez entrer le numéro de téléphone (Format:555 555-4444)'
+            }, {
+                title: 'Garage',
+                text: 'Veuillez entrer une description (adresse etc...)'
+            }
+        ]
+
+        swal.queue(steps).then(function (result) {
+            swal.resetDefaults()
+
+            if (result) {
+                name = result[0];
+                tel = result[1];
+                desc = result[2];
+                swal({
+                    title: 'Le garage a été ajouté!',
+                    showConfirmButton: false
+
+                })
+                location.href = "../controllers/ajouterGarage.php?nom=" + name + "&tel=" + tel + "&desc=" + desc;
+            }
+        })
+
     }
 
     $(document).ready(function () {
@@ -206,6 +238,7 @@ $listVehicule = new InfoVehicule();
             e.preventDefault();
 
             if ($("#garage").val() && $("#acquisition").val() && $("#vehicule").val() && $("#type").val()) {
+              swal.resetDefaults()
                 swal({
                     title: "Ajouté",
                     text: "L'entretien a bien été ajouté.",
@@ -242,6 +275,7 @@ $listVehicule = new InfoVehicule();
 
                 })
             }else{
+              swal.resetDefaults()
                 swal({
                     title:"",
                     text:"Vous avez oublié une liste déroulante.",
@@ -253,6 +287,7 @@ $listVehicule = new InfoVehicule();
 
         $(document).on("click", "#cancel", function (e) {
             e.preventDefault();
+            swal.resetDefaults()
             swal({
                 title: "",
                 text: "L'entretien va être annulé.",

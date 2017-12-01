@@ -54,7 +54,7 @@ $currentReservation = $gReservation->getObjectFromDB($_GET["id"]);
                                      <form id="formAjout">
                                        <?php
                                         if (file_exists("../img/car" . $currentReservation['fk_vehicule'] . ".jpg")) {
-                                         echo '<div class="col-md-5 pull-right"><img id="imgVehicule" src="../img/car' . $currentReservation["fk_vehicule"] . '.jpg" /></div>';
+                                          echo '<div class="col-md-5 pull-right"><div class="form-group"><img src="../img/car' . $currentReservation["fk_vehicule"] . '.jpg" /></div></div><div class="clearfix visible-xs"></div>';
                                         }
                                        ?>
                                        <div>

@@ -65,8 +65,8 @@ class InfoGarage extends InfoModel
         include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
         $results = $conn->query("SELECT * FROM garage");
-        if ($pk == null){
-            echo "<option>Sélectionnez un garage...</option>";
+        if ($pk === null){
+            echo "<option value='0'>Sélectionnez un garage...</option>";
         }
 
         while ($row = $results->fetch_assoc()) {

@@ -59,8 +59,11 @@ $listVehicule = new InfoVehicule();
                             <div class="card-content">
                                 <form id="formAjout">
                                   <div class="col-md-5 pull-right">
-                                    <img id="imgVehicule" src="" hidden />
+                                    <div class="form-group">
+                                      <img id="imgVehicule" src="" hidden />
+                                    </div>
                                   </div>
+                                  <div class="clearfix visible-xs"></div>
                                   <div>
                                     <div class="col-md-7">
                                         <div class="form-group label-static">

@@ -48,18 +48,18 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                  <div class="card-content">
                                    <?php
                                    if (file_exists("../img/car" . $currentVehicule['pk_vehicule'] . ".jpg")) {
-                                     echo '<div class="col-md-5 pull-right"><img src="../img/car' . $currentVehicule['pk_vehicule'] . '.jpg" />';
+                                     echo '<div class="col-md-5 pull-right"><div class="form-group"><img src="../img/car' . $currentVehicule['pk_vehicule'] . '.jpg" />';
                                      echo '<form action="../controllers/uploadImg.php?update='.$currentVehicule['pk_vehicule'].'" method="post" enctype="multipart/form-data">';
                                        echo '<label class="control-label">Image du véhicule</label><br><br>';
                                        echo '<input type="file" name="fileToUpload" id="fileToUpload" required><br>';
                                        echo '<input type="submit" class="btn" value="Enregistrer l\'image" name="submit">';
-                                     echo '</form></div>';
+                                     echo '</form></div></div><div class="clearfix visible-xs"></div>';
                                    } else {
                                      echo '<div class="col-md-5 pull-right"><form action="../controllers/uploadImg.php?update='.$currentVehicule['pk_vehicule'].'" method="post" enctype="multipart/form-data">';
                                        echo '<label class="control-label">Image du véhicule</label><br><br>';
                                        echo '<input type="file" name="fileToUpload" id="fileToUpload" required><br>';
                                        echo '<input type="submit" class="btn" value="Enregistrer l\'image" name="submit">';
-                                     echo '</form></div>';
+                                     echo '</form></div><div class="clearfix visible-xs"></div>';
                                    } ?>
 
                                    <form id="formAjout" >

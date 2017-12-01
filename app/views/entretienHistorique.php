@@ -52,6 +52,7 @@ $gEntretiens = new InfoReservation();
                                     <th>Date entretien</th>
                                     <th>Type d'entretien</th>
                                     <th>Coût de l'entretien</th>
+                                    <th>Entretien fait par</th>
                                     </thead>
                                     <tbody>
                                     <?php $gEntretiens->getHistoriqueEntretiens();?>
@@ -130,7 +131,7 @@ $gEntretiens = new InfoReservation();
             } else {
                 swal({
                     title: "",
-                    text: "Vous devez sélectionner un entretien",
+                    text: "Vous devez sélectionner un entretien.",
                     type: "warning",
                     allowOutsideClick: true
                 });
@@ -146,7 +147,7 @@ $gEntretiens = new InfoReservation();
             } else {
                 swal({
                     title: "",
-                    text: "Vous devez sélectionner un entretien",
+                    text: "Vous devez sélectionner un entretien.",
                     type: "warning",
                     allowOutsideClick: true
                 });

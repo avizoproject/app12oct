@@ -230,7 +230,7 @@ function getSelectReservations($id_user){
 
         include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
         //SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','')); pour config (section SQL) GROUP BY dans phpMyAdmin
-        $results = $conn->query("SELECT vehicule.pk_vehicule,entretien.pk_entretien , modele.nom_modele,couleur.nom_couleur, vehicule.odometre, entretien.odometre_entretien, type_entretien.nom, vehicule.odometre-entretien.odometre_entretien as difference FROM couleur LEFT JOIN vehicule ON couleur.pk_couleur=vehicule.fk_couleur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN entretien ON vehicule.pk_vehicule = entretien.fk_vehicule LEFT JOIN type_entretien ON type_entretien.pk_type_entretien=entretien.fk_type_entretien WHERE entretien.fk_type_entretien = ".$type." GROUP BY vehicule.pk_vehicule ORDER BY ( DATEDIFF( NOW(),entretien.date_entretien ) )");
+        $results = $conn->query("SELECT vehicule.pk_vehicule,entretien.pk_entretien, modele.nom_modele,couleur.nom_couleur, vehicule.odometre, entretien.odometre_entretien, type_entretien.nom, vehicule.odometre-entretien.odometre_entretien as difference FROM couleur LEFT JOIN vehicule ON couleur.pk_couleur=vehicule.fk_couleur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN entretien ON vehicule.pk_vehicule = entretien.fk_vehicule LEFT JOIN type_entretien ON type_entretien.pk_type_entretien=entretien.fk_type_entretien WHERE entretien.fk_type_entretien = ".$type." GROUP BY vehicule.pk_vehicule ORDER BY ( DATEDIFF( NOW(),entretien.date_entretien ) )");
 
 
         $allentretiens = array();
@@ -306,6 +306,8 @@ function getSelectReservations($id_user){
 
         return json_encode($allentretiens);
     }
+
+
 
     //Liste des entretiens à faire côté admin
     function getListEntretiensUser($iduser,$type)
@@ -395,7 +397,7 @@ function getHistoriqueEntretiens($type)
 
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 //SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','')); pour config (section SQL) GROUP BY dans phpMyAdmin
-    $results = $conn->query("SELECT vehicule.pk_vehicule,modele.nom_modele ,couleur.nom_couleur,entretien.pk_entretien, type_entretien.nom, odometre_entretien, entretien.date_entretien, cout_entretien FROM entretien JOIN vehicule on entretien.fk_vehicule=vehicule.pk_vehicule JOIN modele ON modele.pk_modele=vehicule.fk_modele JOIN couleur ON couleur.pk_couleur=vehicule.fk_couleur JOIN type_entretien ON type_entretien.pk_type_entretien=entretien.fk_type_entretien
+    $results = $conn->query("SELECT vehicule.pk_vehicule,modele.nom_modele ,utilisateur.prenom, entretien.fk_utilisateur, couleur.nom_couleur,entretien.pk_entretien, type_entretien.nom, odometre_entretien, entretien.date_entretien, cout_entretien FROM entretien JOIN vehicule on entretien.fk_vehicule=vehicule.pk_vehicule JOIN modele ON modele.pk_modele=vehicule.fk_modele JOIN couleur ON couleur.pk_couleur=vehicule.fk_couleur LEFT JOIN utilisateur ON entretien.fk_utilisateur = utilisateur.pk_utilisateur  JOIN type_entretien ON type_entretien.pk_type_entretien=entretien.fk_type_entretien
 group by pk_entretien");
 
 
@@ -410,6 +412,8 @@ group by pk_entretien");
             'nom_modele' => $row['nom_modele'],
             'cout_entretien' => $row['cout_entretien'],
             'odometre_entretien' => $row['odometre_entretien'],
+            'prenom' => $row['prenom'],
+            'fk_utilisateur' => $row['fk_utilisateur']
         );
     }
 
@@ -430,6 +434,8 @@ group by pk_entretien");
             echo $allentretiens[$i]['nom'] . "</td>";
             echo "<td>";
             echo $allentretiens[$i]['cout_entretien'] . "</td>";
+            echo "<td>";
+            echo $allentretiens[$i]['prenom'] . "  #" . $allentretiens[$i]['fk_utilisateur']. "</td>";
             echo "</tr>";
         }
     }
