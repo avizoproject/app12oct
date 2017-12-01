@@ -46,29 +46,24 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                      <p class="category">Tous les champs sont obligatoires.</p>
                                  </div>
                                  <div class="card-content">
-                                   <?php
-                                   if (file_exists("../img/car" . $currentVehicule['pk_vehicule'] . ".jpg")) {
-                                     echo '<div class="col-md-5 pull-right"><div class="form-group"><img src="../img/car' . $currentVehicule['pk_vehicule'] . '.jpg" />';
-                                     echo '<form action="../controllers/uploadImg.php?update='.$currentVehicule['pk_vehicule'].'" method="post" enctype="multipart/form-data">';
-                                       echo '<label class="control-label">Image du véhicule</label><br><br>';
-                                       echo '<input type="file" name="fileToUpload" id="fileToUpload" required><br>';
-                                       echo '<input type="submit" class="btn" value="Enregistrer l\'image" name="submit">';
-                                     echo '</form></div></div><div class="clearfix visible-xs"></div>';
-                                   } else {
-                                     echo '<div class="col-md-5 pull-right"><form action="../controllers/uploadImg.php?update='.$currentVehicule['pk_vehicule'].'" method="post" enctype="multipart/form-data">';
-                                       echo '<label class="control-label">Image du véhicule</label><br><br>';
-                                       echo '<input type="file" name="fileToUpload" id="fileToUpload" required><br>';
-                                       echo '<input type="submit" class="btn" value="Enregistrer l\'image" name="submit">';
-                                     echo '</form></div><div class="clearfix visible-xs"></div>';
-                                   } ?>
-
                                    <form id="formAjout" >
-
+                                           <?php
+                                           if (file_exists("../img/car" . $currentVehicule['pk_vehicule'] . ".jpg")) {
+                                               echo '<div class="col-md-5 pull-right"><div class="form-group"><img src="../img/car' . $currentVehicule['pk_vehicule'] . '.jpg" />';
+                                               echo '<label class="control-label">Image du véhicule</label><br><br>';
+                                               echo '<input type="file" name="fileToUpload" id="fileToUpload" ><br>';
+                                               echo '</div></div><div class="clearfix visible-xs"></div>';
+                                           } else {
+                                               echo '<div class="col-md-5 pull-right">';
+                                               echo '<label class="control-label">Image du véhicule</label><br><br>';
+                                               echo '<input type="file" name="fileToUpload" id="fileToUpload" ><br>';
+                                               echo '</div><div class="clearfix visible-xs"></div>';
+                                           } ?>
                                        <div>
                                            <div class="col-md-7">
                                                <div class="form-group label-static">
                                                    <label class="control-label">Marque</label>
-                                                   <select class="form-control" id="marque" name="select" required></select>
+                                                   <select class="form-control" id="marque" name="marque" required></select>
                                                    <label onclick="modMarque()">Modifier</label><label onclick="ajoutMarque()" style="float: right;">Ajouter</label>
                                                </div>
                                            </div>
@@ -78,7 +73,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            <div class="col-md-7">
                                                <div class="form-group label-static">
                                                    <label class="control-label">Modèle</label>
-                                                   <select class="form-control" id="modele" name="select" required></select>
+                                                   <select class="form-control" id="modele" name="modele" required></select>
                                                    <label onclick="modModele()">Modifier</label><label onclick="ajoutModele()" style="float: right;">Ajouter</label>
                                                </div>
                                            </div>
@@ -88,7 +83,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            <div class="col-md-7">
                                                <div class="form-group label-static">
                                                    <label class="control-label">Année</label>
-                                                   <input type='number' class='form-control' id='annee' maxlength="4" min="1950" pattern="\d{4}" value='<?php echo $currentVehicule['annee']; ?>' required>
+                                                   <input type='number' class='form-control' id='annee' name='annee' maxlength="4" min="1950" pattern="\d{4}" value='<?php echo $currentVehicule['annee']; ?>' required>
                                                </div>
                                            </div>
                                        </div>
@@ -97,7 +92,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            <div class="col-md-7">
                                                <div class="form-group label-static">
                                                    <label class="control-label">Couleur</label>
-                                                   <select class="form-control" id="couleur" name="select" required></select>
+                                                   <select class="form-control" id="couleur" name="couleur" required></select>
                                                    <label onclick="modCouleur()">Modifier</label><label onclick="ajoutCouleur()" style="float: right;">Ajouter</label>
                                                </div>
                                            </div>
@@ -107,7 +102,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            <div class="col-md-7">
                                                <div class="form-group label-static">
                                                    <label class="control-label">Secteur</label>
-                                                   <select class="form-control" id="secteur" name="select" required></select>
+                                                   <select class="form-control" id="secteur" name="secteur" required></select>
                                                </div>
                                            </div>
                                        </div>
@@ -116,7 +111,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            <div class="col-md-7">
                                                <div class="form-group label-static">
                                                    <label class="control-label">Odomètre</label>
-                                                   <input type='number' class='form-control' id='odometre' maxlength='6' min='1' value='<?php echo $currentVehicule['odometre']; ?>' required>
+                                                   <input type='number' class='form-control' id='odometre' name='odometre'maxlength='6' min='1' value='<?php echo $currentVehicule['odometre']; ?>' required>
                                                </div>
                                            </div>
                                        </div>
@@ -125,7 +120,7 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                            <div class="col-md-7">
                                                <div class="form-group label-static">
                                                    <label class="control-label">Plaque</label>
-                                                   <input type='text' class='form-control' id='plaque' maxlength='7' value='<?php echo $currentVehicule['plaque']; ?>' required>
+                                                   <input type='text' class='form-control' id='plaque' name='plaque'maxlength='7' value='<?php echo $currentVehicule['plaque']; ?>' required>
                                                </div>
                                            </div>
                                        </div>
@@ -255,7 +250,26 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                   text: "Le véhicule a bien été modifié",
                   type: "success"
               }).then(function () {
-                location.href = "../controllers/controller_vehicules.php?mod=1&id=<?php echo $_GET['id']; ?>&marque=" + marque + "&modele=" + modele + "&annee=" + annee + "&couleur=" + couleur + "&secteur=" + secteur + "&odometre=" + odometre + "&plaque=" + plaque + "&date=" + date + "&statut=" + statut;
+                  var url = "../controllers/controller_vehicules.php?mod=1&id=<?php echo $_GET['id']; ?>";
+                //location.href = "../controllers/controller_vehicules.php?mod=1&id=<?php echo $_GET['id']; ?>&marque=" + marque + "&modele=" + modele + "&annee=" + annee + "&couleur=" + couleur + "&secteur=" + secteur + "&odometre=" + odometre + "&plaque=" + plaque + "&date=" + date + "&statut=" + statut;
+                  var form = $("#formAjout")[0];
+
+                  var formData = new FormData(form);
+
+                  $.ajax({
+                      type: "POST",
+                      url: url,
+                      data: formData,
+                      contentType: false,
+                      processData: false,
+                      success: function (response) {
+                          console.log(response);
+                          window.location.replace("http://localhost/app/app/views/vehicule.php");
+                      },
+                      error: function (xhr, title, trace) {
+                          console.error(title + trace);
+                      }
+                  });
               })
             }
         });

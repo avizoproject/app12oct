@@ -41,7 +41,7 @@ class controller_login
     function login()
     {
         foreach ($this->allUsers as $row) {
-            if ($row['courriel'] == $this->infosLogin[0] && $row['mot_de_passe'] == $this->infosLogin[1]) {
+            if ($row['courriel'] == $this->infosLogin[0] && $row['mot_de_passe'] == $this->infosLogin[1] && $row['statut'] != '3') {
                 $this->Handshake = true;
             }
         }

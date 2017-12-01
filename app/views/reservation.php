@@ -421,8 +421,9 @@ $_SESSION['plusmoinsWeek'] = 0;
 
 
                 //---------------HORAIRE ALEX----------------
-
                 CreateHoraire();
+
+
 
 
     	});
