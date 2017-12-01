@@ -77,10 +77,11 @@ $_SESSION['plusmoinsWeek'] = 0;
                                     <p class="category">Cliquez sur une réservation pour la modifier</p>
                                 </div>
                                 <div class="card-content table col-md-12">
-                                    <div class="row padding-md">
-                                        <button class="btn btn-default" name="" id="previousWeek"><i class='material-icons'>fast_rewind</i>
+                                    <div class="text-center col-md-12"><div class="" id="weekRange"></div></div>
+                                    <div class="row padding-md col-md-12">
+                                        <button class="btn btn-default text-center pull-left" name="" id="previousWeek"><i class='material-icons'>fast_rewind</i></button>
 
-                                        </button><button class="pull-right btn btn-default" name="" id="nextWeek"><i class='material-icons'>fast_forward</i></button>
+                                        <button class="btn btn-default text-center pull-right" name="" id="nextWeek"><i class='material-icons'>fast_forward</i></button>
                                     </div>
 
                                     <div class="col-md-11 margin-left-lg center-block float-none" id="schedule"></div>
@@ -216,6 +217,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                         }else{
                             $('#previousWeek').prop('disabled',false);
                         }
+
                         printHoraire();
                     }
 
@@ -271,6 +273,8 @@ $_SESSION['plusmoinsWeek'] = 0;
                             }
                         }
 
+
+
                         var nom_vehicule = reservations[index]['nom_modele'] + "  #" + reservations[index]['fk_vehicule'];
                         var nom_user = reservations[index]['prenom'] + " " + reservations[index]['nom'].charAt(0);
                         var dated = removeTime(splitDate(reservations[index]['date_debut'])[2]) + "-" + removeTime(splitDate(reservations[index]['date_fin'])[2]) + " " + getTime(splitDate(reservations[index]['date_fin'])[2])[0] + "h";
@@ -297,6 +301,11 @@ $_SESSION['plusmoinsWeek'] = 0;
 
 
                     });
+                    var displayDates = getWeek(0, numberofWeeks);
+
+                    var comp1 = removeTime(displayDates[0].toString());
+                    var comp2 = removeTime(displayDates[1].toString());
+                    $('#weekRange').html(comp1+' au '+comp2);
                     return data;
                 }
 

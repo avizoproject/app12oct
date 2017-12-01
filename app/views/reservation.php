@@ -82,6 +82,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                         <p class="category">Cliquez sur une réservation pour la modifier</p>
                     </div>
                     <div class="card-content table-responsive col-md-12">
+                        <div class="text-center col-md-12"><div class="" id="weekRange"></div></div>
                         <div class="row padding-md"><button class="btn btn-default" name="" id="previousWeek"><i class='material-icons'>fast_rewind</i></button><button class="pull-right btn btn-default" name="" id="nextWeek"><i class='material-icons'>fast_forward</i></button></div>
 
                         <div class="col-md-11 margin-left-lg center-block float-none" id="schedule"></div>
@@ -300,6 +301,11 @@ $_SESSION['plusmoinsWeek'] = 0;
 
 
                     });
+                    var displayDates = getWeek(0, numberofWeeks);
+
+                    var comp1 = removeTime(displayDates[0].toString());
+                    var comp2 = removeTime(displayDates[1].toString());
+                    $('#weekRange').html(comp1+' au '+comp2);
                     return data;
                 }
 
