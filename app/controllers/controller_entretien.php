@@ -132,8 +132,8 @@ class controller_entretien
             $uploadOk = 0;
         }
         // Allow certain file formats
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif" && $imageFileType != "JPG" ) {
+        if(strtolower($imageFileType) != "jpg" && strtolower($imageFileType) != "png" && strtolower($imageFileType) != "jpeg"
+            && strtolower($imageFileType) != "gif") {
             $uploadOk = 0;
         }
         // If everything is ok, upload file
