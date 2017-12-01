@@ -131,7 +131,7 @@ $gUser = new InfoUser();
             } else {
                 swal({
                     title: "",
-                    text: "Vous devez sélectionner un utilisateur",
+                    text: "Vous devez sélectionner un utilisateur.",
                     type: "warning",
                     allowOutsideClick: true
                 });
@@ -146,7 +146,7 @@ $gUser = new InfoUser();
             } else {
                 swal({
                     title: "",
-                    text: "Vous devez sélectionner un utilisateur",
+                    text: "Vous devez sélectionner un utilisateur.",
                     type: "warning",
                     allowOutsideClick: true
                 });

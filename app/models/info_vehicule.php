@@ -235,7 +235,7 @@ function getVehiculeReservation ($id_reservation){
 function getListVehicules(){
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
-    $results = $conn->query('SELECT vehicule.odometre, vehicule.pk_vehicule, marque.nom_marque, modele.nom_modele, vehicule.annee, couleur.nom_couleur, statut_vehicule.nom_statut FROM `vehicule` LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN statut_vehicule ON vehicule.fk_statut = statut_vehicule.pk_statut_vehicule LEFT JOIN couleur ON vehicule.fk_couleur = couleur.pk_couleur');
+    $results = $conn->query('SELECT vehicule.odometre, vehicule.pk_vehicule, marque.nom_marque, modele.nom_modele, vehicule.annee, couleur.nom_couleur, statut_vehicule.nom_statut FROM `vehicule` LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele LEFT JOIN statut_vehicule ON vehicule.fk_statut = statut_vehicule.pk_statut_vehicule LEFT JOIN couleur ON vehicule.fk_couleur = couleur.pk_couleur WHERE vehicule.date_mise_hors_service IS NULL');
 
     $allvehicules= array();
     while ($row = $results->fetch_assoc()) {

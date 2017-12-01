@@ -368,7 +368,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                     }else{
                         swal({
                                 title:"",
-                                text:"Vous devez sélectionner une réservation",
+                                text:"Vous devez sélectionner une réservation.",
                                 type:"warning",
                                 allowOutsideClick : true
                             });
@@ -383,7 +383,7 @@ $_SESSION['plusmoinsWeek'] = 0;
                     }else{
                         swal({
                                 title:"",
-                                text:"Vous devez sélectionner une réservation",
+                                text:"Vous devez sélectionner une réservation.",
                                 type:"warning",
                                 allowOutsideClick : true
                             });
@@ -421,8 +421,9 @@ $_SESSION['plusmoinsWeek'] = 0;
 
 
                 //---------------HORAIRE ALEX----------------
-
                 CreateHoraire();
+
+
 
 
     	});

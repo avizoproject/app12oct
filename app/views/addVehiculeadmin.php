@@ -48,26 +48,24 @@ $listVehicule = new InfoVehicule();
                                 <p class="category">Tous les champs sont obligatoires.</p>
                             </div>
                             <div class="card-content">
-                              <?php
-                              include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
-                              $results = $conn->query("SELECT MAX(pk_vehicule) + 1 AS Top FROM vehicule");
-                              $row = $results->fetch_assoc();
-                              if (file_exists("../img/car" . $row['Top']. ".jpg") && $_GET['upload']) {
-                                echo '<div class="col-md-5 pull-right"><img src="../img/car' . $row["Top"] . '.jpg" /></div>';
-                              } else {
-                                echo '<div class="col-md-5 pull-right"><form action="../controllers/uploadImg.php" method="post" enctype="multipart/form-data">';
-                                  echo '<label class="control-label">Image du véhicule</label><br><br>';
-                                  echo '<input type="file" name="fileToUpload" id="fileToUpload" required><br>';
-                                  echo '<input type="submit" class="btn" value="Enregistrer l\'image" name="submit">';
-                                echo '</form></div>';
-                              } ?>
-
-                                <form id="formAjout" >
+                                <form id="formAjout">
+                                    <?php
+                                    include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
+                                    $results = $conn->query("SELECT MAX(pk_vehicule) + 1 AS Top FROM vehicule");
+                                    $row = $results->fetch_assoc();
+                                    if (file_exists("../img/car" . $row['Top']. ".jpg") && $_GET['upload']) {
+                                        echo '<div class="col-md-5 pull-right"><div class="form-group"><img src="../img/car' . $row["Top"] . '.jpg" /></div></div><div class="clearfix visible-xs"></div>';
+                                    } else {
+                                        echo '<div class="col-md-5 pull-right">';
+                                        echo '<label class="control-label">Image du véhicule</label><br><br>';
+                                        echo '<input type="file" name="fileToUpload" id="fileToUpload"><br>';
+                                        echo '</div><div class="clearfix visible-xs visible-sm visible-md "></div>';
+                                    } ?>
                                     <div>
                                         <div class="col-md-7">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Marque</label>
-                                                <select class="form-control" id="marque" name="select" required></select>
+                                                <select class="form-control" id="marque" name="marque" required></select>
                                                 <label onclick="modMarque()">Modifier</label><label onclick="ajoutMarque()" style="float: right;">Ajouter</label>
                                             </div>
                                         </div>
@@ -77,7 +75,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-7">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Modèle</label>
-                                                <select class="form-control" id="modele" name="select" required></select>
+                                                <select class="form-control" id="modele" name="modele" required></select>
                                                 <label onclick="modModele()">Modifier</label><label onclick="ajoutModele()" style="float: right;">Ajouter</label>
                                             </div>
                                         </div>
@@ -87,7 +85,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-7">
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Année</label>
-                                                <input type="text" class="form-control" id="annee" maxlength="4" min="1950" pattern="\d{4}" required></select>
+                                                <input type="text" class="form-control" id="annee" name="annee" maxlength="4" min="1950" pattern="\d{4}" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +94,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-7">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Couleur</label>
-                                                <select class="form-control" id="couleur" name="select" required></select>
+                                                <select class="form-control" id="couleur" name="couleur" required></select>
                                                 <label onclick="modCouleur()">Modifier</label><label onclick="ajoutCouleur()" style="float: right;">Ajouter</label>
                                             </div>
                                         </div>
@@ -106,7 +104,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-7">
                                             <div class="form-group label-static">
                                                 <label class="control-label">Secteur</label>
-                                                <select class="form-control" id="secteur" name="select" required></select>
+                                                <select class="form-control" id="secteur" name="secteur" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -115,7 +113,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-7">
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Odomètre</label>
-                                                <input type="number" class="form-control" id="odometre" maxlength="6" min="0" required></select>
+                                                <input type="number" class="form-control" id="odometre" name="odometre" maxlength="6" min="0" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -124,7 +122,7 @@ $listVehicule = new InfoVehicule();
                                         <div class="col-md-7">
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Plaque</label>
-                                                <input type="text" class="form-control" id="plaque" maxlength="7" required></select>
+                                                <input type="text" class="form-control" id="plaque"  name="plaque"maxlength="7" required></select>
                                             </div>
                                         </div>
                                     </div>
@@ -145,7 +143,6 @@ $listVehicule = new InfoVehicule();
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class='row'>
                                         <div class='form-group col-md-8'>
                                             <div class='checkbox'>
@@ -236,7 +233,25 @@ $listVehicule = new InfoVehicule();
                     text: "Le véhicule a bien été ajouté.",
                     type: "success"
                 }).then(function () {
-                  location.href = "../controllers/controller_vehicules.php?ajout=1&marque=" + marque + "&modele=" + modele + "&annee=" + annee + "&couleur=" + couleur + "&secteur=" + secteur + "&odometre=" + odometre + "&plaque=" + plaque + "&date=" + date + "&statut=" + statut;
+                  //location.href = "../controllers/controller_vehicules.php?ajout=1&marque=" + marque + "&modele=" + modele + "&annee=" + annee + "&couleur=" + couleur + "&secteur=" + secteur + "&odometre=" + odometre + "&plaque=" + plaque + "&date=" + date + "&statut=" + statut;
+                    var form = $("#formAjout")[0];
+
+                    var formData = new FormData(form);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "../controllers/controller_vehicules.php?ajout=1",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            console.log(response);
+                            window.location.replace("http://localhost/app/app/views/vehicule.php");
+                        },
+                        error: function (xhr, title, trace) {
+                            console.error(title + trace);
+                        }
+                    });
                 })
             }
         });

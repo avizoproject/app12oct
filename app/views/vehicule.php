@@ -131,7 +131,7 @@ $gVehicule = new InfoVehicule();
             } else {
                 swal({
                     title: "",
-                    text: "Vous devez sélectionner un véhicule",
+                    text: "Vous devez sélectionner un véhicule.",
                     type: "warning",
                     allowOutsideClick: true
                 });
@@ -146,7 +146,7 @@ $gVehicule = new InfoVehicule();
             } else {
                 swal({
                     title: "",
-                    text: "Vous devez sélectionner un véhicule",
+                    text: "Vous devez sélectionner un véhicule.",
                     type: "warning",
                     allowOutsideClick: true
                 });

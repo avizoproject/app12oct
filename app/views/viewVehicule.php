@@ -44,13 +44,12 @@ $currentVehicule = $listVehicule->getObjectFromDB($_GET["id"]);
                                                  <h4 class="title">Consultation d'un véhicule</h4>
                                              </div>
                                              <div class="card-content">
-                                                 <form id="formAjout" >
+                                                 <form id="formAjout">
                                                    <?php
                                                     if (file_exists("../img/car" . $currentVehicule['pk_vehicule'] . ".jpg")) {
-                                                     echo '<div class="col-md-5 pull-right"><img src="../img/car' . $currentVehicule["pk_vehicule"] . '.jpg" /></div>';
+                                                     echo '<div class="col-md-5 pull-right"><div class="form-group"><img src="../img/car' . $currentVehicule["pk_vehicule"] . '.jpg" /></div></div><div class="clearfix visible-xs"></div>';
                                                     }
                                                    ?>
-
                                                      <div>
                                                          <div class="col-md-7">
                                                              <div class="form-group label-static">
