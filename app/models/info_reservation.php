@@ -187,7 +187,7 @@ function getListReservationsUser($id){
     $conn->close();
 }
 
-function getSelectReservations($id_user){
+function getSelectReservations($id_user, $id_res){
     include $_SERVER["DOCUMENT_ROOT"] . '/app/app/database_connect.php';
 
     $results = $conn->query("SELECT vehicule.pk_vehicule, reservation.date_debut, reservation.date_fin, reservation.pk_reservation, marque.nom_marque, modele.nom_modele FROM `reservation` LEFT JOIN vehicule ON reservation.fk_vehicule = vehicule.pk_vehicule LEFT JOIN utilisateur ON reservation.fk_utilisateur = utilisateur.pk_utilisateur LEFT JOIN marque ON vehicule.fk_marque = marque.pk_marque LEFT JOIN modele ON vehicule.fk_modele = modele.pk_modele WHERE reservation.fk_utilisateur='" . $id_user . "' AND reservation.statut='1' ORDER BY reservation.date_fin ASC");
@@ -203,14 +203,18 @@ function getSelectReservations($id_user){
             'date_fin' => $row['date_fin']
         );
     }
-    echo "<select class='form-control' id='selectReservation' name='selectReservation'>";
+    echo "<select class='form-control' id='selectReservation' name='selectReservation' disabled>";
     $size= sizeof($allreservation);
     if($size != null){
         for($i=0;$i<$size;$i++){
             $dateTo = date('d-m-Y', strtotime( $allreservation[$i]['date_debut'] ));
             $dateFrom = date('d-m-Y', strtotime( $allreservation[$i]['date_fin'] ));
+            if ($allreservation[$i]['pk_reservation'] == $id_res){
+                echo "<option selected value='".$allreservation[$i]['pk_reservation']."'>".$allreservation[$i]['nom_modele']. " #". $allreservation[$i]['pk_vehicule'] . " " . $dateTo . " à " . $dateFrom ."</option>";
+            }else {
 
-            echo "<option value='".$allreservation[$i]['pk_reservation']."'>".$allreservation[$i]['nom_modele']. " #". $allreservation[$i]['pk_vehicule'] . " " . $dateTo . " à " . $dateFrom ."</option>";
+                echo "<option value='" . $allreservation[$i]['pk_reservation'] . "'>" . $allreservation[$i]['nom_modele'] . " #" . $allreservation[$i]['pk_vehicule'] . " " . $dateTo . " à " . $dateFrom . "</option>";
+            }
         }
     }
     echo "</select>";

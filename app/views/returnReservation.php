@@ -12,6 +12,14 @@ session_start();
 error_reporting(0);
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/app/models/info_reservation.php';
 $gReservation = new InfoReservation();
+
+$idres =  isset($_GET['idres']) ? $_GET['idres'] : null;
+if ($idres == null){
+    header("Location: http://localhost/app/app/views/reservationuser.php");
+    exit();
+}else{
+    $currentReservation = $gReservation->getObjectFromDB($idres);
+}
 ?>
 <html>
 <head>
@@ -39,17 +47,33 @@ $gReservation = new InfoReservation();
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
+                            <div class="card-header" data-background-color="blue">
+                                <h4 class="title">Formulaire de retour</h4>
+                                <p class="category">Entrez le kilométrage du véhicule.</p>
+                            </div>
+                            <div class="card-content">
+                                <br>
+                                <div class="row">
+                                    <?php
+                                    if (file_exists("../img/car" . $currentReservation['fk_vehicule'] . ".jpg")) {
+                                        echo '<div class="col-md-3 center-block  float-none img-responsive"><img id="imgVehicule" src="../img/car' . $currentReservation["fk_vehicule"] . '.jpg" /></div>';
+                                    }
+                                    ?>
+                                </div>
                             <form id="formRetour" action="" enctype="multipart/form-data" accept-charset="utf-8">
+
+
                                 <div class="col-md-6">
                                     <div class="form-group label-static">
-                                        <label for='selectReservation'>Choisissez le véhicule à retourner</label>
-                                        <?php $gReservation->getSelectReservations($_SESSION['user']['pk_utilisateur']); ?>
+
+                                        <label for='selectReservation'>Réservation sélectionnée</label>
+                                        <?php $gReservation->getSelectReservations($_SESSION['user']['pk_utilisateur'], $idres); ?>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group label-floating">
-                                        <label for='odometer'>Kilométrage du véhicule</label>
+                                        <label for='odometer'>Odomètre au retour</label>
 
                                         <input type="text" size="40" maxlenght="50" class="form-control" id="odometer" name="odometer" required>
                                     </div>
@@ -58,6 +82,7 @@ $gReservation = new InfoReservation();
                                 <input type="submit" id="confirmer" class="btn pull-right" value="Confirmer" style="margin-right:10px;margin-bottom:10px;">
                                 <input class="btn pull-right" type="button" id="retour" name="Retour" value="Annuler" style="margin-right:10px;">
                             </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -120,6 +145,7 @@ $gReservation = new InfoReservation();
         // this is the id of the form
         $(document).on("click", "#confirmer", function(e) {
             e.preventDefault();
+            $("#selectReservation").removeAttr("disabled");
             if($('#odometer').val() != ""){
                 var url = "../controllers/cReservation.php?mod=3";
 
@@ -151,7 +177,9 @@ $gReservation = new InfoReservation();
                                 title: "Retour",
                                 text: "Le retour du véhicule a été effectué.",
                                 type: "success"
-                            });
+                            }).then(function () {
+                                location.href = "../views/reservationuser.php";
+                            })
                         }
                     },error: function(trace){
                         alert(trace);

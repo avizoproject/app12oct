@@ -502,7 +502,28 @@ $_SESSION['plusmoinsWeek'] = 0;
 
                 //clic consulter, envoie en get le id selectionné
                 $('#Retourner').click(function () {
-                    window.location.href = "http://localhost/app/app/views/returnReservation.php";
+                    if ($('#example tr.selected td:first').length > 0) {
+                        var statutReservation = $('#example tr.selected td:last').html();
+                        if(statutReservation == "Inactif"){
+                            swal({
+                                title:"",
+                                text:"Vous devez sélectionner une réservation présentement active",
+                                type:"warning",
+                                allowOutsideClick : true
+                            });
+                        }else{
+                            var idcont = $('#example tr.selected td:first').html();
+                            window.location.href = "http://localhost/app/app/views/returnReservation.php?idres=" + idcont + "";
+                        }
+                    }else{
+                        swal({
+                            title:"",
+                            text:"Vous devez sélectionner une réservation",
+                            type:"warning",
+                            allowOutsideClick : true
+                        });
+                    }
+
                 });
 
             //clic historique shows you all the reservations made by that user
