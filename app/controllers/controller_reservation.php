@@ -107,7 +107,7 @@ if (isset($_GET['admin'])&& isset($_GET['ajout'])) {
     $reservControl->ajoutReservation();
 }
 
-if ($_SESSION['admin'] === 1) {
+if ($_SESSION['admin'] == '1') {
     header("Location: http://localhost/app/app/views/reservation.php");
 } else {
     header("Location: http://localhost/app/app/views/reservationuser.php");
