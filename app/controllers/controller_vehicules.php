@@ -138,4 +138,8 @@ if (isset($_GET['ajout'])) {
   $vehiculesControl->suppVehicule($_GET['id']);
 }
 
+
+header("Location: http://localhost/app/app/views/vehicule.php");
+
+
 ?>
